@@ -31,24 +31,37 @@ class StoreDao extends Dao {
             $store->setDate($row['DATE_CREATED']);
 
             $toReturn[] = $store;
-
         }
 
         return $toReturn;
     }
 
-    public function findById()
-    {
-        // TODO: Implement findById() method.
+    public function findById($id) {
+        return $this->findByProperty("id", $id);
     }
 
-    public function findByProperty($property, $value)
-    {
-        // TODO: Implement findByProperty() method.
+    public function findByProperty($property, $value) {
+
+        $query = "SELECT * FROM STORE WHERE $property = $value";
+
+        $result = parent::query($query);
+
+        $toReturn = array();
+
+        while($row = $result->fetch_assoc()) {
+
+            $store = new Store();
+            $store->setId($row['ID']);
+            $store->setName($row['NAME']);
+            $store->setDate($row['DATE_CREATED']);
+
+            $toReturn[] = $store;
+        }
+
+        return $toReturn;
     }
 
-    public function save($object)
-    {
+    public function save($object) {
         // TODO: Implement save() method.
     }
 
@@ -57,8 +70,8 @@ class StoreDao extends Dao {
         // TODO: Implement update() method.
     }
 
-    public function delete($object)
-    {
-        // TODO: Implement delete() method.
+    public function delete($id) {
+        $query = "DELETE FROM STORE WHERE ID = $id";
+        return parent::query($query);
     }
 }

@@ -6,6 +6,8 @@
  * Time: 19:01
  */
 
+require dirname(__FILE__) . '/../controller/StoreManager.php';
+
 class StoreRouterManager {
 
     public static function manageRoutes(Phroute\Phroute\RouteCollector $router) {
@@ -15,7 +17,7 @@ class StoreRouterManager {
         });
 
         $router->get('/store/{id}', function ($id) {
-            return 'this will return the store with id:' . $id;
+            return (new StoreManager())->findById($id);
         });
 
         $router->post('/store', function () {
@@ -29,7 +31,7 @@ class StoreRouterManager {
         });
 
         $router->delete('/store/{id}', function ($id) {
-            return 'this will remove the store with id ' . $id;
+            return (new StoreManager())->delete($id);
         });
     }
 

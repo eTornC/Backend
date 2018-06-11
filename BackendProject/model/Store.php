@@ -71,6 +71,10 @@ class Store implements JsonSerializable {
      * @since 5.4.0
      */
     public function jsonSerialize() {
-        // TODO: Implement jsonSerialize() method.
+        return array(
+            'id' => $this->id,
+            'name' => $this->name,
+            'date_created' => $this->date
+        );
     }
 }

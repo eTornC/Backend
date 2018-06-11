@@ -6,6 +6,11 @@
  * Date: 11/06/2018
  * Time: 11:48
  */
+
+    require dirname(__FILE__) . '/../constants/ConstantsDB.php';
+
+    require dirname(__FILE__) . '/../model/Store.php';
+
     abstract class Dao {
 
         private $DAO;
@@ -37,7 +42,7 @@
 
         public abstract function findAll();
 
-        public abstract function findById();
+        public abstract function findById($id);
 
         public abstract function findByProperty($property, $value);
 
@@ -45,7 +50,7 @@
 
         public abstract function update($object);
 
-        public abstract function delete($object);
+        public abstract function delete($id);
     }
 
 
