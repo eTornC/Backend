@@ -22,12 +22,12 @@ class StoreRouterManager {
 
         $router->post('/store', function () {
             $body = file_get_contents('php://input');
-            return 'this will create a store';
+            return (new StoreManager())->save(json_decode($body));
         });
 
-        $router->put('/store', function () {
+        $router->put('/store/{id}', function ($id) {
             $body = file_get_contents('php://input');
-            return 'this will update a store';
+            return (new StoreManager())->update(json_decode($body), $id);
         });
 
         $router->delete('/store/{id}', function ($id) {

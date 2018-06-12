@@ -21,24 +21,46 @@ class StoreManager {
     }
 
     public function findById($id) {
-
-        if (!is_integer($id)) {
-            return [];
+        try {
+            $id = (int) htmlentities(addslashes($id));
+            return $this->storeDao->findById($id);
+        } catch (Exception $e) {
+            return array();
         }
-
-        $id = htmlentities(addslashes($id));
-
-        return $this->storeDao->findById($id);
     }
 
     public function delete($id) {
-
-        if (!is_integer($id)) {
-            return [];
+        try {
+            $id = (int) htmlentities(addslashes($id));
+            return array("done" => $this->storeDao->delete($id));
+        } catch (Exception $e) {
+            return array("done" => false);
         }
+    }
 
-        $id = htmlentities(addslashes($id));
+    public function save($body) {
 
-        return $this->storeDao->delete($id);
+        $name = htmlentities(addslashes($body->name));
+
+        $store = new Store();
+        $store->setName($name);
+
+        return array('done' => $this->storeDao->save($store));
+    }
+
+    public function update($body, $id){
+        try {
+            $name = htmlentities(addslashes($body->name));
+            $id = (int) htmlentities(addslashes($id));
+
+            $store = new Store();
+            $store->setName($name);
+            $store->setId($id);
+
+            return array('done' => $this->storeDao->update($store));
+
+        } catch (Exception $e) {
+            return array('done' => false);
+        }
     }
 }

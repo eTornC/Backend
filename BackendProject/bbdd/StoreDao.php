@@ -62,12 +62,21 @@ class StoreDao extends Dao {
     }
 
     public function save($object) {
-        // TODO: Implement save() method.
+        if ($object instanceof Store) {
+            $query = "INSERT INTO STORE (NAME, DATE_CREATED) VALUES ('" . $object->getName() . "', NOW())";
+            return parent::query($query);
+        } else {
+            return false;
+        }
     }
 
-    public function update($object)
-    {
-        // TODO: Implement update() method.
+    public function update($object) {
+        if ($object instanceof Store) {
+            $query = "UPDATE STORE SET NAME='" . $object->getName() . "' WHERE ID = " . $object->getId();
+            return parent::query($query);
+        } else {
+            return false;
+        }
     }
 
     public function delete($id) {
