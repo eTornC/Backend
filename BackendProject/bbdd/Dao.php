@@ -10,6 +10,7 @@
     require dirname(__FILE__) . '/../constants/ConstantsDB.php';
 
     require dirname(__FILE__) . '/../model/Store.php';
+    require dirname(__FILE__) . '/../model/Queue.php';
 
     abstract class Dao {
 

@@ -1,11 +1,11 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: yous
- * Date: 11/06/18
- * Time: 11:25
- */
 
+    /**
+     * Created by PhpStorm.
+     * User: yous
+     * Date: 11/06/18
+     * Time: 11:25
+     */
 
     ini_set('display_errors', 1);
     ini_set('display_startup_errors', 1);
@@ -14,17 +14,24 @@
     header('Content-type: application/json; charset=utf-8');
 
     require(dirname(__FILE__) . '/vendor/autoload.php');
-    require(dirname(__FILE__) . '/routes/StoreRouterManager.php');
+    require(dirname(__FILE__) . '/routes/RouterManager.php');
 
     use Phroute\Phroute\RouteCollector;
 
     $router = new RouteCollector();
 
-    StoreRouterManager::manageRoutes($router);
+    RouterManager::manageRoutes($router);
 
     $dispatcher = new Phroute\Phroute\Dispatcher($router->getData());
 
-    $response = $dispatcher->dispatch($_SERVER['REQUEST_METHOD'], parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH));
+    $response = '';
+
+    try {
+        $response = $dispatcher->dispatch($_SERVER['REQUEST_METHOD'], parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH));
+    } catch (\Phroute\Phroute\Exception\HttpRouteNotFoundException $e) {
+        $response = array("Error" => "Route not found");
+    }
 
     echo json_encode($response);
+
 ?>
