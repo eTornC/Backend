@@ -47,19 +47,21 @@ class RouterManager {
             return (new QueueManager())->findById($idStore, $idQueue);
         });
 
-        $router->post('/store/{id}/queue', function($id) {
+        $router->post('/store/{idStore}/queue', function($idStore) {
             $body = file_get_contents('php://input');
-            return (new QueueManager())->save(json_decode($body), $id);
+            return (new QueueManager())->save(json_decode($body), $idStore);
         });
 
-        $router->put('/store/{id}/queue/{idQueue}', function ($id, $idQueue) {
+        $router->put('/store/{idStore}/queue/{idQueue}', function ($idStore, $idQueue) {
             $body = file_get_contents('php://input');
-            return '';
+            return (new QueueManager())->update(json_decode($body), $idStore, $idQueue);
         });
 
-        $router->delete('/store/{id}/queue/{idQueue}', function ($id, $idQueue) {
-            return '';
+        $router->delete('/store/{idStore}/queue/{idQueue}', function ($idStore, $idQueue) {
+            return (new QueueManager())->delete($idStore, $idQueue);
         });
     }
 
 }
+
+?>

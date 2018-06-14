@@ -45,19 +45,30 @@ class QueueDao extends Dao {
         return $toReturn;
     }
 
-    public function save($object) {
+    public function save($queue) {
 
-        if ($object instanceof Queue) {
+        if ($queue instanceof Queue) {
 
-            $query = "INSERT INTO QUEUE (QUEUE_TYPE, PRIORITY, ID_STORE) VALUES ";
+            $query = "INSERT INTO QUEUE (QUEUE_TYPE, PRIORITY, ID_STORE) VALUES ('" . $queue->getType() . "', " .
+                        $queue->getPriority() . ", " . $queue->getIdStore() . ")";
 
+            return parent::query($query);
         }
 
         return false;
     }
 
-    public function update($object) {
-        // TODO: Implement update() method.
+    public function update($queue) {
+
+        if ($queue instanceof Queue) {
+
+            $query = "UPDATE QUEUE SET QUEUE_TYPE='" . $queue->getType() . "', PRIORITY=" . $queue->getPriority() .
+                        " WHERE ID=" . $queue->getId();
+
+            return parent::query($query);
+        }
+
+        return false;
     }
 
     public function delete($id) {

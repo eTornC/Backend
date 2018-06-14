@@ -61,9 +61,9 @@ class StoreDao extends Dao {
         return $toReturn;
     }
 
-    public function save($object) {
-        if ($object instanceof Store) {
-            $query = "INSERT INTO STORE (NAME, DATE_CREATED) VALUES ('" . $object->getName() . "', NOW())";
+    public function save($queue) {
+        if ($queue instanceof Store) {
+            $query = "INSERT INTO STORE (NAME, DATE_CREATED) VALUES ('" . $queue->getName() . "', NOW())";
             return parent::query($query);
         } else {
             return false;

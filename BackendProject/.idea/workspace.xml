@@ -31,8 +31,8 @@
       <file leaf-file-name="RouterManager.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/routes/RouterManager.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="102">
-              <caret line="11" column="21" lean-forward="true" selection-start-line="11" selection-start-column="21" selection-end-line="11" selection-end-column="21" />
+            <state relative-caret-position="195">
+              <caret line="32" column="73" lean-forward="true" selection-start-line="32" selection-start-column="73" selection-end-line="32" selection-end-column="73" />
               <folding />
             </state>
           </provider>
@@ -41,9 +41,27 @@
       <file leaf-file-name="QueueManager.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/controller/QueueManager.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="765">
-              <caret line="45" column="21" lean-forward="false" selection-start-line="45" selection-start-column="21" selection-end-line="45" selection-end-column="21" />
+            <state relative-caret-position="467">
+              <caret line="50" column="51" lean-forward="false" selection-start-line="50" selection-start-column="51" selection-end-line="50" selection-end-column="51" />
               <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="QueueDao.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/bbdd/QueueDao.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="682">
+              <caret line="52" column="75" lean-forward="false" selection-start-line="52" selection-start-column="75" selection-end-line="52" selection-end-column="75" />
+              <folding>
+                <element signature="e#7#88#0#PHP" expanded="true" />
+                <marker date="1528981261061" expanded="true" signature="487:524" ph="SELECT * FRO... QUEUE" />
+                <marker date="1528981261061" expanded="true" signature="487:525" ph="SELECT * FRO... QUEUE" />
+                <marker date="1528981261061" expanded="true" signature="1093:1236" ph="INSERT INTO QUEUE... " />
+                <marker date="1528981261061" expanded="true" signature="1093:1265" ph="INSERT INTO QUEUE... " />
+                <marker date="1528981261061" expanded="true" signature="1451:1580" ph="UPDATE QUEUE... " />
+                <marker date="1528981261061" expanded="true" signature="1736:1765" ph="DELETE FROM " />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -57,17 +75,17 @@
         <option value="$PROJECT_DIR$/composer.json" />
         <option value="$PROJECT_DIR$/constants/ConstantsDB.php" />
         <option value="$PROJECT_DIR$/model/Store.php" />
-        <option value="$PROJECT_DIR$/controller/StoreManager.php" />
         <option value="$PROJECT_DIR$/bbdd/StoreDao.php" />
         <option value="$PROJECT_DIR$/routes/QueueRouterManager.php" />
         <option value="$PROJECT_DIR$/scripts/etorn.sql" />
         <option value="$PROJECT_DIR$/bbdd/Dao.php" />
         <option value="$PROJECT_DIR$/index.php" />
         <option value="$PROJECT_DIR$/model/Queue.php" />
-        <option value="$PROJECT_DIR$/bbdd/QueueDao.php" />
         <option value="$PROJECT_DIR$/routes/StoreRouterManager.php" />
-        <option value="$PROJECT_DIR$/routes/RouterManager.php" />
+        <option value="$PROJECT_DIR$/controller/StoreManager.php" />
         <option value="$PROJECT_DIR$/controller/QueueManager.php" />
+        <option value="$PROJECT_DIR$/bbdd/QueueDao.php" />
+        <option value="$PROJECT_DIR$/routes/RouterManager.php" />
       </list>
     </option>
   </component>
@@ -318,12 +336,13 @@
       <workItem from="1528790520409" duration="6814000" />
       <workItem from="1528810808028" duration="6395000" />
       <workItem from="1528830916670" duration="1219000" />
-      <workItem from="1528874991890" duration="5570000" />
+      <workItem from="1528874991890" duration="7495000" />
+      <workItem from="1528959859848" duration="7249000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="36875000" />
+    <option name="totallyTimeSpent" value="46049000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="22" width="1696" height="1036" extended-state="6" />
@@ -364,7 +383,7 @@
         <state relative-caret-position="289">
           <caret line="22" column="46" lean-forward="true" selection-start-line="22" selection-start-column="46" selection-end-line="22" selection-end-column="46" />
           <folding>
-            <element signature="e#11#109#0#PHP" expanded="true" />
+            <element signature="e#11#109#0#PHP" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -391,18 +410,18 @@
         <state relative-caret-position="1139">
           <caret line="72" column="33" lean-forward="false" selection-start-line="72" selection-start-column="33" selection-end-line="72" selection-end-column="33" />
           <folding>
-            <marker date="1528795685791" expanded="true" signature="277:296" ph="SELECT * FRO... STORE" />
-            <marker date="1528795685791" expanded="true" signature="833:860" ph="SELECT * FRO... STORE" />
-            <marker date="1528795685791" expanded="true" signature="833:871" ph="SELECT * FRO... STORE" />
-            <marker date="1528795685791" expanded="true" signature="833:872" ph="SELECT * FRO... STORE" />
-            <marker date="1528795685791" expanded="true" signature="1345:1393" ph="INSERT INTO STORE... " />
-            <marker date="1528795685791" expanded="true" signature="1345:1428" ph="INSERT INTO STORE... " />
-            <marker date="1528795685791" expanded="true" signature="1633:1656" ph="UPDATE STORE... " />
-            <marker date="1528795685791" expanded="true" signature="1633:1694" ph="UPDATE STORE... " />
-            <marker date="1528795685791" expanded="true" signature="1633:1695" ph="UPDATE STORE... " />
-            <marker date="1528795685791" expanded="true" signature="1633:1696" ph="UPDATE STORE... " />
-            <marker date="1528795685791" expanded="true" signature="1871:1899" ph="DELETE FROM " />
-            <marker date="1528795685791" expanded="true" signature="1871:1900" ph="DELETE FROM " />
+            <marker date="1528962117899" expanded="true" signature="277:296" ph="SELECT * FRO... STORE" />
+            <marker date="1528962117899" expanded="true" signature="833:860" ph="SELECT * FRO... STORE" />
+            <marker date="1528962117899" expanded="true" signature="833:871" ph="SELECT * FRO... STORE" />
+            <marker date="1528962117899" expanded="true" signature="833:872" ph="SELECT * FRO... STORE" />
+            <marker date="1528962117899" expanded="true" signature="1343:1391" ph="INSERT INTO STORE... " />
+            <marker date="1528962117899" expanded="true" signature="1343:1425" ph="INSERT INTO STORE... " />
+            <marker date="1528962117899" expanded="true" signature="1630:1653" ph="UPDATE STORE... " />
+            <marker date="1528962117899" expanded="true" signature="1630:1691" ph="UPDATE STORE... " />
+            <marker date="1528962117899" expanded="true" signature="1630:1692" ph="UPDATE STORE... " />
+            <marker date="1528962117899" expanded="true" signature="1630:1693" ph="UPDATE STORE... " />
+            <marker date="1528962117899" expanded="true" signature="1868:1896" ph="DELETE FROM " />
+            <marker date="1528962117899" expanded="true" signature="1868:1897" ph="DELETE FROM " />
           </folding>
         </state>
       </provider>
@@ -448,18 +467,18 @@
         <state relative-caret-position="1241">
           <caret line="78" column="41" lean-forward="false" selection-start-line="78" selection-start-column="41" selection-end-line="78" selection-end-column="41" />
           <folding>
-            <marker date="1528795685791" expanded="true" signature="277:296" ph="SELECT * FRO... STORE" />
-            <marker date="1528795685791" expanded="true" signature="833:860" ph="SELECT * FRO... STORE" />
-            <marker date="1528795685791" expanded="true" signature="833:871" ph="SELECT * FRO... STORE" />
-            <marker date="1528795685791" expanded="true" signature="833:872" ph="SELECT * FRO... STORE" />
-            <marker date="1528795685791" expanded="true" signature="1345:1393" ph="INSERT INTO STORE... " />
-            <marker date="1528795685791" expanded="true" signature="1345:1428" ph="INSERT INTO STORE... " />
-            <marker date="1528795685791" expanded="true" signature="1633:1656" ph="UPDATE STORE... " />
-            <marker date="1528795685791" expanded="true" signature="1633:1694" ph="UPDATE STORE... " />
-            <marker date="1528795685791" expanded="true" signature="1633:1695" ph="UPDATE STORE... " />
-            <marker date="1528795685791" expanded="true" signature="1633:1696" ph="UPDATE STORE... " />
-            <marker date="1528795685791" expanded="true" signature="1871:1899" ph="DELETE FROM " />
-            <marker date="1528795685791" expanded="true" signature="1871:1900" ph="DELETE FROM " />
+            <marker date="1528962117899" expanded="true" signature="277:296" ph="SELECT * FRO... STORE" />
+            <marker date="1528962117899" expanded="true" signature="833:860" ph="SELECT * FRO... STORE" />
+            <marker date="1528962117899" expanded="true" signature="833:871" ph="SELECT * FRO... STORE" />
+            <marker date="1528962117899" expanded="true" signature="833:872" ph="SELECT * FRO... STORE" />
+            <marker date="1528962117899" expanded="true" signature="1343:1391" ph="INSERT INTO STORE... " />
+            <marker date="1528962117899" expanded="true" signature="1343:1425" ph="INSERT INTO STORE... " />
+            <marker date="1528962117899" expanded="true" signature="1630:1653" ph="UPDATE STORE... " />
+            <marker date="1528962117899" expanded="true" signature="1630:1691" ph="UPDATE STORE... " />
+            <marker date="1528962117899" expanded="true" signature="1630:1692" ph="UPDATE STORE... " />
+            <marker date="1528962117899" expanded="true" signature="1630:1693" ph="UPDATE STORE... " />
+            <marker date="1528962117899" expanded="true" signature="1868:1896" ph="DELETE FROM " />
+            <marker date="1528962117899" expanded="true" signature="1868:1897" ph="DELETE FROM " />
           </folding>
         </state>
       </provider>
@@ -489,7 +508,7 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#11#109#0#PHP" expanded="true" />
+            <element signature="e#11#109#0#PHP" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -506,7 +525,7 @@
         <state relative-caret-position="72">
           <caret line="9" column="2" lean-forward="false" selection-start-line="9" selection-start-column="2" selection-end-line="9" selection-end-column="2" />
           <folding>
-            <element signature="e#11#109#0#PHP" expanded="true" />
+            <element signature="e#11#109#0#PHP" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -539,7 +558,7 @@
         <state relative-caret-position="72">
           <caret line="9" column="2" lean-forward="true" selection-start-line="9" selection-start-column="2" selection-end-line="9" selection-end-column="2" />
           <folding>
-            <element signature="e#11#109#0#PHP" expanded="true" />
+            <element signature="e#11#109#0#PHP" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -572,7 +591,7 @@
         <state relative-caret-position="68">
           <caret line="9" column="2" lean-forward="false" selection-start-line="9" selection-start-column="2" selection-end-line="9" selection-end-column="2" />
           <folding>
-            <element signature="e#11#109#0#PHP" expanded="true" />
+            <element signature="e#11#109#0#PHP" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -697,49 +716,23 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/controller/StoreManager.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="8" column="52" lean-forward="true" selection-start-line="8" selection-start-column="52" selection-end-line="8" selection-end-column="52" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/bbdd/StoreDao.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="722">
           <caret line="82" column="8" lean-forward="false" selection-start-line="82" selection-start-column="8" selection-end-line="83" selection-end-column="37" />
           <folding>
-            <marker date="1528795685791" expanded="true" signature="277:296" ph="SELECT * FRO... STORE" />
-            <marker date="1528795685791" expanded="true" signature="833:860" ph="SELECT * FRO... STORE" />
-            <marker date="1528795685791" expanded="true" signature="833:871" ph="SELECT * FRO... STORE" />
-            <marker date="1528795685791" expanded="true" signature="833:872" ph="SELECT * FRO... STORE" />
-            <marker date="1528795685791" expanded="true" signature="1345:1393" ph="INSERT INTO STORE... " />
-            <marker date="1528795685791" expanded="true" signature="1345:1428" ph="INSERT INTO STORE... " />
-            <marker date="1528795685791" expanded="true" signature="1633:1656" ph="UPDATE STORE... " />
-            <marker date="1528795685791" expanded="true" signature="1633:1694" ph="UPDATE STORE... " />
-            <marker date="1528795685791" expanded="true" signature="1633:1695" ph="UPDATE STORE... " />
-            <marker date="1528795685791" expanded="true" signature="1633:1696" ph="UPDATE STORE... " />
-            <marker date="1528795685791" expanded="true" signature="1871:1899" ph="DELETE FROM " />
-            <marker date="1528795685791" expanded="true" signature="1871:1900" ph="DELETE FROM " />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/scripts/etorn.sql">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="14" column="21" lean-forward="false" selection-start-line="14" selection-start-column="21" selection-end-line="14" selection-end-column="21" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/index.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="374">
-          <caret line="22" column="26" lean-forward="true" selection-start-line="22" selection-start-column="26" selection-end-line="22" selection-end-column="26" />
-          <folding>
-            <element signature="e#11#109#0#PHP" expanded="true" />
+            <marker date="1528962117899" expanded="true" signature="277:296" ph="SELECT * FRO... STORE" />
+            <marker date="1528962117899" expanded="true" signature="833:860" ph="SELECT * FRO... STORE" />
+            <marker date="1528962117899" expanded="true" signature="833:871" ph="SELECT * FRO... STORE" />
+            <marker date="1528962117899" expanded="true" signature="833:872" ph="SELECT * FRO... STORE" />
+            <marker date="1528962117899" expanded="true" signature="1343:1391" ph="INSERT INTO STORE... " />
+            <marker date="1528962117899" expanded="true" signature="1343:1425" ph="INSERT INTO STORE... " />
+            <marker date="1528962117899" expanded="true" signature="1630:1653" ph="UPDATE STORE... " />
+            <marker date="1528962117899" expanded="true" signature="1630:1691" ph="UPDATE STORE... " />
+            <marker date="1528962117899" expanded="true" signature="1630:1692" ph="UPDATE STORE... " />
+            <marker date="1528962117899" expanded="true" signature="1630:1693" ph="UPDATE STORE... " />
+            <marker date="1528962117899" expanded="true" signature="1868:1896" ph="DELETE FROM " />
+            <marker date="1528962117899" expanded="true" signature="1868:1897" ph="DELETE FROM " />
           </folding>
         </state>
       </provider>
@@ -749,20 +742,6 @@
         <state relative-caret-position="722">
           <caret line="79" column="5" lean-forward="false" selection-start-line="79" selection-start-column="5" selection-end-line="79" selection-end-column="5" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/bbdd/QueueDao.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="127">
-          <caret line="27" column="62" lean-forward="false" selection-start-line="27" selection-start-column="62" selection-end-line="27" selection-end-column="62" />
-          <folding>
-            <element signature="e#7#88#0#PHP" expanded="true" />
-            <marker date="1528882817015" expanded="true" signature="487:524" ph="SELECT * FRO... QUEUE" />
-            <marker date="1528882817015" expanded="true" signature="487:525" ph="SELECT * FRO... QUEUE" />
-            <marker date="1528882817015" expanded="true" signature="1095:1152" ph="INSERT INTO QUEUE... " />
-            <marker date="1528882817015" expanded="true" signature="1338:1367" ph="DELETE FROM " />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -782,18 +761,58 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/controller/StoreManager.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="790">
+          <caret line="66" column="0" lean-forward="false" selection-start-line="66" selection-start-column="0" selection-end-line="66" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/scripts/etorn.sql">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="238">
+          <caret line="14" column="21" lean-forward="false" selection-start-line="14" selection-start-column="21" selection-end-line="14" selection-end-column="21" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/index.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="289">
+          <caret line="22" column="26" lean-forward="true" selection-start-line="22" selection-start-column="26" selection-end-line="22" selection-end-column="26" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/controller/QueueManager.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="765">
-          <caret line="45" column="21" lean-forward="false" selection-start-line="45" selection-start-column="21" selection-end-line="45" selection-end-column="21" />
+        <state relative-caret-position="467">
+          <caret line="50" column="51" lean-forward="false" selection-start-line="50" selection-start-column="51" selection-end-line="50" selection-end-column="51" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/bbdd/QueueDao.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="682">
+          <caret line="52" column="75" lean-forward="false" selection-start-line="52" selection-start-column="75" selection-end-line="52" selection-end-column="75" />
+          <folding>
+            <element signature="e#7#88#0#PHP" expanded="true" />
+            <marker date="1528981261061" expanded="true" signature="487:524" ph="SELECT * FRO... QUEUE" />
+            <marker date="1528981261061" expanded="true" signature="487:525" ph="SELECT * FRO... QUEUE" />
+            <marker date="1528981261061" expanded="true" signature="1093:1236" ph="INSERT INTO QUEUE... " />
+            <marker date="1528981261061" expanded="true" signature="1093:1265" ph="INSERT INTO QUEUE... " />
+            <marker date="1528981261061" expanded="true" signature="1451:1580" ph="UPDATE QUEUE... " />
+            <marker date="1528981261061" expanded="true" signature="1736:1765" ph="DELETE FROM " />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/routes/RouterManager.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="11" column="21" lean-forward="true" selection-start-line="11" selection-start-column="21" selection-end-line="11" selection-end-column="21" />
+        <state relative-caret-position="195">
+          <caret line="32" column="73" lean-forward="true" selection-start-line="32" selection-start-column="73" selection-end-line="32" selection-end-column="73" />
           <folding />
         </state>
       </provider>

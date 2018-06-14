@@ -47,7 +47,7 @@
 
         public abstract function findByProperty($property, $value);
 
-        public abstract function save($object);
+        public abstract function save($queue);
 
         public abstract function update($object);
 
