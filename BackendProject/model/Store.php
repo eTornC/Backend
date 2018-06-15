@@ -1,11 +1,5 @@
 <?php
 
-/**
- * Created by PhpStorm.
- * User: yous
- * Date: 11/06/18
- * Time: 11:28
- */
 class Store implements JsonSerializable {
 
     private $id;

@@ -1,12 +1,5 @@
 <?php
 
-    /**
-     * Created by PhpStorm.
-     * User: yous
-     * Date: 11/06/18
-     * Time: 11:25
-     */
-
     ini_set('display_errors', 1);
     ini_set('display_startup_errors', 1);
     error_reporting(E_ALL);

@@ -1,11 +1,5 @@
 <?php
 
-/**
- * Created by PhpStorm.
- * User: Josep
- * Date: 12/06/2018
- * Time: 11:48
- */
 require dirname(__FILE__) . '/../bbdd/QueueDao.php';
 
 class QueueManager {

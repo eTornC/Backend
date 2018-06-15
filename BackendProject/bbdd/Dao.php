@@ -1,14 +1,6 @@
 <?php
 
-/**
- * Created by PhpStorm.
- * User: Josep
- * Date: 11/06/2018
- * Time: 11:48
- */
-
     require dirname(__FILE__) . '/../constants/ConstantsDB.php';
-
     require dirname(__FILE__) . '/../model/Store.php';
     require dirname(__FILE__) . '/../model/Queue.php';
 

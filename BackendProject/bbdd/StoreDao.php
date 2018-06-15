@@ -1,12 +1,5 @@
 <?php
 
-/**
- * Created by PhpStorm.
- * User: yous
- * Date: 11/06/18
- * Time: 19:27
- */
-
 require(dirname(__FILE__) . '/Dao.php');
 
 class StoreDao extends Dao {

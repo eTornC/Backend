@@ -1,14 +1,5 @@
 <?php
 
-/**
- * Created by PhpStorm.
- * User: Josep
- * Date: 12/06/2018
- * Time: 15:58
- */
-
-//require dirname(__FILE__) . '/Dao.php';
-
 class QueueDao extends Dao {
 
     public function __construct() {

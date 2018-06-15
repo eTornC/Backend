@@ -1,11 +1,5 @@
 <?php
 
-/**
- * Created by PhpStorm.
- * User: yous
- * Date: 11/06/18
- * Time: 19:31
- */
 require dirname(__FILE__) . '/../bbdd/StoreDao.php';
 
 class StoreManager {
