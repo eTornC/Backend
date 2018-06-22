@@ -13,7 +13,7 @@ class QueueManager {
     public function findAll($idStore) {
         try {
             $idStore = (int) htmlentities(addslashes($idStore));
-            return $this->queueDao->findByProperty("ID_STORE",  $idStore);
+            return $this->queueDao->findByIdStore($idStore);
         } catch (Exception $e) {
             return array();
         }
@@ -22,7 +22,7 @@ class QueueManager {
     public function findById($idStore, $idQueue) {
         try {
             $idQueue = (int) htmlentities(addslashes($idQueue));
-            $result = $this->queueDao->findByProperty("ID",  $idQueue);
+            $result = $this->queueDao->findById($idQueue);
 
             if ((count($result) == 1) && ($result[0]->getIdStore() == $idStore)) {
                     return $result;

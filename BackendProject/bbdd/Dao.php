@@ -3,6 +3,7 @@
     require dirname(__FILE__) . '/../constants/ConstantsDB.php';
     require dirname(__FILE__) . '/../model/Store.php';
     require dirname(__FILE__) . '/../model/Queue.php';
+    require dirname(__FILE__) . '/../model/Turn.php';
 
     abstract class Dao {
 
@@ -39,7 +40,7 @@
 
         public abstract function findByProperty($property, $value);
 
-        public abstract function save($queue);
+        public abstract function save($object);
 
         public abstract function update($object);
 

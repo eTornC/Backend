@@ -66,4 +66,8 @@ class QueueDao extends Dao {
         $query = "DELETE FROM QUEUE WHERE ID = $id";
         return parent::query($query);
     }
+
+    public function findByIdStore($idStore) {
+        return $this->findByProperty("ID_STORE",  $idStore);
+    }
 }

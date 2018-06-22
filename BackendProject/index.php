@@ -23,6 +23,8 @@
         $response = $dispatcher->dispatch($_SERVER['REQUEST_METHOD'], parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH));
     } catch (\Phroute\Phroute\Exception\HttpRouteNotFoundException $e) {
         $response = array("Error" => "Route not found");
+    } catch (\Phroute\Phroute\Exception\HttpMethodNotAllowedException $e) {
+        $response = array("Error" => "Route not found or incorrect method.");
     }
 
     echo json_encode($response);

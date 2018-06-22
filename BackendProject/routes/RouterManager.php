@@ -2,12 +2,13 @@
 
 require dirname(__FILE__) . '/../controller/StoreManager.php';
 require dirname(__FILE__) . '/../controller/QueueManager.php';
+require dirname(__FILE__) . '/../controller/TurnManager.php';
 
 class RouterManager {
 
     public static function manageRoutes(Phroute\Phroute\RouteCollector $router) {
 
-        $prefix = '';
+        $prefix = '/~a16josortmar/eTorn';
 
         // -----------------------------------------------------------------
         // ---------------------------- STORES -----------------------------
@@ -88,13 +89,42 @@ class RouterManager {
         });
 
         // -----------------------------------------------------------------
-        // ---------------------------- TURNS ------------------------------
+        // ---------------------------- TURNS OF QUEUE ---------------------
         // -----------------------------------------------------------------
 
         $router->get($prefix . '/store/{idStore}/queue/{idQueue}/turns', function ($idStore, $idQueue) {
-            return '';
+            return (new TurnManager())->findByIdStoreAndIdQueue($idStore, $idQueue);
         });
 
+        $router->get($prefix . '/turn/{idTurn}', function ($idTurn) {
+            return (new TurnManager())->findById($idTurn);
+        });
+
+        $router->get($prefix . '/turns', function () {
+            return (new TurnManager())->findAll();
+        });
+
+        $router->get($prefix . '/store/{idStore}/queue/{idQueue}/turn/{idTurn}', function ($idStore, $idQueue, $idTurn) {
+            return (new TurnManager())->findById($idTurn);
+        });
+
+        $router->post($prefix . '/store/{idStore}/queue/{idQueue}/turn', function ($idStore, $idQueue) {
+            $body = file_get_contents('php://input');
+            return (new TurnManager())->save($body, $idStore, $idQueue);
+        });
+
+        $router->put($prefix . '/store/{idStore}/queue/{idQueue}/turn/{idTurn}', function ($idStore, $idQueue, $idTurn) {
+            $body = file_get_contents('php://input');
+            return (new TurnManager())->update($body, $idStore, $idQueue, $idTurn);
+        });
+
+        $router->delete($prefix . '/store/{idStore}/queue/{idQueue}/turn/{idTurn}', function ($idStore, $idQueue, $idTurn) {
+            return (new TurnManager())->delete($idTurn);
+        });
+
+        $router->delete($prefix . '/turn/{idTurn}', function ($idTurn) {
+            return (new TurnManager())->delete($idTurn);
+        });
     }
 
 }
