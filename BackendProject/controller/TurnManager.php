@@ -48,5 +48,41 @@ class TurnManager {
         return array('done' => $this->turnDao->delete($idTurn));
     }
 
+    public function nextTurn($idStore, $idQueue) {
+
+        $actualTurn = $this->turnDao->getActualTurn($idQueue);
+
+        $result = false;
+
+        if ($actualTurn == null) {
+
+            $firstTurnInQueue = $this->turnDao->getFirstTurnInQueue($idQueue);
+
+            if ($firstTurnInQueue != null) {
+                $firstTurnInQueue->setState('ATTENDING');
+                $result = $this->turnDao->update($firstTurnInQueue);
+            }
+        } else {
+
+            $actualTurn->setState('ENDED');
+            $result = $this->turnDao->update($actualTurn);
+
+            if ($result) {
+
+                $firstTurnInQueue = $this->turnDao->getFirstTurnInQueue($idQueue);
+
+                if ($firstTurnInQueue != null) {
+                    $firstTurnInQueue->setState('ATTENDING');
+                    $result = $this->turnDao->update($firstTurnInQueue);
+                }
+            }
+        }
+
+        return array('done' => (bool) $result);
+    }
+
+    public function getActualTurn($idStore, $idQueue) {
+        return $this->turnDao->getActualTurn($idQueue);
+    }
 
 }

@@ -5,6 +5,7 @@
     error_reporting(E_ALL);
 
     header('Content-type: application/json; charset=utf-8');
+    header('Access-Control-Allow-Origin: *');
 
     require(dirname(__FILE__) . '/vendor/autoload.php');
     require(dirname(__FILE__) . '/routes/RouterManager.php');

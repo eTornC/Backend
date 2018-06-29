@@ -76,4 +76,52 @@ class TurnDao extends Dao {
 
         return $this->findByProperty('ID_QUEUE', $idQueue);
     }
+
+    public function getActualTurn($idQueue) {
+
+        $query = "SELECT * FROM TURN WHERE ID_QUEUE = $idQueue AND STATE = 'ATTENDING'";
+
+        $result = $this->query($query);
+
+        if ($row = $result->fetch_assoc()) {
+
+            $turn = new Turn();
+            $turn->setId($row['ID']);
+            $turn->setNumber($row['NUMBER']);
+            $turn->setIdBucket($row['ID_BUCKET']);
+            $turn->setIdUser($row['ID_USER']);
+            $turn->setIdQueue($row['ID_QUEUE']);
+            $turn->setDateTurn($row['DATE_TURN']);
+            $turn->setState($row['STATE']);
+
+            return $turn;
+        }
+
+        return null;
+    }
+
+    public function getFirstTurnInQueue($idQueue) {
+
+        $query = "SELECT * FROM TURN WHERE ID_QUEUE = $idQueue AND NUMBER = (SELECT MIN(NUMBER) " .
+                    "FROM TURN WHERE ID_QUEUE = $idQueue AND STATE LIKE 'WAITING');";
+
+        $result = $this->query($query);
+
+        if ($row = $result->fetch_assoc()) {
+
+            $turn = new Turn();
+            $turn->setId($row['ID']);
+            $turn->setNumber($row['NUMBER']);
+            $turn->setIdBucket($row['ID_BUCKET']);
+            $turn->setIdUser($row['ID_USER']);
+            $turn->setIdQueue($row['ID_QUEUE']);
+            $turn->setDateTurn($row['DATE_TURN']);
+            $turn->setState($row['STATE']);
+
+            return $turn;
+        }
+
+        return null;
+    }
+
 }

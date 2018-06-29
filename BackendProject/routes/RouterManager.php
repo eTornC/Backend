@@ -125,8 +125,19 @@ class RouterManager {
         $router->delete($prefix . '/turn/{idTurn}', function ($idTurn) {
             return (new TurnManager())->delete($idTurn);
         });
-    }
 
+        // -----------------------------------------------------------------
+        // ---------------------------- ACTIONS ----------------------------
+        // -----------------------------------------------------------------
+
+        $router->post($prefix . '/store/{idStore}/queue/{idQueue}/storeTurn', function ($idStore, $idQueue) {
+            return (new TurnManager())->nextTurn($idStore, $idQueue);
+        });
+
+        $router->get($prefix . '/store/{idStore}/queue/{idQueue}/storeTurn', function ($idStore, $idQueue) {
+            return (new TurnManager())->getActualTurn($idStore, $idQueue);
+        });
+    }
 }
 
 ?>
