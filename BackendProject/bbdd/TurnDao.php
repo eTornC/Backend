@@ -124,4 +124,30 @@ class TurnDao extends Dao {
         return null;
     }
 
+    public function getLastTurn($idQueue) {
+
+        $query = "SELECT * FROM TURN WHERE ID_QUEUE = $idQueue AND NUMBER = (SELECT MAX(NUMBER) " .
+            "FROM TURN WHERE ID_QUEUE = $idQueue);";
+
+        $result = $this->query($query);
+
+        $turn = new Turn();
+
+        if ($row = $result->fetch_assoc()) {
+
+            $turn->setId($row['ID']);
+            $turn->setNumber($row['NUMBER']);
+            $turn->setIdBucket($row['ID_BUCKET']);
+            $turn->setIdUser($row['ID_USER']);
+            $turn->setIdQueue($row['ID_QUEUE']);
+            $turn->setDateTurn($row['DATE_TURN']);
+            $turn->setState($row['STATE']);
+
+        } else {
+            $turn->setNumber(0);
+        }
+
+        return $turn;
+    }
+
 }

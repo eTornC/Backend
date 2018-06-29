@@ -32,7 +32,7 @@
         <entry file="file://$PROJECT_DIR$/index.php">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="144">
-              <caret line="8" column="0" lean-forward="true" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
+              <caret line="8" column="0" lean-forward="false" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -41,62 +41,64 @@
       <file leaf-file-name="RouterManager.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/routes/RouterManager.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="373">
-              <caret line="135" column="0" lean-forward="true" selection-start-line="135" selection-start-column="0" selection-end-line="135" selection-end-column="0" />
+            <state relative-caret-position="445">
+              <caret line="112" column="43" lean-forward="false" selection-start-line="112" selection-start-column="43" selection-end-line="112" selection-end-column="43" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="TurnManager.php" pinned="false" current-in-tab="true">
+      <file leaf-file-name="TurnManager.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/controller/TurnManager.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="517">
-              <caret line="79" column="0" lean-forward="true" selection-start-line="79" selection-start-column="0" selection-end-line="79" selection-end-column="0" />
+            <state relative-caret-position="454">
+              <caret line="38" column="0" lean-forward="true" selection-start-line="38" selection-start-column="0" selection-end-line="38" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="TurnDao.php" pinned="false" current-in-tab="false">
+      <file leaf-file-name="TurnDao.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/bbdd/TurnDao.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="202">
-              <caret line="79" column="20" lean-forward="false" selection-start-line="79" selection-start-column="20" selection-end-line="79" selection-end-column="20" />
+            <state relative-caret-position="2088">
+              <caret line="149" column="19" lean-forward="true" selection-start-line="149" selection-start-column="19" selection-end-line="149" selection-end-column="19" />
               <folding>
-                <marker date="1530262013939" expanded="true" signature="360:397" ph="SELECT * FRO... TURN" />
-                <marker date="1530262013939" expanded="true" signature="1096:1169" ph="INSERT INTO TURN... " />
-                <marker date="1530262013939" expanded="true" signature="1096:1176" ph="INSERT INTO TURN... " />
-                <marker date="1530262013939" expanded="true" signature="1096:1207" ph="INSERT INTO TURN... " />
-                <marker date="1530262013939" expanded="true" signature="1096:1208" ph="INSERT INTO TURN... " />
-                <marker date="1530262013939" expanded="true" signature="1096:1234" ph="INSERT INTO TURN... " />
-                <marker date="1530262013939" expanded="true" signature="1096:1235" ph="INSERT INTO TURN... " />
-                <marker date="1530262013939" expanded="true" signature="1096:1236" ph="INSERT INTO TURN... " />
-                <marker date="1530262013939" expanded="true" signature="1096:1264" ph="INSERT INTO TURN... " />
-                <marker date="1530262013939" expanded="true" signature="1096:1265" ph="INSERT INTO TURN... " />
-                <marker date="1530262013939" expanded="true" signature="1096:1266" ph="INSERT INTO TURN... " />
-                <marker date="1530262013939" expanded="true" signature="1096:1316" ph="INSERT INTO TURN... " />
-                <marker date="1530262013939" expanded="true" signature="1096:1317" ph="INSERT INTO TURN... " />
-                <marker date="1530262013939" expanded="true" signature="1096:1318" ph="INSERT INTO TURN... " />
-                <marker date="1530262013939" expanded="true" signature="1096:1352" ph="INSERT INTO TURN... " />
-                <marker date="1530262013939" expanded="true" signature="1096:1353" ph="INSERT INTO TURN... " />
-                <marker date="1530262013939" expanded="true" signature="1096:1354" ph="INSERT INTO TURN... " />
-                <marker date="1530262013939" expanded="true" signature="1096:1355" ph="INSERT INTO TURN... " />
-                <marker date="1530262013939" expanded="true" signature="1096:1381" ph="INSERT INTO TURN... " />
-                <marker date="1530262013939" expanded="true" signature="1096:1382" ph="INSERT INTO TURN... " />
-                <marker date="1530262013939" expanded="true" signature="1564:1589" ph="UPDATE TURN " />
-                <marker date="1530262013939" expanded="true" signature="1564:1626" ph="UPDATE TURN " />
-                <marker date="1530262013939" expanded="true" signature="1564:1627" ph="UPDATE TURN " />
-                <marker date="1530262013939" expanded="true" signature="1564:1628" ph="UPDATE TURN " />
-                <marker date="1530262013939" expanded="true" signature="1783:1810" ph="DELETE FROM " />
-                <marker date="1530262013939" expanded="true" signature="1783:1811" ph="DELETE FROM " />
-                <marker date="1530262013939" expanded="true" signature="2045:2081" ph="SELECT * FRO... TURN" />
-                <marker date="1530262013939" expanded="true" signature="2045:2082" ph="SELECT * FRO... TURN" />
-                <marker date="1530262013939" expanded="true" signature="2045:2113" ph="SELECT * FRO... TURN" />
-                <marker date="1530262013939" expanded="true" signature="2699:2863" ph="SELECT * FRO... TURN" />
-                <marker date="1530262013939" expanded="true" signature="2758:2776" ph="SELECT MIN(N... " />
-                <marker date="1530262013939" expanded="true" signature="2758:2777" ph="SELECT MIN(N... " />
-                <marker date="1530262013939" expanded="true" signature="2758:2862" ph="SELECT MIN(N... TURN" />
+                <marker date="1530269151077" expanded="true" signature="360:397" ph="SELECT * FRO... TURN" />
+                <marker date="1530269151077" expanded="true" signature="1096:1169" ph="INSERT INTO TURN... " />
+                <marker date="1530269151077" expanded="true" signature="1096:1176" ph="INSERT INTO TURN... " />
+                <marker date="1530269151077" expanded="true" signature="1096:1207" ph="INSERT INTO TURN... " />
+                <marker date="1530269151077" expanded="true" signature="1096:1208" ph="INSERT INTO TURN... " />
+                <marker date="1530269151077" expanded="true" signature="1096:1234" ph="INSERT INTO TURN... " />
+                <marker date="1530269151077" expanded="true" signature="1096:1235" ph="INSERT INTO TURN... " />
+                <marker date="1530269151077" expanded="true" signature="1096:1236" ph="INSERT INTO TURN... " />
+                <marker date="1530269151077" expanded="true" signature="1096:1264" ph="INSERT INTO TURN... " />
+                <marker date="1530269151077" expanded="true" signature="1096:1265" ph="INSERT INTO TURN... " />
+                <marker date="1530269151077" expanded="true" signature="1096:1266" ph="INSERT INTO TURN... " />
+                <marker date="1530269151077" expanded="true" signature="1096:1316" ph="INSERT INTO TURN... " />
+                <marker date="1530269151077" expanded="true" signature="1096:1317" ph="INSERT INTO TURN... " />
+                <marker date="1530269151077" expanded="true" signature="1096:1318" ph="INSERT INTO TURN... " />
+                <marker date="1530269151077" expanded="true" signature="1096:1352" ph="INSERT INTO TURN... " />
+                <marker date="1530269151077" expanded="true" signature="1096:1353" ph="INSERT INTO TURN... " />
+                <marker date="1530269151077" expanded="true" signature="1096:1354" ph="INSERT INTO TURN... " />
+                <marker date="1530269151077" expanded="true" signature="1096:1355" ph="INSERT INTO TURN... " />
+                <marker date="1530269151077" expanded="true" signature="1096:1381" ph="INSERT INTO TURN... " />
+                <marker date="1530269151077" expanded="true" signature="1096:1382" ph="INSERT INTO TURN... " />
+                <marker date="1530269151077" expanded="true" signature="1564:1589" ph="UPDATE TURN " />
+                <marker date="1530269151077" expanded="true" signature="1564:1626" ph="UPDATE TURN " />
+                <marker date="1530269151077" expanded="true" signature="1564:1627" ph="UPDATE TURN " />
+                <marker date="1530269151077" expanded="true" signature="1564:1628" ph="UPDATE TURN " />
+                <marker date="1530269151077" expanded="true" signature="1783:1810" ph="DELETE FROM " />
+                <marker date="1530269151077" expanded="true" signature="1783:1811" ph="DELETE FROM " />
+                <marker date="1530269151077" expanded="true" signature="2045:2081" ph="SELECT * FRO... TURN" />
+                <marker date="1530269151077" expanded="true" signature="2045:2082" ph="SELECT * FRO... TURN" />
+                <marker date="1530269151077" expanded="true" signature="2045:2113" ph="SELECT * FRO... TURN" />
+                <marker date="1530269151077" expanded="true" signature="2699:2863" ph="SELECT * FRO... TURN" />
+                <marker date="1530269151077" expanded="true" signature="2758:2776" ph="SELECT MIN(N... " />
+                <marker date="1530269151077" expanded="true" signature="2758:2777" ph="SELECT MIN(N... " />
+                <marker date="1530269151077" expanded="true" signature="2758:2862" ph="SELECT MIN(N... TURN" />
+                <marker date="1530269151077" expanded="true" signature="3442:3573" ph="SELECT * FRO... TURN" />
+                <marker date="1530269151077" expanded="true" signature="3501:3564" ph="SELECT MAX(N... TURN" />
               </folding>
             </state>
           </provider>
@@ -122,10 +124,10 @@
         <option value="$PROJECT_DIR$/scripts/etorn.sql" />
         <option value="$PROJECT_DIR$/bbdd/Dao.php" />
         <option value="$PROJECT_DIR$/controller/StoreManager.php" />
-        <option value="$PROJECT_DIR$/bbdd/TurnDao.php" />
-        <option value="$PROJECT_DIR$/controller/TurnManager.php" />
         <option value="$PROJECT_DIR$/index.php" />
         <option value="$PROJECT_DIR$/routes/RouterManager.php" />
+        <option value="$PROJECT_DIR$/controller/TurnManager.php" />
+        <option value="$PROJECT_DIR$/bbdd/TurnDao.php" />
       </list>
     </option>
   </component>
@@ -372,20 +374,20 @@
       <workItem from="1529567376795" duration="5843000" />
       <workItem from="1529653420215" duration="12691000" />
       <workItem from="1529943717616" duration="1137000" />
-      <workItem from="1530257351546" duration="8540000" />
+      <workItem from="1530257351546" duration="12214000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="85343000" />
+    <option name="totallyTimeSpent" value="89017000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="1366" y="0" width="1366" height="768" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.15519765" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.14934114" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32937366" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32880846" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24963397" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -777,69 +779,71 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/bbdd/TurnDao.php">
+    <entry file="file://$PROJECT_DIR$/index.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="202">
-          <caret line="79" column="20" lean-forward="false" selection-start-line="79" selection-start-column="20" selection-end-line="79" selection-end-column="20" />
-          <folding>
-            <marker date="1530262013939" expanded="true" signature="360:397" ph="SELECT * FRO... TURN" />
-            <marker date="1530262013939" expanded="true" signature="1096:1169" ph="INSERT INTO TURN... " />
-            <marker date="1530262013939" expanded="true" signature="1096:1176" ph="INSERT INTO TURN... " />
-            <marker date="1530262013939" expanded="true" signature="1096:1207" ph="INSERT INTO TURN... " />
-            <marker date="1530262013939" expanded="true" signature="1096:1208" ph="INSERT INTO TURN... " />
-            <marker date="1530262013939" expanded="true" signature="1096:1234" ph="INSERT INTO TURN... " />
-            <marker date="1530262013939" expanded="true" signature="1096:1235" ph="INSERT INTO TURN... " />
-            <marker date="1530262013939" expanded="true" signature="1096:1236" ph="INSERT INTO TURN... " />
-            <marker date="1530262013939" expanded="true" signature="1096:1264" ph="INSERT INTO TURN... " />
-            <marker date="1530262013939" expanded="true" signature="1096:1265" ph="INSERT INTO TURN... " />
-            <marker date="1530262013939" expanded="true" signature="1096:1266" ph="INSERT INTO TURN... " />
-            <marker date="1530262013939" expanded="true" signature="1096:1316" ph="INSERT INTO TURN... " />
-            <marker date="1530262013939" expanded="true" signature="1096:1317" ph="INSERT INTO TURN... " />
-            <marker date="1530262013939" expanded="true" signature="1096:1318" ph="INSERT INTO TURN... " />
-            <marker date="1530262013939" expanded="true" signature="1096:1352" ph="INSERT INTO TURN... " />
-            <marker date="1530262013939" expanded="true" signature="1096:1353" ph="INSERT INTO TURN... " />
-            <marker date="1530262013939" expanded="true" signature="1096:1354" ph="INSERT INTO TURN... " />
-            <marker date="1530262013939" expanded="true" signature="1096:1355" ph="INSERT INTO TURN... " />
-            <marker date="1530262013939" expanded="true" signature="1096:1381" ph="INSERT INTO TURN... " />
-            <marker date="1530262013939" expanded="true" signature="1096:1382" ph="INSERT INTO TURN... " />
-            <marker date="1530262013939" expanded="true" signature="1564:1589" ph="UPDATE TURN " />
-            <marker date="1530262013939" expanded="true" signature="1564:1626" ph="UPDATE TURN " />
-            <marker date="1530262013939" expanded="true" signature="1564:1627" ph="UPDATE TURN " />
-            <marker date="1530262013939" expanded="true" signature="1564:1628" ph="UPDATE TURN " />
-            <marker date="1530262013939" expanded="true" signature="1783:1810" ph="DELETE FROM " />
-            <marker date="1530262013939" expanded="true" signature="1783:1811" ph="DELETE FROM " />
-            <marker date="1530262013939" expanded="true" signature="2045:2081" ph="SELECT * FRO... TURN" />
-            <marker date="1530262013939" expanded="true" signature="2045:2082" ph="SELECT * FRO... TURN" />
-            <marker date="1530262013939" expanded="true" signature="2045:2113" ph="SELECT * FRO... TURN" />
-            <marker date="1530262013939" expanded="true" signature="2699:2863" ph="SELECT * FRO... TURN" />
-            <marker date="1530262013939" expanded="true" signature="2758:2776" ph="SELECT MIN(N... " />
-            <marker date="1530262013939" expanded="true" signature="2758:2777" ph="SELECT MIN(N... " />
-            <marker date="1530262013939" expanded="true" signature="2758:2862" ph="SELECT MIN(N... TURN" />
-          </folding>
+        <state relative-caret-position="144">
+          <caret line="8" column="0" lean-forward="false" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/routes/RouterManager.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="373">
-          <caret line="135" column="0" lean-forward="true" selection-start-line="135" selection-start-column="0" selection-end-line="135" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/index.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="144">
-          <caret line="8" column="0" lean-forward="true" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
+        <state relative-caret-position="445">
+          <caret line="112" column="43" lean-forward="false" selection-start-line="112" selection-start-column="43" selection-end-line="112" selection-end-column="43" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/controller/TurnManager.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="517">
-          <caret line="79" column="0" lean-forward="true" selection-start-line="79" selection-start-column="0" selection-end-line="79" selection-end-column="0" />
+        <state relative-caret-position="454">
+          <caret line="38" column="0" lean-forward="true" selection-start-line="38" selection-start-column="0" selection-end-line="38" selection-end-column="0" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/bbdd/TurnDao.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2088">
+          <caret line="149" column="19" lean-forward="true" selection-start-line="149" selection-start-column="19" selection-end-line="149" selection-end-column="19" />
+          <folding>
+            <marker date="1530269151077" expanded="true" signature="360:397" ph="SELECT * FRO... TURN" />
+            <marker date="1530269151077" expanded="true" signature="1096:1169" ph="INSERT INTO TURN... " />
+            <marker date="1530269151077" expanded="true" signature="1096:1176" ph="INSERT INTO TURN... " />
+            <marker date="1530269151077" expanded="true" signature="1096:1207" ph="INSERT INTO TURN... " />
+            <marker date="1530269151077" expanded="true" signature="1096:1208" ph="INSERT INTO TURN... " />
+            <marker date="1530269151077" expanded="true" signature="1096:1234" ph="INSERT INTO TURN... " />
+            <marker date="1530269151077" expanded="true" signature="1096:1235" ph="INSERT INTO TURN... " />
+            <marker date="1530269151077" expanded="true" signature="1096:1236" ph="INSERT INTO TURN... " />
+            <marker date="1530269151077" expanded="true" signature="1096:1264" ph="INSERT INTO TURN... " />
+            <marker date="1530269151077" expanded="true" signature="1096:1265" ph="INSERT INTO TURN... " />
+            <marker date="1530269151077" expanded="true" signature="1096:1266" ph="INSERT INTO TURN... " />
+            <marker date="1530269151077" expanded="true" signature="1096:1316" ph="INSERT INTO TURN... " />
+            <marker date="1530269151077" expanded="true" signature="1096:1317" ph="INSERT INTO TURN... " />
+            <marker date="1530269151077" expanded="true" signature="1096:1318" ph="INSERT INTO TURN... " />
+            <marker date="1530269151077" expanded="true" signature="1096:1352" ph="INSERT INTO TURN... " />
+            <marker date="1530269151077" expanded="true" signature="1096:1353" ph="INSERT INTO TURN... " />
+            <marker date="1530269151077" expanded="true" signature="1096:1354" ph="INSERT INTO TURN... " />
+            <marker date="1530269151077" expanded="true" signature="1096:1355" ph="INSERT INTO TURN... " />
+            <marker date="1530269151077" expanded="true" signature="1096:1381" ph="INSERT INTO TURN... " />
+            <marker date="1530269151077" expanded="true" signature="1096:1382" ph="INSERT INTO TURN... " />
+            <marker date="1530269151077" expanded="true" signature="1564:1589" ph="UPDATE TURN " />
+            <marker date="1530269151077" expanded="true" signature="1564:1626" ph="UPDATE TURN " />
+            <marker date="1530269151077" expanded="true" signature="1564:1627" ph="UPDATE TURN " />
+            <marker date="1530269151077" expanded="true" signature="1564:1628" ph="UPDATE TURN " />
+            <marker date="1530269151077" expanded="true" signature="1783:1810" ph="DELETE FROM " />
+            <marker date="1530269151077" expanded="true" signature="1783:1811" ph="DELETE FROM " />
+            <marker date="1530269151077" expanded="true" signature="2045:2081" ph="SELECT * FRO... TURN" />
+            <marker date="1530269151077" expanded="true" signature="2045:2082" ph="SELECT * FRO... TURN" />
+            <marker date="1530269151077" expanded="true" signature="2045:2113" ph="SELECT * FRO... TURN" />
+            <marker date="1530269151077" expanded="true" signature="2699:2863" ph="SELECT * FRO... TURN" />
+            <marker date="1530269151077" expanded="true" signature="2758:2776" ph="SELECT MIN(N... " />
+            <marker date="1530269151077" expanded="true" signature="2758:2777" ph="SELECT MIN(N... " />
+            <marker date="1530269151077" expanded="true" signature="2758:2862" ph="SELECT MIN(N... TURN" />
+            <marker date="1530269151077" expanded="true" signature="3442:3573" ph="SELECT * FRO... TURN" />
+            <marker date="1530269151077" expanded="true" signature="3501:3564" ph="SELECT MAX(N... TURN" />
+          </folding>
         </state>
       </provider>
     </entry>

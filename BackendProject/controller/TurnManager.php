@@ -26,7 +26,8 @@ class TurnManager {
 
         $turn = new Turn();
 
-        //$turn->setNumber($turnNumber);
+        $turn->setNumber($this->turnDao->getLastTurn($idQueue)->getNumber()+1);
+        $turn->setIdBucket('null');
         $turn->setIdQueue($idQueue);
         $turn->setState('WAITING');
         $turn->setIdUser(0); // Body?
@@ -82,7 +83,13 @@ class TurnManager {
     }
 
     public function getActualTurn($idStore, $idQueue) {
-        return $this->turnDao->getActualTurn($idQueue);
+        $turn = $this->turnDao->getActualTurn($idQueue);
+
+        if ($turn == null) {
+            return array('error' => 'no turn');
+        }
+
+        return $turn;
     }
 
 }
