@@ -24,7 +24,7 @@ class RouterManager {
 
         $router->post($prefix . '/store', function () {
             $body = file_get_contents('php://input');
-            return (new StoreManager())->save(json_decode($body));
+            return (new StoreManager())->save(json_decode($body), $_FILES['photoStore']);
         });
 
         $router->put($prefix . '/store/{id}', function ($id) {

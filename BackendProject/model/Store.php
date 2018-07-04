@@ -5,6 +5,7 @@ class Store implements JsonSerializable {
     private $id;
     private $name;
     private $date;
+    private $photopath;
 
     function __construct() {
     }
@@ -58,6 +59,22 @@ class Store implements JsonSerializable {
     }
 
     /**
+     * @return mixed
+     */
+    public function getPhotopath()
+    {
+        return $this->photopath;
+    }
+
+    /**
+     * @param mixed $photopath
+     */
+    public function setPhotopath($photopath)
+    {
+        $this->photopath = $photopath;
+    }
+
+    /**
      * Specify data which should be serialized to JSON
      * @link http://php.net/manual/en/jsonserializable.jsonserialize.php
      * @return mixed data which can be serialized by <b>json_encode</b>,
@@ -68,7 +85,8 @@ class Store implements JsonSerializable {
         return array(
             'id' => $this->id,
             'name' => $this->name,
-            'date_created' => $this->date
+            'date_created' => $this->date,
+            'photopath' => $this->photopath
         );
     }
 }

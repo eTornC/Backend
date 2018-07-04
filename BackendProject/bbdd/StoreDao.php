@@ -22,6 +22,7 @@ class StoreDao extends Dao {
             $store->setId($row['ID']);
             $store->setName($row['NAME']);
             $store->setDate($row['DATE_CREATED']);
+            $store->setPhotopath($row['PHOTO_PATH']);
 
             $toReturn[] = $store;
         }
@@ -30,7 +31,7 @@ class StoreDao extends Dao {
     }
 
     public function findById($id) {
-        return $this->findByProperty("id", $id);
+        return $this->findByProperty("ID", $id);
     }
 
     public function findByProperty($property, $value) {
@@ -47,6 +48,7 @@ class StoreDao extends Dao {
             $store->setId($row['ID']);
             $store->setName($row['NAME']);
             $store->setDate($row['DATE_CREATED']);
+            $store->setPhotopath($row['PHOTO_PATH']);
 
             $toReturn[] = $store;
         }
@@ -56,7 +58,7 @@ class StoreDao extends Dao {
 
     public function save($queue) {
         if ($queue instanceof Store) {
-            $query = "INSERT INTO STORE (NAME, DATE_CREATED) VALUES ('" . $queue->getName() . "', NOW())";
+            $query = "INSERT INTO STORE (NAME, DATE_CREATED, PHOTOPATH) VALUES ('" . $queue->getName() . "', NOW(), '" . $queue->getPhotopath() ."')";
             return parent::query($query);
         } else {
             return false;
@@ -65,7 +67,7 @@ class StoreDao extends Dao {
 
     public function update($object) {
         if ($object instanceof Store) {
-            $query = "UPDATE STORE SET NAME='" . $object->getName() . "' WHERE ID = " . $object->getId();
+            $query = "UPDATE STORE SET NAME='" . $object->getName() . "', PHOTO_PATH='" . $object->getPhotopath() . "' WHERE ID = " . $object->getId();
             return parent::query($query);
         } else {
             return false;

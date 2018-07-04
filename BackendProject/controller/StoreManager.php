@@ -1,6 +1,7 @@
 <?php
 
 require dirname(__FILE__) . '/../bbdd/StoreDao.php';
+require dirname(__FILE__) . '/ImageAlmacenator.php';
 
 class StoreManager {
 
@@ -32,12 +33,23 @@ class StoreManager {
         }
     }
 
-    public function save($body) {
+    public function save($body, $imageFile) {
 
         $name = htmlentities(addslashes($body->name));
 
         $store = new Store();
         $store->setName($name);
+
+        $imageAlmacenator = new ImageAlmacenator($imageFile['name'], $imageFile['tmp_name'], $imageFile['size'],
+            $imageFile['type'], ConstantsPaths::PATH_IMAGES);
+
+        $imageAlmacenator->setImageName($store->getName());
+
+        $store->setPhotopath($imageAlmacenator->getTargetPath());
+
+        if (!$imageAlmacenator->uploadPhoto()) {
+            return array('done' => false);
+        }
 
         return array('done' => $this->storeDao->save($store));
     }
