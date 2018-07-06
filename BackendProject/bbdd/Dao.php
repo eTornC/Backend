@@ -5,6 +5,7 @@
     require dirname(__FILE__) . '/../model/Queue.php';
     require dirname(__FILE__) . '/../model/Turn.php';
     require dirname(__FILE__) . '/../model/Bucket.php';
+    require dirname(__FILE__) . '/../model/Till.php';
 
     abstract class Dao {
 

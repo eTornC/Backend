@@ -7,70 +7,61 @@ class Store implements JsonSerializable {
     private $date;
     private $photopath;
 
-    function __construct() {
-    }
+    function __construct() {}
 
     /**
      * @return mixed
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
     /**
      * @param mixed $id
      */
-    public function setId($id)
-    {
+    public function setId($id) {
         $this->id = $id;
     }
 
     /**
      * @return mixed
      */
-    public function getName()
-    {
+    public function getName() {
         return $this->name;
     }
 
     /**
      * @param mixed $name
      */
-    public function setName($name)
-    {
+    public function setName($name) {
         $this->name = $name;
     }
 
     /**
      * @return mixed
      */
-    public function getDate()
-    {
+    public function getDate() {
         return $this->date;
     }
 
     /**
      * @param mixed $date
      */
-    public function setDate($date)
-    {
+    public function setDate($date) {
         $this->date = $date;
     }
 
     /**
      * @return mixed
      */
-    public function getPhotopath()
-    {
+    public function getPhotopath() {
         return $this->photopath;
     }
 
     /**
      * @param mixed $photopath
      */
-    public function setPhotopath($photopath)
-    {
+    public function setPhotopath($photopath) {
         $this->photopath = $photopath;
     }
 
@@ -82,7 +73,7 @@ class Store implements JsonSerializable {
      * @since 5.4.0
      */
     public function jsonSerialize() {
-        return array(
+        return array (
             'id' => $this->id,
             'name' => $this->name,
             'date_created' => $this->date,

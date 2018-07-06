@@ -5,10 +5,11 @@ class Turn implements JsonSerializable {
     private $id;
     private $number;
     private $idBucket;
+    private $idUser;
     private $idQueue;
     private $dateTurn;
     private $state;
-    private $idUser;
+    private $idTill;
 
     function __construct() {
     }
@@ -126,6 +127,22 @@ class Turn implements JsonSerializable {
     }
 
     /**
+     * @return mixed
+     */
+    public function getIdTill()
+    {
+        return $this->idTill;
+    }
+
+    /**
+     * @param mixed $idTill
+     */
+    public function setIdTill($idTill)
+    {
+        $this->idTill = $idTill;
+    }
+
+    /**
      * Specify data which should be serialized to JSON
      * @link http://php.net/manual/en/jsonserializable.jsonserialize.php
      * @return mixed data which can be serialized by <b>json_encode</b>,
@@ -138,9 +155,11 @@ class Turn implements JsonSerializable {
             'id' => $this->id,
             'number' => $this->number,
             'idBucket' => $this->idBucket,
+            'idUser' => $this->idUser,
             'idQueue' => $this->idQueue,
             'dateTurn' => $this->dateTurn,
-            'state' => $this->state
+            'state' => $this->state,
+            'idTill' => $this->idTill
         );
     }
 }

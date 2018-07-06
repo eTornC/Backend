@@ -51,17 +51,17 @@ class TurnManager {
 
     public function nextTurn($idStore, $idQueue) {
 
-        $actualTurn = $this->turnDao->getActualTurn($idQueue);
+        $actualTurn = $this->turnDao->getActualTurn($idStore);
 
         $result = false;
 
         if ($actualTurn == null) {
 
-            $firstTurnInQueue = $this->turnDao->getFirstTurnInQueue($idQueue);
+            $listOfTurns = $this->turnDao->getListNextsTurns($idStore);
 
-            if ($firstTurnInQueue != null) {
-                $firstTurnInQueue->setState('ATTENDING');
-                $result = $this->turnDao->update($firstTurnInQueue);
+            if (count($listOfTurns) > 0) {
+                $listOfTurns[0]->setState('ATTENDING');
+                $result = $this->turnDao->update($listOfTurns[0]);
             }
         } else {
 
@@ -70,11 +70,11 @@ class TurnManager {
 
             if ($result) {
 
-                $firstTurnInQueue = $this->turnDao->getFirstTurnInQueue($idQueue);
+                $listOfTurns = $this->turnDao->getListNextsTurns($idStore);
 
-                if ($firstTurnInQueue != null) {
-                    $firstTurnInQueue->setState('ATTENDING');
-                    $result = $this->turnDao->update($firstTurnInQueue);
+                if (count($listOfTurns) > 0) {
+                    $listOfTurns[0]->setState('ATTENDING');
+                    $result = $this->turnDao->update($listOfTurns[0]);
                 }
             }
         }
@@ -83,13 +83,71 @@ class TurnManager {
     }
 
     public function getActualTurn($idStore, $idQueue) {
-        $turn = $this->turnDao->getActualTurn($idQueue);
+        $turns = $this->turnDao->getActualTurn($idStore);
 
-        if ($turn == null) {
+        if (count($turns) == 0) {
             return array('error' => 'no turn');
         }
 
-        return $turn;
+        return $turns;
     }
 
+    public function newNormalTurn($body, $idStore) {
+
+        $queueDao = new QueueDao();
+
+        $normalQueue = $queueDao->getNormalQueue($idStore);
+
+        $queueDao->close();
+
+        if ($normalQueue == null) {
+            return array('error' => 'No normal queue for this store');
+        }
+
+        $lastTurn = $this->turnDao->getLastTurn($normalQueue->getId());
+
+        $newTurn = $this->createTurn($lastTurn->getNumber(), $normalQueue->getId());
+
+        if ($this->turnDao->save($newTurn)) {
+            return array('number' => $newTurn->getNumber());
+        }
+
+        return array('done' => false);
+    }
+
+    public function newVipTurn($body, $idStore) {
+
+        $queueDao = new QueueDao();
+
+        $vipQueue = $queueDao->getVipQueue($idStore);
+
+        $queueDao->close();
+
+        if ($vipQueue == null) {
+            return array('error' => 'No VIP queue for this store');
+        }
+
+        $lastTurn = $this->turnDao->getLastTurn($vipQueue->getId());
+
+        $newTurn = $this->createTurn($lastTurn->getNumber(), $vipQueue->getId());
+
+        if ($this->turnDao->save($newTurn)) {
+            return array('number' => $newTurn->getNumber());
+        }
+
+        return array('done' => false);
+
+    }
+
+    private function createTurn($lastNumber, $queueId) {
+
+        $newTurn = new Turn();
+        $newTurn->setIdQueue($queueId);
+        $newTurn->setNumber($lastNumber+1);
+        $newTurn->setIdUser(0);
+        $newTurn->setState('WAITING');
+        $newTurn->setIdBucket('NULL');
+
+        return $newTurn;
+    }
 }

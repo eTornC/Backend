@@ -70,4 +70,45 @@ class QueueDao extends Dao {
     public function findByIdStore($idStore) {
         return $this->findByProperty("ID_STORE",  $idStore);
     }
+
+    public function getNormalQueue($idStore) {
+
+        $query = "SELECT * FROM QUEUE WHERE ID_STORE = $idStore AND QUEUE_TYPE LIKE 'NORMAL'";
+
+        $result = parent::query($query);
+
+        if ($row = $result->fetch_assoc()) {
+
+            $queue = new Queue();
+            $queue->setId($row['ID']);
+            $queue->setType($row['QUEUE_TYPE']);
+            $queue->setPriority($row['PRIORITY']);
+            $queue->setIdStore($row['ID_STORE']);
+
+            return $queue;
+        }
+
+        return null;
+    }
+
+    public function getVipQueue($idStore) {
+
+        $query = "SELECT * FROM QUEUE WHERE ID_STORE = $idStore AND QUEUE_TYPE LIKE 'VIP'";
+
+        $result = parent::query($query);
+
+        if ($row = $result->fetch_assoc()) {
+
+            $queue = new Queue();
+            $queue->setId($row['ID']);
+            $queue->setType($row['QUEUE_TYPE']);
+            $queue->setPriority($row['PRIORITY']);
+            $queue->setIdStore($row['ID_STORE']);
+
+            return $queue;
+        }
+
+        return null;
+
+    }
 }

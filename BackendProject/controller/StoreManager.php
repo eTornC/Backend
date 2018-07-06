@@ -33,9 +33,9 @@ class StoreManager {
         }
     }
 
-    public function save($body, $imageFile) {
+    public function save($name, $imageFile) {
 
-        $name = htmlentities(addslashes($body->name));
+        $name = htmlentities(addslashes($name));
 
         $store = new Store();
         $store->setName($name);

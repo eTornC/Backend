@@ -23,8 +23,9 @@ class RouterManager {
         });
 
         $router->post($prefix . '/store', function () {
-            $body = file_get_contents('php://input');
-            return (new StoreManager())->save(json_decode($body), $_FILES['photoStore']);
+            //$body = file_get_contents('php://input');
+            // Form data for file upload too
+            return (new StoreManager())->save($_POST['name'], $_FILES['photoStore']);
         });
 
         $router->put($prefix . '/store/{id}', function ($id) {
@@ -136,6 +137,16 @@ class RouterManager {
 
         $router->get($prefix . '/store/{idStore}/queue/{idQueue}/storeTurn', function ($idStore, $idQueue) {
             return (new TurnManager())->getActualTurn($idStore, $idQueue);
+        });
+
+        $router->post($prefix . '/store/{idStore}/turn', function ($idStore) {
+            $body = file_get_contents('php://input');
+            return (new TurnManager())->newNormalTurn($body, $idStore);
+        });
+
+        $router->post($prefix . '/store/{idStore}/vipTurn', function ($idStore) {
+            $body = file_get_contents('php://input');
+            return (new TurnManager())->newVipTurn($body, $idStore);
         });
     }
 }
