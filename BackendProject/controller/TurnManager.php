@@ -115,6 +115,25 @@ class TurnManager {
         return array('done' => false);
     }
 
+    public function newHourTurn($hour, $idStore) {
+
+        $hour = date('H:i:s', $hour);
+
+        $bucketQueueDao = new BucketQueueDao();
+
+        $bucketQueue = $bucketQueueDao->findByStore($idStore);
+
+        $bucketQueueDao->close();
+
+        $bucketDao = new BucketDao();
+
+        $bucket = $bucketDao->getBucketOfThisHour($hour, $bucketQueue);
+
+        // TODO
+
+        return '';
+    }
+
     public function newVipTurn($body, $idStore) {
 
         $queueDao = new QueueDao();
@@ -150,4 +169,8 @@ class TurnManager {
 
         return $newTurn;
     }
+
+
 }
+
+?>

@@ -51,6 +51,8 @@ class StoreManager {
             return array('done' => false);
         }
 
+
+
         return array('done' => $this->storeDao->save($store));
     }
 
@@ -71,3 +73,6 @@ class StoreManager {
     }
 
 }
+
+
+?>

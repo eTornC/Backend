@@ -3,9 +3,11 @@
 class Bucket implements JsonSerializable {
 
     private $id;
-    private $idQueue;
+    private $idBucketQueue;
+    private $hourStart;
     private $hourFinal;
     private $quantity;
+    private $dateCreated;
 
     function __construct()
     {
@@ -14,9 +16,9 @@ class Bucket implements JsonSerializable {
     /**
      * @return mixed
      */
-    public function getId()
+    public function getDateCreated()
     {
-        return $this->id;
+        return $this->dateCreated;
     }
 
     /**
@@ -30,9 +32,25 @@ class Bucket implements JsonSerializable {
     /**
      * @return mixed
      */
-    public function getIdQueue()
+    public function getHourStart()
     {
-        return $this->idQueue;
+        return $this->hourStart;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getIdBucketQueue()
+    {
+        return $this->idBucketQueue;
     }
 
     /**
@@ -52,6 +70,14 @@ class Bucket implements JsonSerializable {
     }
 
     /**
+     * @param mixed $dateCreated
+     */
+    public function setDateCreated($dateCreated)
+    {
+        $this->dateCreated = $dateCreated;
+    }
+
+    /**
      * @param mixed $hourFinal
      */
     public function setHourFinal($hourFinal)
@@ -60,11 +86,19 @@ class Bucket implements JsonSerializable {
     }
 
     /**
-     * @param mixed $idQueue
+     * @param mixed $hourStart
      */
-    public function setIdQueue($idQueue)
+    public function setHourStart($hourStart)
     {
-        $this->idQueue = $idQueue;
+        $this->hourStart = $hourStart;
+    }
+
+    /**
+     * @param mixed $idBucketQueue
+     */
+    public function setIdBucketQueue($idBucketQueue)
+    {
+        $this->idBucketQueue = $idBucketQueue;
     }
 
     /**
@@ -82,9 +116,14 @@ class Bucket implements JsonSerializable {
      * which is a value of any type other than a resource.
      * @since 5.4.0
      */
-    public function jsonSerialize()
-    {
-        // TODO: Implement jsonSerialize() method.
-        return '';
+    function jsonSerialize() {
+        return array(
+            'id' => $this->id,
+            'idBucketQueue' => $this->idBucketQueue,
+            'hourStart' => $this->hourStart,
+            'hourFinal' => $this->hourFinal,
+            'quantity' => $this->quantity,
+            'dateCreated' => $this->dateCreated
+        );
     }
 }

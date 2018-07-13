@@ -148,6 +148,16 @@ class RouterManager {
             $body = file_get_contents('php://input');
             return (new TurnManager())->newVipTurn($body, $idStore);
         });
+
+        $router->post($prefix . '/store/{idStore}/hourTurn', function ($idStore) {
+            $body = file_get_contents('php://input');
+            return (new TurnManager())->newHourTurn($body->hour, $idStore);
+        });
+
+        $router->post($prefix . '/clockUpdate', function () {
+
+        });
+
     }
 }
 
