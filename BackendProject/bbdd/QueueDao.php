@@ -11,7 +11,7 @@ class QueueDao extends Dao {
     }
 
     public function findById($id) {
-        return $this->findByProperty("ID", $id);
+        return $this->findByProperty("ID", $id)[0];
     }
 
     public function findByProperty($property, $value) {

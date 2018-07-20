@@ -66,7 +66,8 @@ class TurnDao extends Dao {
 
         if ($turn instanceof Turn) {
 
-            $query = "UPDATE TURN SET STATE = '" . $turn->getState() . "' WHERE ID = " . $turn->getId();
+            $query = "UPDATE TURN SET STATE = '" . $turn->getState() . "', NUMBER = " . $turn->getNumber() .
+                ", ID_QUEUE = " . $turn->getIdQueue() . " WHERE ID = " . $turn->getId();
 
             return parent::query($query);
         }
@@ -189,6 +190,31 @@ class TurnDao extends Dao {
         }
 
         return $turn;
+    }
+
+    public function getMobileTurnsToUpdate(Bucket $bucket) {
+
+        $query = "SELECT * FROM TURN WHERE ID_BUCKET = " . $bucket->getId() . " AND STATE = 'WAITING'";
+
+        $results = array();
+
+        $res = $this->query($query);
+
+        while ($row = $res->fetch_assoc()) {
+
+            $turn = new Turn();
+            $turn->setId($row['ID']);
+            $turn->setNumber($row['NUMBER']);
+            $turn->setIdBucket($row['ID_BUCKET']);
+            $turn->setIdUser($row['ID_USER']);
+            $turn->setIdQueue($row['ID_QUEUE']);
+            $turn->setDateTurn($row['DATE_TURN']);
+            $turn->setState($row['STATE']);
+
+            $results[] = $turn;
+        }
+
+        return $results;
     }
 
 }

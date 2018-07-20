@@ -157,6 +157,15 @@ class RouterManager {
 
         $router->post($prefix . '/clockUpdate', function () {
 
+            $configDao = new ConfigDao();
+            $minuteInterval = $configDao->findByKey('MIN_DURATION_BUCKETS')->getValue();
+            $configDao->close();
+
+            if (date('i') % $minuteInterval == 0) {
+                return (new TurnManager())->updateHourTurns();
+            }
+
+            return array('done' => false);
         });
 
         $router->get($prefix . '/test', function () {

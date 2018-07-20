@@ -101,8 +101,6 @@ class BucketDao extends Dao {
 
                 $hourFinalTimeStamp = strtotime($auxBucket->getHourStart()) + ($minuteLenghtBucket * 60) - 1;
 
-                echo date('Y-m-d H:i:s', $hourFinalTimeStamp);
-
                 $auxBucket->setHourFinal(date('Y-m-d H:i:s', $hourFinalTimeStamp));
 
                 $this->save($auxBucket);
@@ -196,6 +194,30 @@ class BucketDao extends Dao {
         }
 
         return null;
+    }
+
+    public function getActualBuckets() {
+
+        $query = "SELECT * FROM BUCKET WHERE HOUR_START < NOW() AND HOUR_FINAL > NOW()";
+
+        $result = parent::query($query);
+
+        $toReturn = array();
+
+        while ($row = $result->fetch_assoc()) {
+
+            $bucket = new Bucket();
+            $bucket->setId($row['ID']);
+            $bucket->setIdBucketQueue($row['ID_BUCKET_QUEUE']);
+            $bucket->setHourStart($row['HOUR_START']);
+            $bucket->setHourFinal($row['HOUR_FINAL']);
+            $bucket->setDateCreated($row['DATE_CREATED']);
+            $bucket->setQuantity($row['QUANTITY']);
+
+            $toReturn[] = $bucket;
+        }
+
+        return $toReturn;
     }
 }
 

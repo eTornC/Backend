@@ -182,6 +182,46 @@ class TurnManager {
         return $newTurn;
     }
 
+    public function updateHourTurns() {
+
+        $bucketDao = new BucketDao();
+        $bucketQueueDao = new BucketQueueDao();
+        $queueDao = new QueueDao();
+
+        $actualBuckets = $bucketDao->getActualBuckets();
+
+        foreach ($actualBuckets as $bucket) {
+
+            $bucketQueue = $bucketQueueDao->findById($bucket->getIdBucketQueue());
+
+            $turnsToUpdate = $this->turnDao->getMobileTurnsToUpdate($bucket);
+
+            if (count($turnsToUpdate) > 0) {
+
+                $queue = $queueDao->findById($bucketQueue->getIdDestinationQueue());
+
+                $lastTurnNum = $this->turnDao->getLastTurn($queue->getId())->getNumber();
+
+                $turnNumber = $lastTurnNum + 1;
+
+                foreach ($turnsToUpdate as $turn) {
+                    if ($turn instanceof Turn) {
+                        $turn->setNumber($turnNumber);
+                        $turn->setIdQueue($queue->getId());
+                        $this->turnDao->update($turn);
+                        $turnNumber++;
+                    }
+                }
+            }
+        }
+
+        $bucketDao->close();
+        $bucketQueueDao->close();
+        $queueDao->close();
+
+        return array('done' => true);
+    }
+
 
 }
 
