@@ -71,6 +71,6 @@ class BucketQueueDao extends Dao {
     }
 
     public function findByStore($idStore) {
-        return $this->findByProperty('ID_STORE', $idStore);
+        return $this->findByProperty('ID_STORE', $idStore)[0];
     }
 }

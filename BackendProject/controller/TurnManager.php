@@ -1,6 +1,9 @@
 <?php
 
 require dirname(__FILE__) . '/../bbdd/TurnDao.php';
+require dirname(__FILE__) . '/../bbdd/BucketQueueDao.php';
+require dirname(__FILE__) . '/../bbdd/BucketDao.php';
+require dirname(__FILE__) . '/../bbdd/ConfigDao.php';
 
 class TurnManager {
 
@@ -117,21 +120,30 @@ class TurnManager {
 
     public function newHourTurn($hour, $idStore) {
 
-        $hour = date('H:i:s', $hour);
+        if ($hour < strtotime('now')) {
+            return array('done' => false);
+        }
+
+        $hour = date('Y-m-d H:i:s', $hour);
 
         $bucketQueueDao = new BucketQueueDao();
-
         $bucketQueue = $bucketQueueDao->findByStore($idStore);
-
         $bucketQueueDao->close();
 
         $bucketDao = new BucketDao();
-
         $bucket = $bucketDao->getBucketOfThisHour($hour, $bucketQueue);
+        $bucketDao->close();
 
-        // TODO
+        if ($bucket == null) {
+            return array('done' => false);
+        }
 
-        return '';
+        $turn = new Turn();
+        $turn->setIdBucket($bucket->getId());
+        $turn->setState('WAITING');
+        $turn->setIdUser(0);
+
+        return array('done' => ($this->turnDao->saveHourTurn($turn)));
     }
 
     public function newVipTurn($body, $idStore) {

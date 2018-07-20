@@ -2,7 +2,7 @@
 
 namespace eTorn\models;
 
-class Config implements JsonSerializable {
+class Config implements \JsonSerializable {
 
     private $id;
     private $key;

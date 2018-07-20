@@ -53,6 +53,15 @@ class TurnDao extends Dao {
         return false;
     }
 
+    public function saveHourTurn(Turn $turn) {
+
+        $query = "INSERT INTO TURN (ID_BUCKET, ID_USER, DATE_TURN, STATE) VALUES " .
+            "(" . $turn->getIdBucket() . ", " . $turn->getIdUser() . ", NOW(), '"
+            . $turn->getState() . "')";
+
+        return parent::query($query);
+    }
+
     public function update($turn) {
 
         if ($turn instanceof Turn) {

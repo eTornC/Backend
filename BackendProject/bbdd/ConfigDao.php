@@ -64,7 +64,7 @@ class ConfigDao extends Dao {
     }
 
     public function findByKey($key) {
-        return $this->findByProperty('NAME', $key);
+        return $this->findByProperty('NAME', $key)[0];
     }
 }
 

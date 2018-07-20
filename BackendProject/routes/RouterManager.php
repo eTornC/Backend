@@ -151,14 +151,26 @@ class RouterManager {
 
         $router->post($prefix . '/store/{idStore}/hourTurn', function ($idStore) {
             $body = file_get_contents('php://input');
-            return (new TurnManager())->newHourTurn($body->hour, $idStore);
+            $body = json_decode($body);
+            return (new TurnManager())->newHourTurn($body->hour, $idStore); // timestamp!!!
         });
 
         $router->post($prefix . '/clockUpdate', function () {
 
         });
 
+        $router->get($prefix . '/test', function () {
+            $hour = $_GET['t'];
+            $hour2 = $hour + 1;
+
+            echo $hour . ' ';
+            echo $hour2 . ' ';
+
+            echo date('Y-m-d H:i:s', $hour) . ' ';
+            echo date('Y-m-d H:i:s', $hour2) . ' ';
+
+            return '';
+        });
+
     }
 }
-
-?>
