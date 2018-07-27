@@ -82,6 +82,8 @@ class BucketDao extends Dao {
 
             $configDao = new ConfigDao();
             $minuteLenghtBucket = $configDao->findByKey('MIN_DURATION_BUCKETS')->getValue();
+            $hourOpen = $configDao->findByKey('HOUR_START_ALL_BUCKETS')->getValue();
+            $hourClose = $configDao->findByKey('HOUR_FINAL_ALL_BUCKETS')->getValue();
             $configDao->close();
 
             $lastBucket = $this->getLastBucketInTime($bucketQueue);

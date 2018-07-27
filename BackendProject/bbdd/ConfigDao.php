@@ -58,6 +58,11 @@ class ConfigDao extends Dao {
         return false;
     }
 
+    public function updateByKey(Config $config) {
+        $query = "UPDATE CONFIG SET VALUE='" . $config->getValue() ."' WHERE NAME = '" . $config->getKey() . "'";
+        return parent::query($query);
+    }
+
     public function delete($id) {
         $query = "DELETE FROM CONFIG WHERE ID = $id";
         return parent::query($query);

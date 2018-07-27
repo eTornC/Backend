@@ -1,6 +1,8 @@
 <?php
 
-require dirname(__FILE__) . '../bbdd/ConfigDao.php';
+//require dirname(__FILE__) . '/../bbdd/ConfigDao.php';
+
+use \eTorn\models\Config;
 
 class ConfigManager {
 
@@ -41,6 +43,26 @@ class ConfigManager {
 
     public function delete($id) {
         return array('done', $this->configDao->delete($id));
+    }
+
+    public function updateConfigs($body) {
+
+        $minDurationConfig = new Config();
+        $minDurationConfig->setKey('MIN_DURATION_BUCKETS');
+        $minDurationConfig->setValue($body->data->params->MIN_DURATION_BUCKETS);
+
+        $hourStartConfig = new Config();
+        $hourStartConfig->setKey('HOUR_START_ALL_BUCKETS');
+        $hourStartConfig->setValue($body->data->params->HOUR_START_ALL_BUCKETS);
+
+        $hourFinalConfig = new Config();
+        $hourFinalConfig->setKey('HOUR_FINAL_ALL_BUCKETS');
+        $hourFinalConfig->setValue($body->data->params->HOUR_FINAL_ALL_BUCKETS);
+
+        return array('done' => $this->configDao->updateByKey($hourFinalConfig)
+                && $this->configDao->updateByKey($hourStartConfig)
+                && $this->configDao->updateByKey($minDurationConfig)
+        );
     }
 }
 

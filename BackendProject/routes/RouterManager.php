@@ -3,6 +3,7 @@
 require dirname(__FILE__) . '/../controller/StoreManager.php';
 require dirname(__FILE__) . '/../controller/QueueManager.php';
 require dirname(__FILE__) . '/../controller/TurnManager.php';
+require dirname(__FILE__) . '/../controller/ConfigManager.php';
 
 class RouterManager {
 
@@ -131,12 +132,12 @@ class RouterManager {
         // ---------------------------- ACTIONS ----------------------------
         // -----------------------------------------------------------------
 
-        $router->post($prefix . '/store/{idStore}/queue/{idQueue}/storeTurn', function ($idStore, $idQueue) {
-            return (new TurnManager())->nextTurn($idStore, $idQueue);
+        $router->post($prefix . '/store/{idStore}/storeTurn', function ($idStore) {
+            return (new TurnManager())->nextTurn($idStore);
         });
 
-        $router->get($prefix . '/store/{idStore}/queue/{idQueue}/storeTurn', function ($idStore, $idQueue) {
-            return (new TurnManager())->getActualTurn($idStore, $idQueue);
+        $router->get($prefix . '/store/{idStore}/storeTurn', function ($idStore) {
+            return (new TurnManager())->getActualTurn($idStore);
         });
 
         $router->post($prefix . '/store/{idStore}/turn', function ($idStore) {
@@ -179,6 +180,20 @@ class RouterManager {
             echo date('Y-m-d H:i:s', $hour2) . ' ';
 
             return '';
+        });
+
+        // -----------------------------------------------------------------
+        // ---------------------------- CONFIG -----------------------------
+        // -----------------------------------------------------------------
+
+        $router->get($prefix . '/config', function () {
+            return (new ConfigManager())->findAll();
+        });
+
+        $router->post($prefix . '/config', function () {
+            $body = file_get_contents('php://input');
+            $body = json_decode($body);
+            return (new ConfigManager())->updateConfigs($body);
         });
 
     }

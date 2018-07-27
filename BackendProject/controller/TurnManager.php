@@ -52,7 +52,7 @@ class TurnManager {
         return array('done' => $this->turnDao->delete($idTurn));
     }
 
-    public function nextTurn($idStore, $idQueue) {
+    public function nextTurn($idStore) {
 
         $actualTurn = $this->turnDao->getActualTurn($idStore);
 
@@ -85,7 +85,7 @@ class TurnManager {
         return array('done' => (bool) $result);
     }
 
-    public function getActualTurn($idStore, $idQueue) {
+    public function getActualTurn($idStore) {
         $turns = $this->turnDao->getActualTurn($idStore);
 
         if (count($turns) == 0) {
@@ -190,7 +190,7 @@ class TurnManager {
 
         $actualBuckets = $bucketDao->getActualBuckets();
 
-        foreach ($actualBuckets as $bucket) {
+        foreach ($actualBuckets as $bucket) { // TODO notifications
 
             $bucketQueue = $bucketQueueDao->findById($bucket->getIdBucketQueue());
 

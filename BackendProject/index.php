@@ -6,6 +6,10 @@
 
     header('Content-type: application/json; charset=utf-8');
     header('Access-Control-Allow-Origin: *');
+    header("Access-Control-Allow-Credentials: false");
+    header('Access-Control-Allow-Methods: GET, PUT, POST, DELETE, OPTIONS');
+    header('Access-Control-Max-Age: 1000');
+    header('Access-Control-Allow-Headers: Content-Type, Content-Range, Content-Disposition, Content-Description');
 
     require(dirname(__FILE__) . '/vendor/autoload.php');
     require(dirname(__FILE__) . '/routes/RouterManager.php');
