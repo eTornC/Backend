@@ -132,11 +132,11 @@ class RouterManager {
         // ---------------------------- ACTIONS ----------------------------
         // -----------------------------------------------------------------
 
-        $router->post($prefix . '/store/{idStore}/storeTurn', function ($idStore) {
+        $router->post($prefix . '/store/{idStore}/nextTurn', function ($idStore) {
             return (new TurnManager())->nextTurn($idStore);
         });
 
-        $router->get($prefix . '/store/{idStore}/storeTurn', function ($idStore) {
+        $router->get($prefix . '/store/{idStore}/actualTurn', function ($idStore) {
             return (new TurnManager())->getActualTurn($idStore);
         });
 

@@ -58,7 +58,7 @@ class StoreDao extends Dao {
 
     public function save($queue) {
         if ($queue instanceof Store) {
-            $query = "INSERT INTO STORE (NAME, DATE_CREATED, PHOTOPATH) VALUES ('" . $queue->getName() . "', NOW(), '" . $queue->getPhotopath() ."')";
+            $query = "INSERT INTO STORE (NAME, DATE_CREATED, PHOTO_PATH) VALUES ('" . $queue->getName() . "', NOW(), '" . $queue->getPhotopath() ."')";
             return parent::query($query);
         } else {
             return false;

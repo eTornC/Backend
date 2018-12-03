@@ -85,7 +85,10 @@ class ImageAlmacenator {
     }
 
     public function uploadPhoto(){
-        return move_uploaded_file($this->image_file, getcwd() . "/../" .$this->target_path);
+
+        $path = str_replace(' ', '', $name);
+
+        return move_uploaded_file($this->image_file, getcwd() . '/'. $this->target_path);
     }
 
     public function copyPhotoWithEspecificDimensions($newWidth, $newHeigth, $compresionLevel){
