@@ -1,6 +1,6 @@
 <?php
 
-namespace eTorn\models;
+namespace eTorn\Models;
 
 class Config implements \JsonSerializable {
 

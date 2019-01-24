@@ -1,5 +1,7 @@
 <?php
 
+namespace eTorn\Bbdd;
+
 class TurnDao extends Dao {
 
     public function __construct() {
@@ -89,7 +91,7 @@ class TurnDao extends Dao {
 
     public function getActualTurn($idStore) {
 
-        $query = "SELECT T.* 
+        $query = "SELECT T.*, Q.QUEUE_TYPE 
                   FROM TURN T JOIN QUEUE Q ON T.ID_QUEUE=Q.ID 
                   WHERE T.STATE = 'ATTENDING' AND Q.ID_STORE = $idStore";
 
@@ -106,6 +108,7 @@ class TurnDao extends Dao {
             $turn->setDateTurn($row['DATE_TURN']);
             $turn->setState($row['STATE']);
             $turn->setIdTill($row['ID_TILL']);
+            $turn->setType($row['QUEUE_TYPE']);
 
             return $turn;
         }
@@ -117,7 +120,7 @@ class TurnDao extends Dao {
 
         $results = array();
 
-        $query = "  SELECT T.*
+        $query = "  SELECT T.*, Q.QUEUE_TYPE AS 'TYPE'
                     FROM TURN T JOIN QUEUE Q ON T.ID_QUEUE=Q.ID
                     WHERE T.STATE LIKE 'WAITING' AND Q.ID_STORE = $idStore 
                     ORDER BY Q.PRIORITY, T.DATE_TURN, T.ID;
@@ -135,6 +138,7 @@ class TurnDao extends Dao {
             $turn->setIdQueue($row['ID_QUEUE']);
             $turn->setDateTurn($row['DATE_TURN']);
             $turn->setState($row['STATE']);
+            $turn->setType($row['TYPE']);
 
             $results[] = $turn;
         }

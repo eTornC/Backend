@@ -1,8 +1,9 @@
 <?php
 
-//require dirname(__FILE__) . '/../bbdd/ConfigDao.php';
+namespace eTorn\Controller;
 
-use \eTorn\models\Config;
+use eTorn\Bbdd\ConfigDao;
+use eTorn\Models\Config;
 
 class ConfigManager {
 
@@ -25,7 +26,7 @@ class ConfigManager {
     }
 
     public function save($body) {
-        $config = new \eTorn\models\Config();
+        $config = new Config();
         $config->setKey($body->key);
         $config->setValue($body->value);
 
@@ -33,7 +34,7 @@ class ConfigManager {
     }
 
     public function update($body, $id) {
-        $config = new \eTorn\models\Config();
+        $config = new Config();
         $config->setId($id);
         $config->setKey($body->key);
         $config->setValue($body->value);

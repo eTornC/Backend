@@ -1,5 +1,7 @@
 <?php
 
+namespace eTorn\Models;
+
 class BucketQueue implements JsonSerializable {
 
     private $id;

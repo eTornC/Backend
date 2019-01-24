@@ -1,6 +1,8 @@
 <?php
 
-use \eTorn\models\Config;
+namespace eTorn\Bbdd;
+
+use eTorn\Models\Config;
 
 class ConfigDao extends Dao {
 

@@ -1,5 +1,7 @@
 <?php
 
+namespace eTorn\Models;
+
 class Queue implements JsonSerializable {
 
     private $id;

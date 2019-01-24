@@ -1,5 +1,7 @@
 <?php
 
+namespace eTorn\Models;
+
 class Till implements JsonSerializable {
 
     private $id;

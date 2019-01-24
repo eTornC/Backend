@@ -1,5 +1,7 @@
 <?php
 
+namespace eTorn\Models;
+
 class Turn implements JsonSerializable {
 
     private $id;
@@ -10,6 +12,7 @@ class Turn implements JsonSerializable {
     private $dateTurn;
     private $state;
     private $idTill;
+    private $type;
 
     function __construct() {
     }
@@ -142,6 +145,14 @@ class Turn implements JsonSerializable {
         $this->idTill = $idTill;
     }
 
+    public function getType() {
+        return $this->type;
+    }
+
+    public function setType($type) {
+        $this->type = $type;
+    }
+
     /**
      * Specify data which should be serialized to JSON
      * @link http://php.net/manual/en/jsonserializable.jsonserialize.php
@@ -159,7 +170,8 @@ class Turn implements JsonSerializable {
             'idQueue' => $this->idQueue,
             'dateTurn' => $this->dateTurn,
             'state' => $this->state,
-            'idTill' => $this->idTill
+            'idTill' => $this->idTill,
+            'type' => $this->type,
         );
     }
 }

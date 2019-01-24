@@ -1,7 +1,10 @@
 <?php
 
-require dirname(__FILE__) . '/../bbdd/StoreDao.php';
-require dirname(__FILE__) . '/ImageAlmacenator.php';
+namespace eTorn\Controller;
+
+use eTorn\Bbdd\StoreDao;
+use eTorn\Models\Store;
+use eTorn\Constants\ConstantsPaths;
 
 class StoreManager {
 
@@ -19,7 +22,7 @@ class StoreManager {
         try {
             $id = (int) htmlentities(addslashes($id));
             return $this->storeDao->findById($id);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             return array();
         }
     }
@@ -28,7 +31,7 @@ class StoreManager {
         try {
             $id = (int) htmlentities(addslashes($id));
             return array("done" => $this->storeDao->delete($id));
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             return array("done" => false);
         }
     }

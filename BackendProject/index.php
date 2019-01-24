@@ -15,6 +15,7 @@
     require(dirname(__FILE__) . '/routes/RouterManager.php');
 
     use Phroute\Phroute\RouteCollector;
+    use eTorn\Routes\RouterManager;
 
     $router = new RouteCollector();
 
@@ -32,6 +33,9 @@
         $response = array("Error" => "Route not found or incorrect method.");
     }
 
-    echo json_encode($response);
-
+    if (is_array($response)) {
+        echo json_encode($response);
+    } else {
+        echo $response;
+    }
 ?>

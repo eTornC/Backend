@@ -1,6 +1,8 @@
 <?php
 
-require(dirname(__FILE__) . '/Dao.php');
+namespace eTorn\Bbdd;
+
+use eTorn\Models\Store;
 
 class StoreDao extends Dao {
 

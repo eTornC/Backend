@@ -1,6 +1,9 @@
 <?php
 
-require dirname(__FILE__) . '/../bbdd/QueueDao.php';
+namespace eTorn\Controller;
+
+use eTorn\Bbdd\QueueDao;
+use eTorn\Models\Queue;
 
 class QueueManager {
 
@@ -14,7 +17,7 @@ class QueueManager {
         try {
             $idStore = (int) htmlentities(addslashes($idStore));
             return $this->queueDao->findByIdStore($idStore);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             return array();
         }
     }
@@ -28,7 +31,7 @@ class QueueManager {
                     return $result;
 
             }
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             return array();
         }
 

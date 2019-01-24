@@ -7,6 +7,14 @@ namespace Composer\Autoload;
 class ComposerStaticInitb821f652f2baac11548877a3658a4b31
 {
     public static $prefixLengthsPsr4 = array (
+        'e' => 
+        array (
+            'eTorn\\Routes\\' => 13,
+            'eTorn\\Models\\' => 13,
+            'eTorn\\Controller\\' => 17,
+            'eTorn\\Bbdd\\' => 11,
+            'eTorn\\' => 6,
+        ),
         'P' => 
         array (
             'Phroute\\Phroute\\' => 16,
@@ -14,6 +22,26 @@ class ComposerStaticInitb821f652f2baac11548877a3658a4b31
     );
 
     public static $prefixDirsPsr4 = array (
+        'eTorn\\Routes\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/routes',
+        ),
+        'eTorn\\Models\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/models',
+        ),
+        'eTorn\\Controller\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/controller',
+        ),
+        'eTorn\\Bbdd\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/bbdd',
+        ),
+        'eTorn\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/',
+        ),
         'Phroute\\Phroute\\' => 
         array (
             0 => __DIR__ . '/..' . '/phroute/phroute/src/Phroute',

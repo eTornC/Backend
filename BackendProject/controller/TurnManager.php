@@ -1,9 +1,6 @@
 <?php
 
-require dirname(__FILE__) . '/../bbdd/TurnDao.php';
-require dirname(__FILE__) . '/../bbdd/BucketQueueDao.php';
-require dirname(__FILE__) . '/../bbdd/BucketDao.php';
-require dirname(__FILE__) . '/../bbdd/ConfigDao.php';
+namespace eTorn\Controller;
 
 class TurnManager {
 
@@ -222,6 +219,9 @@ class TurnManager {
         return array('done' => true);
     }
 
+    public function waitingTurns($idStore) {
+        return $this->turnDao->getListNextsTurns($idStore);
+    }
 
 }
 

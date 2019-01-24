@@ -1,5 +1,7 @@
 <?php
 
+namespace eTorn\Bbdd;
+
 class TillDao extends Dao {
 
     public function __construct() {

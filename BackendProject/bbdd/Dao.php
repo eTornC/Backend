@@ -1,55 +1,50 @@
 <?php
 
-    require dirname(__FILE__) . '/../constants/ConstantsDB.php';
-    require dirname(__FILE__) . '/../model/Store.php';
-    require dirname(__FILE__) . '/../model/Queue.php';
-    require dirname(__FILE__) . '/../model/Turn.php';
-    require dirname(__FILE__) . '/../model/Bucket.php';
-    require dirname(__FILE__) . '/../model/Till.php';
-    require dirname(__FILE__) . '/../model/BucketQueue.php';
-    require dirname(__FILE__) . '/../model/Config.php';
+namespace eTorn\Bbdd;
 
-    abstract class Dao {
+use eTorn\Constants\ConstantsDB;
 
-        private $DAO;
+abstract class Dao {
 
-        public function __construct () {
+    private $DAO;
 
-            $this->DAO = new mysqli(ConstantsDB::DB_SERVER, ConstantsDB::DB_USER, ConstantsDB::DB_PASSWD, ConstantsDB::DB_NAME);
+    public function __construct () {
 
-            if ($this->DAO->connect_errno){
-                echo "Connect failed: " . mysqli_connect_error();
-                exit();
-            }
+        $this->DAO = new \MySqli(ConstantsDB::DB_SERVER, ConstantsDB::DB_USER, ConstantsDB::DB_PASSWD, ConstantsDB::DB_NAME);
 
-            $this->DAO->set_charset(ConstantsDB::DB_CHARSET);
+        if ($this->DAO->connect_errno){
+            echo "Connect failed: " . mysqli_connect_error();
+            exit();
         }
 
-        public function query($sql){
-            $result = $this->DAO->query($sql);
-            return $result;
-        }
-
-        public function getDao(){
-            return $this->DAO;
-        }
-
-        public function close() {
-            return $this->DAO->close();
-        }
-
-        public abstract function findAll();
-
-        public abstract function findById($id);
-
-        public abstract function findByProperty($property, $value);
-
-        public abstract function save($object);
-
-        public abstract function update($object);
-
-        public abstract function delete($id);
+        $this->DAO->set_charset(ConstantsDB::DB_CHARSET);
     }
+
+    public function query($sql){
+        $result = $this->DAO->query($sql);
+        return $result;
+    }
+
+    public function getDao(){
+        return $this->DAO;
+    }
+
+    public function close() {
+        return $this->DAO->close();
+    }
+
+    public abstract function findAll();
+
+    public abstract function findById($id);
+
+    public abstract function findByProperty($property, $value);
+
+    public abstract function save($object);
+
+    public abstract function update($object);
+
+    public abstract function delete($id);
+}
 
 
 ?>

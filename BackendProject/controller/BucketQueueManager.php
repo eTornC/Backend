@@ -1,6 +1,10 @@
 <?php
 
-require dirname(__FILE__) . '/../bbdd/BucketQueueDao.php';
+namespace eTorn\Controller;
+
+use eTorn\Bbdd\BucketQueueDao;
+use eTorn\Models\BucketQueue;
+
 
 class BucketQueueManager {
 

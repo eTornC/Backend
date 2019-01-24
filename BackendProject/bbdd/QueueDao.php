@@ -1,5 +1,7 @@
 <?php
 
+namespace eTorn\Bbdd;
+
 class QueueDao extends Dao {
 
     public function __construct() {

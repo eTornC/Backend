@@ -11,5 +11,14 @@
   ],
   "require": {
     "phroute/phroute": "v2.1.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "eTorn\\": "./",
+      "eTorn\\Routes\\": "./routes",
+      "eTorn\\Models\\": "./models",
+      "eTorn\\Controller\\": "./controller",
+      "eTorn\\Bbdd\\": "./bbdd"
+    }
   }
 }

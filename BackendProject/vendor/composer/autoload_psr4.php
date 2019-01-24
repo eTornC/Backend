@@ -6,5 +6,10 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    'eTorn\\Routes\\' => array($baseDir . '/routes'),
+    'eTorn\\Models\\' => array($baseDir . '/models'),
+    'eTorn\\Controller\\' => array($baseDir . '/controller'),
+    'eTorn\\Bbdd\\' => array($baseDir . '/bbdd'),
+    'eTorn\\' => array($baseDir . '/'),
     'Phroute\\Phroute\\' => array($vendorDir . '/phroute/phroute/src/Phroute'),
 );

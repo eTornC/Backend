@@ -1,15 +1,20 @@
 <?php
 
-require dirname(__FILE__) . '/../controller/StoreManager.php';
-require dirname(__FILE__) . '/../controller/QueueManager.php';
-require dirname(__FILE__) . '/../controller/TurnManager.php';
-require dirname(__FILE__) . '/../controller/ConfigManager.php';
+namespace eTorn\Routes;
+
+use eTorn\Controller\StoreManager;
+use eTorn\Controller\QueueManager;
+use eTorn\Controller\TurnManager;
+use eTorn\Controller\ConfigManager;
+
+use Phroute\Phroute\RouteCollector;
+use eTorn\Bbdd\ConfigDao;
 
 class RouterManager {
 
-    public static function manageRoutes(Phroute\Phroute\RouteCollector $router) {
+    public static function manageRoutes(RouteCollector $router) {
 
-        $prefix = '/~a16josortmar/eTorn';
+        $prefix = '';
 
         // -----------------------------------------------------------------
         // ---------------------------- STORES -----------------------------
@@ -65,37 +70,15 @@ class RouterManager {
         });
 
         // -----------------------------------------------------------------
-        // ---------------------------- BUCKETS ----------------------------
-        // -----------------------------------------------------------------
-
-        $router->get($prefix . '/store/{idStore}/queue/{idQueue}/buckets', function ($idStore, $idQueue) {
-            return '';
-        });
-
-        $router->get($prefix . '/store/{idStore}/queue/{idQueue}/bucket/{idBucket}', function ($idStore, $idQueue, $idBucket) {
-            return '';
-        });
-
-        $router->post($prefix . '/store/{idStore}/queue/{idQueue}/bucket', function ($idStore, $idQueue) {
-            $body = file_get_contents('php://input');
-            return '';
-        });
-
-        $router->put($prefix . '/store/{idStore}/queue/{idQueue}/bucket/{idBucket}', function ($idStore, $idQueue, $idBucket) {
-            $body = file_get_contents('php://input');
-            return '';
-        });
-
-        $router->delete($prefix . '/store/{idStore}/queue/{idQueue}/bucket/{idBucket}', function ($idStore, $idQueue, $idBucket) {
-            return '';
-        });
-
-        // -----------------------------------------------------------------
         // ---------------------------- TURNS OF QUEUE ---------------------
         // -----------------------------------------------------------------
 
         $router->get($prefix . '/store/{idStore}/queue/{idQueue}/turns', function ($idStore, $idQueue) {
             return (new TurnManager())->findByIdStoreAndIdQueue($idStore, $idQueue);
+        });
+
+        $router->get($prefix . '/store/{idStore}/turns', function ($idStore) {
+            return (new TurnManager())->waitingTurns($idStore);
         });
 
         $router->get($prefix . '/turn/{idTurn}', function ($idTurn) {
@@ -170,16 +153,7 @@ class RouterManager {
         });
 
         $router->get($prefix . '/test', function () {
-            $hour = $_GET['t'];
-            $hour2 = $hour + 1;
-
-            echo $hour . ' ';
-            echo $hour2 . ' ';
-
-            echo date('Y-m-d H:i:s', $hour) . ' ';
-            echo date('Y-m-d H:i:s', $hour2) . ' ';
-
-            return '';
+            return 'Aloha';
         });
 
         // -----------------------------------------------------------------

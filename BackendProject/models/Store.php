@@ -1,6 +1,8 @@
 <?php
 
-class Store implements JsonSerializable {
+namespace eTorn\Models;
+
+class Store implements \JsonSerializable {
 
     private $id;
     private $name;

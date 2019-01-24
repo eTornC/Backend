@@ -1,5 +1,9 @@
 <?php
 
+namespace eTorn\Bbdd;
+
+use eTorn\Models\BucketQueue;
+
 class BucketQueueDao extends Dao {
 
     public function __construct() {

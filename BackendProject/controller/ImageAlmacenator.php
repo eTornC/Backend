@@ -1,6 +1,6 @@
 <?php
 
-require dirname(__FILE__) . '/../constants/ConstantsPaths.php';
+namespace eTorn\Controller;
 
 class ImageAlmacenator {
 
