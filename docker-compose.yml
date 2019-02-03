@@ -11,7 +11,7 @@ services:
     volumes:
       - ./BackendProject/:/var/www/html/
     environment:
-      - MYSQL_ROOT_PASSWORD=etorn
+      - MYSQL_ADMIN_PASS=etorn
 networks:
   frontend:
   backend:

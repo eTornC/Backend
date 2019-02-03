@@ -18,7 +18,8 @@
       "eTorn\\Routes\\": "./routes",
       "eTorn\\Models\\": "./models",
       "eTorn\\Controller\\": "./controller",
-      "eTorn\\Bbdd\\": "./bbdd"
+      "eTorn\\Bbdd\\": "./bbdd",
+      "eTorn\\Constants\\": "./constants"
     }
   }
 }
