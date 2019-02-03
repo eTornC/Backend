@@ -13,4 +13,4 @@ yarn-error.log*
 *.njsproj
 *.sln
 
-./BackendProject/constants/ConstantsDB.php
+BackendProject/constants/ConstantsDB.php
