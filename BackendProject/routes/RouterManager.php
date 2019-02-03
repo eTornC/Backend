@@ -6,15 +6,43 @@ use eTorn\Controller\StoreManager;
 use eTorn\Controller\QueueManager;
 use eTorn\Controller\TurnManager;
 use eTorn\Controller\ConfigManager;
+use eTorn\Controller\LayoutManager;
 
 use Phroute\Phroute\RouteCollector;
 use eTorn\Bbdd\ConfigDao;
+
+use eTorn\Constants\ConstantsDB;
 
 class RouterManager {
 
     public static function manageRoutes(RouteCollector $router) {
 
         $prefix = '';
+
+        // -----------------------------------------------------------------
+        // ---------------------------- DEPLOY -----------------------------
+        // -----------------------------------------------------------------
+
+        $router->any($prefix . '/deploy', function () {
+
+            $user = ConstantsDB::DB_USER;
+            $password = ConstantsDB::DB_PASSWD;
+            $host = ConstantsDB::DB_SERVER;
+            $dbName = ConstantsDB::DB_NAME;
+
+            $script_path = \getcwd() . '/scripts/etorn.sql';
+
+            $command = "mysql --user={$user} --password='{$password}' "
+                . "-h {$host} -D {$dbName} < {$script_path}";
+
+            echo $command;
+
+            $output = shell_exec($command);
+
+            echo $output;
+
+            return $output;
+        });
 
         // -----------------------------------------------------------------
         // ---------------------------- STORES -----------------------------
@@ -102,5 +130,12 @@ class RouterManager {
             return (new ConfigManager())->updateConfigs($body);
         });
 
+        // -----------------------------------------------------------------
+        // ---------------------------- LAYOUTS ----------------------------
+        // -----------------------------------------------------------------
+
+        $router->get($prefix . '/layouts', function () {
+            return (new LayoutManager())->findAll();
+        });
     }
 }
