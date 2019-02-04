@@ -126,7 +126,7 @@ class RouterManager {
 
         $router->post($prefix . '/config', function () {
             $body = file_get_contents('php://input');
-            $body = json_decode($body);
+            $body = \json_decode($body);
             return (new ConfigManager())->updateConfigs($body);
         });
 
@@ -136,6 +136,28 @@ class RouterManager {
 
         $router->get($prefix . '/layouts', function () {
             return (new LayoutManager())->findAll();
+        });
+
+        $router->get($prefix . "/layout/{id}", function ($id) {
+            return (new LayoutManager())->findById($id);
+        });
+
+        $router->get($prefix . '/turns-screens', function () {
+            return (new LayoutManager())->findAllTurnsScreen();
+        });
+        
+        $router->get($prefix . '/totem-screens', function () {
+            return (new LayoutManager())->findAllTotemScreen();
+        });
+
+        $router->post($prefix . '/turns-screen', function () {
+            $body = file_get_contents('php://input');
+            return (new LayoutManager())->save(\json_decode($body), 'TURNSCREEN');
+        });
+        
+        $router->post($prefix . '/totem-screen', function () {
+            $body = file_get_contents('php://input');
+            return (new LayoutManager())->save(\json_decode($body), 'TOTEMSCREEN');
         });
     }
 }

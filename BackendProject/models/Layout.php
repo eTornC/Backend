@@ -2,18 +2,15 @@
 
 namespace eTorn\Models;
 
-class Layout {
+class Layout implements \JsonSerializable {
 	
 	private $id;
 	private $name;
 	private $description;
-	private $image;
 	private $layout;
 	private $type;
 
-	public function __construct() {
-
-	}
+	public function __construct() {}
 
 	/**
 	 * Get the value of name
@@ -26,6 +23,7 @@ class Layout {
 	public function setId(int $id) 
 	{
 		$this->id = $id;
+		return $this;
 	}
 
 	/**
@@ -42,14 +40,6 @@ class Layout {
 	public function getDescription()
 	{
 		return $this->description;
-	}
-
-	/**
-	 * Get the value of image
-	 */ 
-	public function getImage()
-	{
-		return $this->image;
 	}
 
 	/**
@@ -85,18 +75,6 @@ class Layout {
 	}
 
 	/**
-	 * Set the value of image
-	 *
-	 * @return  self
-	 */ 
-	public function setImage($image)
-	{
-		$this->image = $image;
-
-		return $this;
-	}
-
-	/**
 	 * Set the value of layout
 	 *
 	 * @return  self
@@ -127,4 +105,22 @@ class Layout {
 
 		return $this;
 	}
+
+	/**
+     * Specify data which should be serialized to JSON
+     * @link http://php.net/manual/en/jsonserializable.jsonserialize.php
+     * @return mixed data which can be serialized by <b>json_encode</b>,
+     * which is a value of any type other than a resource.
+     * @since 5.4.0
+     */
+	public function jsonSerialize() 
+	{
+        return array (
+            'id' => $this->id,
+            'name' => $this->name,
+            'description' => $this->description,
+            'layout' => \json_decode($this->layout),
+            'type' => $this->type,
+        );
+    }
 }

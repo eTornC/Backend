@@ -4,7 +4,6 @@
     ini_set('display_startup_errors', 1);
     error_reporting(E_ALL);
 
-    header('Content-type: application/json; charset=utf-8');
     header('Access-Control-Allow-Origin: *');
     header("Access-Control-Allow-Credentials: false");
     header('Access-Control-Allow-Methods: GET, PUT, POST, DELETE, OPTIONS');
@@ -34,6 +33,7 @@
     }
 
     if (is_array($response)) {
+        header('Content-type: application/json; charset=utf-8');
         echo json_encode($response);
     } else {
         echo $response;

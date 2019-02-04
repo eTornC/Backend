@@ -2,7 +2,7 @@
 
 namespace eTorn\Bbdd;
 
-use eTorn\Constants\ConstantsDB;
+use eTorn\Bbdd\MySqliSingleton;
 
 abstract class Dao {
 
@@ -10,14 +10,12 @@ abstract class Dao {
 
     public function __construct () {
 
-        $this->DAO = new \MySqli(ConstantsDB::DB_SERVER, ConstantsDB::DB_USER, ConstantsDB::DB_PASSWD, ConstantsDB::DB_NAME);
+        $this->DAO = MySqliSingleton::getMySqliInstance();
 
         if ($this->DAO->connect_errno){
             echo "Connect failed: " . mysqli_connect_error();
             exit();
         }
-
-        $this->DAO->set_charset(ConstantsDB::DB_CHARSET);
     }
 
     public function query($sql){
