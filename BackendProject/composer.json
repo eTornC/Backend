@@ -1,0 +1,26 @@
+{
+  "name": "vendor_name/package_name",
+  "description": "description_text",
+  "minimum-stability": "stable",
+  "license": "proprietary",
+  "authors": [
+    {
+      "name": "author's name",
+      "email": "email@example.com"
+    }
+  ],
+  "require": {
+    "phroute/phroute": "v2.1.0",
+    "illuminate/database": "^5.7"
+  },
+  "autoload": {
+    "psr-4": {
+      "eTorn\\": "./",
+      "eTorn\\Routes\\": "./routes",
+      "eTorn\\Models\\": "./models",
+      "eTorn\\Controller\\": "./controller",
+      "eTorn\\Bbdd\\": "./bbdd",
+      "eTorn\\Constants\\": "./constants"
+    }
+  }
+}

@@ -1,0 +1,17 @@
+version: "3.2"
+services:
+  apache:
+    build: './docker/apache/'
+    networks:
+      - frontend
+      - backend
+    ports:
+      - "80:80"
+      - "3306:3306"
+    volumes:
+      - ./BackendProject/:/var/www/html/
+    environment:
+      - MYSQL_ADMIN_PASS=etorn
+networks:
+  frontend:
+  backend:
