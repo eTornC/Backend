@@ -2,74 +2,16 @@
 
 namespace eTorn\Models;
 
-class Config implements \JsonSerializable {
+use Illuminate\Database\Eloquent\Model;
 
-    private $id;
-    private $key;
-    private $value;
+class Config extends Model {
 
-    function __construct() {}
+    protected $table = 'configs';
 
-    /**
-     * @return mixed
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
+	public $timestamps = true;
 
-    /**
-     * @return mixed
-     */
-    public function getKey()
-    {
-        return $this->key;
-    }
+	protected $fillable = [
+		'id', 'key', 'value',
+	];
 
-    /**
-     * @return mixed
-     */
-    public function getValue()
-    {
-        return $this->value;
-    }
-
-    /**
-     * @param mixed $id
-     */
-    public function setId($id)
-    {
-        $this->id = $id;
-    }
-
-    /**
-     * @param mixed $key
-     */
-    public function setKey($key)
-    {
-        $this->key = $key;
-    }
-
-    /**
-     * @param mixed $value
-     */
-    public function setValue($value)
-    {
-        $this->value = $value;
-    }
-
-    /**
-     * Specify data which should be serialized to JSON
-     * @link http://php.net/manual/en/jsonserializable.jsonserialize.php
-     * @return mixed data which can be serialized by <b>json_encode</b>,
-     * which is a value of any type other than a resource.
-     * @since 5.4.0
-     */
-    public function jsonSerialize() {
-        return array (
-            'id' => $this->id,
-            'key' => $this->key,
-            'value' => $this->value
-        );
-    }
 }

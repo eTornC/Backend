@@ -8,15 +8,17 @@ use eTorn\Controller\TurnManager;
 use eTorn\Controller\ConfigManager;
 use eTorn\Controller\LayoutManager;
 
+use eTorn\Models\Config;
 use Phroute\Phroute\RouteCollector;
 use eTorn\Bbdd\ConfigDao;
 
 use eTorn\Constants\ConstantsDB;
+use eTorn\Controller\Logger;
 
-class RouterManager {
-
-    public static function manageRoutes(RouteCollector $router) {
-
+class RouterManager 
+{
+    public static function manageRoutes(RouteCollector $router) 
+    {
         $prefix = '';
 
         // -----------------------------------------------------------------
@@ -28,20 +30,15 @@ class RouterManager {
             $user = ConstantsDB::DB_USER;
             $password = ConstantsDB::DB_PASSWD;
             $host = ConstantsDB::DB_SERVER;
-            $dbName = ConstantsDB::DB_NAME;
 
             $script_path = \getcwd() . '/scripts/etorn.sql';
 
             $command = "mysql --user={$user} --password='{$password}' "
-                . "-h {$host} -D {$dbName} < {$script_path}";
-
-            echo $command;
+                . "-h {$host} < {$script_path}";
 
             $output = shell_exec($command);
 
-            echo $output;
-
-            return $output;
+            return 'done ' . $output;
         });
 
         // -----------------------------------------------------------------
@@ -57,7 +54,6 @@ class RouterManager {
         });
 
         $router->post($prefix . '/store', function () {
-            //$body = file_get_contents('php://input');
             // Form data for file upload too
             return (new StoreManager())->save($_POST['name'], $_FILES['photoStore']);
         });
@@ -101,9 +97,7 @@ class RouterManager {
 
         $router->post($prefix . '/clockUpdate', function () {
 
-            $configDao = new ConfigDao();
-            $minuteInterval = $configDao->findByKey('MIN_DURATION_BUCKETS')->getValue();
-            $configDao->close();
+            $minuteInterval = (int) Config::where('key', 'MIN_DURATION_BUCKETS')->first()->value;
 
             if (date('i') % $minuteInterval == 0) {
                 return (new TurnManager())->updateHourTurns();
@@ -112,19 +106,15 @@ class RouterManager {
             return array('done' => false);
         });
 
-        $router->get($prefix . '/test', function () {
-            return 'Aloha';
-        });
-
         // -----------------------------------------------------------------
         // ---------------------------- CONFIG -----------------------------
         // -----------------------------------------------------------------
 
-        $router->get($prefix . '/config', function () {
+        $router->get($prefix . '/configs', function () {
             return (new ConfigManager())->findAll();
         });
 
-        $router->post($prefix . '/config', function () {
+        $router->post($prefix . '/configs', function () {
             $body = file_get_contents('php://input');
             $body = \json_decode($body);
             return (new ConfigManager())->updateConfigs($body);

@@ -2,84 +2,39 @@
 
 namespace eTorn\Models;
 
-class Store implements \JsonSerializable {
+use Illuminate\Database\Eloquent\Model;
 
-    private $id;
-    private $name;
-    private $date;
-    private $photopath;
+class Store extends Model
+{
+    protected $table = 'stores';
 
-    function __construct() {}
+    public $timestamps = true;
+    
+    protected $fillable = [
+        'id', 'name', 'date', 'photopath', 'config'
+    ];
 
-    /**
-     * @return mixed
-     */
-    public function getId() {
-        return $this->id;
+    protected $casts = [
+        'config' => 'array'
+    ];
+
+    public function queues()
+    {
+        return $this->hasMany('eTorn\Models\Queue', 'id_store');
     }
 
-    /**
-     * @param mixed $id
-     */
-    public function setId($id) {
-        $this->id = $id;
+    public function turns()
+    {
+        $allTurns = [];
+
+        $queues = $this->queues()->get();
+
+        foreach ($queues as $queue) {
+            $turns = $queue->turns()->get();
+            array_push($allTurns, $turns);
+        }
+
+        return $allTurns;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getName() {
-        return $this->name;
-    }
-
-    /**
-     * @param mixed $name
-     */
-    public function setName($name) {
-        $this->name = $name;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getDate() {
-        return $this->date;
-    }
-
-    /**
-     * @param mixed $date
-     */
-    public function setDate($date) {
-        $this->date = $date;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getPhotopath() {
-        return $this->photopath;
-    }
-
-    /**
-     * @param mixed $photopath
-     */
-    public function setPhotopath($photopath) {
-        $this->photopath = $photopath;
-    }
-
-    /**
-     * Specify data which should be serialized to JSON
-     * @link http://php.net/manual/en/jsonserializable.jsonserialize.php
-     * @return mixed data which can be serialized by <b>json_encode</b>,
-     * which is a value of any type other than a resource.
-     * @since 5.4.0
-     */
-    public function jsonSerialize() {
-        return array (
-            'id' => $this->id,
-            'name' => $this->name,
-            'date_created' => $this->date,
-            'photopath' => $this->photopath
-        );
-    }
 }

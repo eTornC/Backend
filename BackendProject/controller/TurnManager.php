@@ -2,6 +2,11 @@
 
 namespace eTorn\Controller;
 
+use eTorn\Bbdd\QueueDao;
+use eTorn\Bbdd\TurnDao;
+use eTorn\Models\Queue;
+use eTorn\Models\Turn;
+
 class TurnManager {
 
     private $turnDao;
@@ -79,14 +84,14 @@ class TurnManager {
             }
         }
 
-        return array('done' => (bool) $result);
+        return ['done' => (bool) $result];
     }
 
     public function getActualTurn($idStore) {
         $turns = $this->turnDao->getActualTurn($idStore);
 
         if (count($turns) == 0) {
-            return array('error' => 'no turn');
+            return ['error' => 'no turn'];
         }
 
         return $turns;
@@ -101,7 +106,7 @@ class TurnManager {
         $queueDao->close();
 
         if ($normalQueue == null) {
-            return array('error' => 'No normal queue for this store');
+            return ['error' => 'No normal queue for this store'];
         }
 
         $lastTurn = $this->turnDao->getLastTurn($normalQueue->getId());
@@ -109,16 +114,16 @@ class TurnManager {
         $newTurn = $this->createTurn($lastTurn->getNumber(), $normalQueue->getId());
 
         if ($this->turnDao->save($newTurn)) {
-            return array('number' => $newTurn->getNumber());
+            return ['number' => $newTurn->getNumber()];
         }
 
-        return array('done' => false);
+        return ['done' => false];
     }
 
     public function newHourTurn($hour, $idStore) {
 
         if ($hour < strtotime('now')) {
-            return array('done' => false);
+            return [ 'done' => false ];
         }
 
         $hour = date('Y-m-d H:i:s', $hour);
@@ -149,34 +154,25 @@ class TurnManager {
 
         $vipQueue = $queueDao->getVipQueue($idStore);
 
-        $queueDao->close();
-
-        if ($vipQueue == null) {
+        if (!$vipQueue) {
             return array('error' => 'No VIP queue for this store');
         }
 
-        $lastTurn = $this->turnDao->getLastTurn($vipQueue->getId());
+        $lastTurn = $vipQueue->getLastTurn();
 
-        $newTurn = $this->createTurn($lastTurn->getNumber(), $vipQueue->getId());
+        $newTurn = new Turn([
+            'number' => $lastTurn->number+1,
+            'state' => 'WAITING'
+        ]);
 
-        if ($this->turnDao->save($newTurn)) {
-            return array('number' => $newTurn->getNumber());
+        if ($vipQueue->turns()->save($newTurn)){
+            return [
+                'done' => true,
+                'number' => $newTurn->number
+            ];
         }
 
         return array('done' => false);
-
-    }
-
-    private function createTurn($lastNumber, $queueId) {
-
-        $newTurn = new Turn();
-        $newTurn->setIdQueue($queueId);
-        $newTurn->setNumber($lastNumber+1);
-        $newTurn->setIdUser(0);
-        $newTurn->setState('WAITING');
-        $newTurn->setIdBucket('NULL');
-
-        return $newTurn;
     }
 
     public function updateHourTurns() {

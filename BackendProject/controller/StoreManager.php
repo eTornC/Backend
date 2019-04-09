@@ -4,6 +4,7 @@ namespace eTorn\Controller;
 
 use eTorn\Bbdd\StoreDao;
 use eTorn\Models\Store;
+use eTorn\Models\Queue;
 use eTorn\Constants\ConstantsPaths;
 
 class StoreManager {
@@ -19,61 +20,90 @@ class StoreManager {
     }
 
     public function findById($id) {
-        try {
-            $id = (int) htmlentities(addslashes($id));
-            return $this->storeDao->findById($id);
-        } catch (\Exception $e) {
-            return array();
+        $store = $this->storeDao->findById($id);
+
+        if (!$store) {
+            return [
+                'err' => 'Store not found'
+            ];
         }
+
+        return $store;
     }
 
     public function delete($id) {
-        try {
-            $id = (int) htmlentities(addslashes($id));
-            return array("done" => $this->storeDao->delete($id));
-        } catch (\Exception $e) {
-            return array("done" => false);
+        $store = $this->storeDao->findById($id);
+
+        if (!$store) {
+            return [
+                'done' => false
+            ];
         }
+
+        return array("done" => $this->storeDao->delete($store));
     }
 
     public function save($name, $imageFile) {
 
-        $name = htmlentities(addslashes($name));
-
         $store = new Store();
-        $store->setName($name);
+        $store->name = $name;
 
-        $imageAlmacenator = new ImageAlmacenator($imageFile['name'], $imageFile['tmp_name'], $imageFile['size'],
-            $imageFile['type'], ConstantsPaths::PATH_IMAGES);
+        try{
+            $imagePath = ImageAlmacenator::getInstance()->saveImage($imageFile);
+            $store->photo_path = $imagePath;
+            
+            $store->save();
 
-        $imageAlmacenator->setImageName($store->getName());
+            $vipQueue = new Queue();
+            $vipQueue->type = "VIP";
+            $vipQueue->priority = 0;
 
-        $store->setPhotopath($imageAlmacenator->getTargetPath());
+            $bucketQueue = new Queue();
+            $bucketQueue->type = 'BUCKETS';
+            $bucketQueue->priority = 1;
 
-        if (!$imageAlmacenator->uploadPhoto()) {
+            $store->queues()->saveMany([
+                $vipQueue, $bucketQueue
+            ]);
+
+            return [
+                'done' => true
+            ];
+
+        } catch (\Exception $e) {
+            Logger::getInstance()->logError('StoreManager@save - ' . $e->getMessage());
             return array('done' => false);
         }
-
-        return array('done' => $this->storeDao->save($store));
     }
 
-    public function update($body, $id){
+    public function update($body, $id)
+    {
         try {
-            $name = htmlentities(addslashes($body->name));
-            $id = (int) htmlentities(addslashes($id));
 
-            $store = new Store();
-            $store->setName($name);
-            $store->setId($id);
+            $store = Store::find($id);
 
-            return array('done' => $this->storeDao->update($store));
+            if (!$store) {
+                return [
+                    'done' => false
+                ];
+            }
 
-        } catch (Exception $e) {
+            if (!array_key_exists('name', (array) $body)) {
+                return [
+                    'done' => false
+                ];
+            }
+
+            $store->name = $body->name;
+
+            return [
+                'done' => $this->storeDao->save($store),
+                'store' => $store
+            ];
+
+        } catch (\Exception $e) {
+            Logger::error('StoreManager@update - ' . $e->getMessage());
             return array('done' => false);
         }
     }
-
 }
-
-
-?>

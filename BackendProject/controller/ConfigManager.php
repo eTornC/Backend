@@ -4,6 +4,7 @@ namespace eTorn\Controller;
 
 use eTorn\Bbdd\ConfigDao;
 use eTorn\Models\Config;
+use Illuminate\Database\Capsule\Manager as DB;
 
 class ConfigManager {
 
@@ -42,28 +43,46 @@ class ConfigManager {
         return array('done', $this->configDao->update($config));
     }
 
-    public function delete($id) {
-        return array('done', $this->configDao->delete($id));
+    public function delete($id)
+    {
+        return [
+            'done', $this->configDao->delete($id)
+        ];
     }
 
-    public function updateConfigs($body) {
+    public function updateConfigs($body)
+    {
+        Config::truncate();
 
-        $minDurationConfig = new Config();
-        $minDurationConfig->setKey('MIN_DURATION_BUCKETS');
-        $minDurationConfig->setValue($body->data->params->MIN_DURATION_BUCKETS);
+        $params = $body->data->params;
 
-        $hourStartConfig = new Config();
-        $hourStartConfig->setKey('HOUR_START_ALL_BUCKETS');
-        $hourStartConfig->setValue($body->data->params->HOUR_START_ALL_BUCKETS);
+        DB::beginTransaction();
 
-        $hourFinalConfig = new Config();
-        $hourFinalConfig->setKey('HOUR_FINAL_ALL_BUCKETS');
-        $hourFinalConfig->setValue($body->data->params->HOUR_FINAL_ALL_BUCKETS);
+        try {
+            foreach ($params as $key => $value) {
 
-        return array('done' => $this->configDao->updateByKey($hourFinalConfig)
-                && $this->configDao->updateByKey($hourStartConfig)
-                && $this->configDao->updateByKey($minDurationConfig)
-        );
+                $config = new Config();
+                $config->key = $key;
+                $config->value = $value;
+
+                $result = $config->save();
+
+                if (!$result) {
+                    throw new \Exception('error');
+                }
+            }
+
+            DB::commit();
+
+            return [
+                'done' => true
+            ];
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return [
+                'done' => false
+            ];
+        }
     }
 }
 

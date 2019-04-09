@@ -38,27 +38,28 @@ class LayoutManager {
 
 	public function save($body, $type) 
 	{
-		$l = null;
+		try {
+			$l = new Layout();
 
-		switch ($type) {
-			case 'TURNSCREEN':
-				$l = new TurnsScreen();
-				break;
-
-			case 'TOTEMSCREEN':
-				$l = new TotemScreen();
-				break;
-
-			default:
+			if ($type === 'TURNSCREEN' || $type === 'TOTEMSCREEN') {
+				$l->type = $type;
+			} else {
 				return array( 'done' => false );
+			}
+	
+			$l->name = $body->name;
+			$l->description = $body->description;
+			$l->layout = $body->layout;
+	
+			return array(
+				'done' => $this->layoutsDao->save($l)
+			);
+		} catch (\Exception $e) {
+			return array(
+			    'done' => false,
+				'err' => $e->getMessage(),
+			);
 		}
-
-		$l->setName($body->name);
-		$l->setDescription($body->description);
-		$l->setLayout(\json_encode($body->layout));
-
-		return array(
-			'done' => $this->layoutsDao->save($l)
-		);
+		
 	}
 }

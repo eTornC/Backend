@@ -2,7 +2,7 @@
 
 namespace eTorn\Models;
 
-class Bucket implements JsonSerializable {
+class Bucket {
 
     private $id;
     private $idBucketQueue;

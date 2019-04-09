@@ -2,91 +2,36 @@
 
 namespace eTorn\Models;
 
-class Queue implements JsonSerializable {
+use Illuminate\Database\Eloquent\Model;
 
-    private $id;
-    private $type;
-    private $priority;
-    private $idStore;
+class Queue extends Model 
+{
+    protected $table = 'queues';
 
-    public function __construct() {}
+    public $timestamps = true;
 
-    /**
-     * @return mixed
-     */
-    public function getId()
+    protected $fillable = [
+        'id', 'type', 'priority'
+    ];
+
+    public function turns()
     {
-        return $this->id;
+        return $this->hasMany('eTorn\Models\Turn', 'id_queue');
     }
 
-    /**
-     * @return mixed
-     */
-    public function getPriority()
+    public function getLastTurn()
     {
-        return $this->priority;
-    }
+        $turn = $this->turns()
+                    ->where('state', '=', 'WAITING')
+                    ->orderBy('state', 'desc')
+                    ->first();
 
-    /**
-     * @return mixed
-     */
-    public function getType()
-    {
-        return $this->type;
-    }
+        if (!$turn) {
+            return new Turn([
+                'number' => 0
+            ]);
+        }
 
-    /**
-     * @param mixed $id
-     */
-    public function setId($id)
-    {
-        $this->id = $id;
-    }
-
-    /**
-     * @param mixed $priority
-     */
-    public function setPriority($priority)
-    {
-        $this->priority = $priority;
-    }
-
-    /**
-     * @param mixed $type
-     */
-    public function setType($type)
-    {
-        $this->type = $type;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getIdStore()
-    {
-        return $this->idStore;
-    }
-
-    /**
-     * @param mixed $idStore
-     */
-    public function setIdStore($idStore)
-    {
-        $this->idStore = $idStore;
-    }
-
-    /**
-     * Specify data which should be serialized to JSON
-     * @link http://php.net/manual/en/jsonserializable.jsonserialize.php
-     * @return mixed data which can be serialized by <b>json_encode</b>,
-     * which is a value of any type other than a resource.
-     * @since 5.4.0
-     */
-    function jsonSerialize() {
-        return array(
-            "id" => $this->id,
-            "type" => $this->type,
-            "priority" => $this->priority
-        );
+        return $turn;
     }
 }
