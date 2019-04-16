@@ -2,93 +2,25 @@
 
 namespace eTorn\Models;
 
-class Till implements JsonSerializable {
+use Illuminate\Database\Eloquent\Model;
 
-    private $id;
-    private $idStore;
-    private $name;
-    private $active;
+class Till extends Model
+{
+    protected $table = 'tills';
 
-    function __construct() {}
+    public $timestamps = true;
 
-    /**
-     * @return mixed
-     */
-    public function getActive()
+    protected $fillable = [
+        'id', 'name', 'active'
+    ];
+
+    public function store()
     {
-        return $this->active;
+        return $this->belongsTo('eTorn\Models\Store', 'id_store');
     }
 
-    /**
-     * @param mixed $active
-     */
-    public function setActive($active)
+    public function turns()
     {
-        $this->active = $active;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getIdStore()
-    {
-        return $this->idStore;
-    }
-
-    /**
-     * @param mixed $id
-     */
-    public function setId($id)
-    {
-        $this->id = $id;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getName()
-    {
-        return $this->name;
-    }
-
-    /**
-     * @param mixed $idStore
-     */
-    public function setIdStore($idStore)
-    {
-        $this->idStore = $idStore;
-    }
-
-    /**
-     * @param mixed $name
-     */
-    public function setName($name)
-    {
-        $this->name = $name;
-    }
-
-    /**
-     * Specify data which should be serialized to JSON
-     * @link http://php.net/manual/en/jsonserializable.jsonserialize.php
-     * @return mixed data which can be serialized by <b>json_encode</b>,
-     * which is a value of any type other than a resource.
-     * @since 5.4.0
-     */
-    function jsonSerialize() {
-
-        return array(
-            'id' => $this->id,
-            'idStore' => $this->idStore,
-            'name' => $this->name,
-            'active' => $this->active
-        );
+        return $this->hasMany('eTorn\Models\Turn', 'id_till');
     }
 }

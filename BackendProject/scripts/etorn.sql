@@ -18,7 +18,7 @@ DROP TABLE IF EXISTS layouts;
 CREATE TABLE stores (
   id INTEGER PRIMARY KEY AUTO_INCREMENT,
   name VARCHAR(30) NOT NULL UNIQUE,
-  photo_path VARCHAR(100) DEFAULT '',
+  photo_path VARCHAR(255) DEFAULT '',
   active BOOLEAN DEFAULT 1,
   config TEXT,
   created_at DATETIME DEFAULT NOW(),
@@ -37,28 +37,17 @@ CREATE TABLE tills (
 CREATE TABLE queues (
   id INTEGER PRIMARY KEY AUTO_INCREMENT,
   id_store INTEGER NOT NULL,
-  type VARCHAR(14) NOT NULL,
-  priority INTEGER(1) NOT NULL,
+  type VARCHAR(50) NOT NULL,
   created_at DATETIME DEFAULT NOW(),
   updated_at DATETIME DEFAULT NOW()
 );
-
-CREATE TABLE bucket_queues (
-  id INTEGER PRIMARY KEY AUTO_INCREMENT,
-  id_store INTEGER NOT NULL, -- FK
-  id_destination_queue INTEGER NOT NULL,
-  queue_type VARCHAR(10) NOT NULL,
-  priority INTEGER(1) NOT NULL,
-  created_at DATETIME DEFAULT NOW(),
-  updated_at DATETIME DEFAULT NOW()
-);
-
 CREATE TABLE buckets (
   id INTEGER PRIMARY KEY AUTO_INCREMENT,
-  id_bucket_queue INTEGER NOT NULL,
+  id_queue INTEGER NOT NULL,
   hour_start DATETIME NOT NULL,
   hour_final DATETIME NOT NULL,
   quantity INTEGER(1) NOT NULL,
+  filled BOOLEAN NOT NULL,
   created_at DATETIME DEFAULT NOW(),
   updated_at DATETIME DEFAULT NOW()
 );
@@ -67,11 +56,11 @@ CREATE TABLE turns (
   id INTEGER PRIMARY KEY AUTO_INCREMENT,
   number INTEGER,
   id_bucket INTEGER,
-  id_queue INTEGER,
-  DATE_turn DATETIME NOT NULL,
   state VARCHAR(10) NOT NULL,
   id_till INTEGER,
+  type VARCHAR(15) NOT NULL,
   created_at DATETIME DEFAULT NOW(),
+  ended_at DATETIME,
   updated_at DATETIME DEFAULT NOW()
 );
 
@@ -99,13 +88,9 @@ ALTER TABLE tills ADD FOREIGN KEY (id_store) REFERENCES stores(id) ON DELETE CAS
 
 ALTER TABLE queues ADD FOREIGN KEY (id_store) REFERENCES stores(id) ON DELETE CASCADE;
 
-ALTER TABLE bucket_queues ADD FOREIGN KEY (id_store) REFERENCES stores(id) ON DELETE CASCADE;
-ALTER TABLE bucket_queues ADD FOREIGN KEY (id_destination_queue) REFERENCES queues(id) ON DELETE CASCADE;
-
-ALTER TABLE buckets ADD FOREIGN KEY (id_bucket_queue) REFERENCES bucket_queues(id) ON DELETE CASCADE;
+ALTER TABLE buckets ADD FOREIGN KEY (id_queue) REFERENCES queues(id) ON DELETE CASCADE;
 
 ALTER TABLE turns ADD FOREIGN KEY (id_bucket) REFERENCES buckets(id) ON DELETE CASCADE;
-ALTER TABLE turns ADD FOREIGN KEY (id_queue) REFERENCES queues(id) ON DELETE CASCADE;
 ALTER TABLE turns ADD FOREIGN KEY (id_till) REFERENCES tills(id) ON DELETE CASCADE;
 
 -- config DATA

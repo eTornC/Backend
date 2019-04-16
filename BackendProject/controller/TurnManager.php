@@ -5,6 +5,7 @@ namespace eTorn\Controller;
 use eTorn\Bbdd\QueueDao;
 use eTorn\Bbdd\TurnDao;
 use eTorn\Models\Queue;
+use eTorn\Models\Store;
 use eTorn\Models\Turn;
 
 class TurnManager {
@@ -97,17 +98,22 @@ class TurnManager {
         return $turns;
     }
 
-    public function newNormalTurn($body, $idStore) {
+    public function newNormalTurn($body, $idStore)
+    {
+        $store = Store::find($idStore);
 
-        $queueDao = new QueueDao();
+        $bucketQueue = $store->queues()->first();
 
-        $normalQueue = $queueDao->getNormalQueue($idStore);
-
-        $queueDao->close();
-
-        if ($normalQueue == null) {
-            return ['error' => 'No normal queue for this store'];
+        if ($bucketQueue == null) {
+            return [
+                'done' => false,
+                'error' => 'No queue for this store'
+            ];
         }
+
+        return $bucketQueue->firstBucketNotFilled();
+
+
 
         $lastTurn = $this->turnDao->getLastTurn($normalQueue->getId());
 
@@ -123,14 +129,19 @@ class TurnManager {
     public function newHourTurn($hour, $idStore) {
 
         if ($hour < strtotime('now')) {
-            return [ 'done' => false ];
+            return [
+                'done' => false,
+                'err' => 'hour from the past'
+            ];
         }
 
         $hour = date('Y-m-d H:i:s', $hour);
 
-        $bucketQueueDao = new BucketQueueDao();
-        $bucketQueue = $bucketQueueDao->findByStore($idStore);
-        $bucketQueueDao->close();
+        $store = Store::find($idStore);
+
+        $bucketQueue = $store->queues()->first();
+
+        $bucket = $bucketQueue->getBucketOfThisHour($hour);
 
         $bucketDao = new BucketDao();
         $bucket = $bucketDao->getBucketOfThisHour($hour, $bucketQueue);

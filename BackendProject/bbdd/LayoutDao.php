@@ -2,8 +2,6 @@
 
 namespace eTorn\Bbdd;
 
-use eTorn\Bbdd\Dao;
-
 use eTorn\Models\Layout;
 
 class LayoutDao {

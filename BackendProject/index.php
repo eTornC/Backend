@@ -6,6 +6,8 @@
     use Illuminate\Database\Capsule\Manager as Capsule;
     use eTorn\Constants\ConstantsDB;
     use Phroute\Phroute\RouteCollector;
+    use Phroute\Phroute\Exception\HttpRouteNotFoundException;
+    use Phroute\Phroute\Exception\HttpMethodNotAllowedException;
     use eTorn\Routes\RouterManager;
 
     require(dirname(__FILE__) . '/vendor/autoload.php');
@@ -34,11 +36,11 @@
     $capsule = new Capsule;
 
     $capsule->addConnection([
-        "driver" => "mysql",
-        "host" => ConstantsDB::DB_SERVER,
-        "database" => ConstantsDB::DB_NAME,
-        "username" => ConstantsDB::DB_USER,
-        "password" => ConstantsDB::DB_PASSWD
+        "driver"    => "mysql",
+        "host"      => ConstantsDB::DB_SERVER,
+        "database"  => ConstantsDB::DB_NAME,
+        "username"  => ConstantsDB::DB_USER,
+        "password"  => ConstantsDB::DB_PASSWD
     ]);
 
     //Make this Capsule instance available globally.
@@ -61,17 +63,22 @@
 
     try {
         $response = $dispatcher->dispatch($_SERVER['REQUEST_METHOD'], parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH));
-    } catch (\Phroute\Phroute\Exception\HttpRouteNotFoundException $e) {
+    } catch (HttpRouteNotFoundException $e) {
         $response = array("Error" => "Route not found");
-    } catch (\Phroute\Phroute\Exception\HttpMethodNotAllowedException $e) {
+    } catch (HttpMethodNotAllowedException $e) {
         $response = array("Error" => "Route not found or incorrect method.");
     }
+
+    // ----------------------------------------------------------------------------------
+    // ------------------------ CLOSING CONNECTION TO DATABASE --------------------------
+    // ----------------------------------------------------------------------------------
+    $capsule->getDatabaseManager()->disconnect(ConstantsDB::DB_NAME);
 
     // ----------------------------------------------------------------------------------
     // ------------------------------------ RESPONSE ------------------------------------
     // ----------------------------------------------------------------------------------
 
-    if (is_array($response)) {
+    if (is_array($response) || is_object($response)) {
         header('Content-type: application/json; charset=utf-8');
         echo json_encode($response);
     } else {

@@ -13,4 +13,14 @@ class Turn extends Model
     protected $fillable = [
         'id', 'number', 'state', 'type'
     ];
+
+    public function bucket()
+    {
+        return $this->belongsTo('eTorn\Models\Bucket', 'id_bucket');
+    }
+
+    public function till()
+    {
+        return $this->belongsTo('eTorn\Models\till', 'id_till');
+    }
 }

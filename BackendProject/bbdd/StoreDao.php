@@ -4,8 +4,8 @@ namespace eTorn\Bbdd;
 
 use eTorn\Models\Store;
 
-class StoreDao {
-
+class StoreDao
+{
     public function findAll() {
         return Store::all();
     }

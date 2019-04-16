@@ -3,7 +3,6 @@
 namespace eTorn\Routes;
 
 use eTorn\Controller\StoreManager;
-use eTorn\Controller\QueueManager;
 use eTorn\Controller\TurnManager;
 use eTorn\Controller\ConfigManager;
 use eTorn\Controller\LayoutManager;
@@ -72,8 +71,8 @@ class RouterManager
         // -----------------------------------------------------------------
 
         $router->post($prefix . '/store/{idStore}/nextTurn', function ($idStore) {
-            return (new TurnManager())->nextTurn($idStore);
-        });
+                return (new TurnManager())->nextTurn($idStore);
+            });
 
         $router->get($prefix . '/store/{idStore}/actualTurn', function ($idStore) {
             return (new TurnManager())->getActualTurn($idStore);

@@ -23,6 +23,11 @@ class Store extends Model
         return $this->hasMany('eTorn\Models\Queue', 'id_store');
     }
 
+    public function tills()
+    {
+        return $this->hasMany('eTorn\Models\Till', 'id_store');
+    }
+
     public function turns()
     {
         $allTurns = [];

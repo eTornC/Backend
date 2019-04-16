@@ -11,27 +11,60 @@ class Queue extends Model
     public $timestamps = true;
 
     protected $fillable = [
-        'id', 'type', 'priority'
+        'id', 'type'
     ];
 
+    /**
+     * @return array
+     */
     public function turns()
     {
-        return $this->hasMany('eTorn\Models\Turn', 'id_queue');
-    }
+        $buckets = $this->buckets()->get();
 
-    public function getLastTurn()
-    {
-        $turn = $this->turns()
-                    ->where('state', '=', 'WAITING')
-                    ->orderBy('state', 'desc')
-                    ->first();
+        $turns = [];
 
-        if (!$turn) {
-            return new Turn([
-                'number' => 0
-            ]);
+        foreach ($buckets as $bucket) {
+            array_push($turns, $bucket->turns());
         }
 
-        return $turn;
+        return $turns;
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function buckets()
+    {
+        return $this->hasMany('eTorn\Models\Bucket', 'id_queue');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public function firstBucketNotFilled()
+    {
+        return $this->buckets()
+                    ->where('filled', '=', false)
+                    ->get();
+    }
+
+    /**
+     * @param $hour
+     * @return Bucket
+     */
+    public function getBucketOfThisHour($hour)
+    {
+        $bucket = $this->buckets()
+                    ->where('hour_start', '<', $hour)
+                    ->where('hour_final', '>', $hour)
+                    ->first();
+
+        if (!$bucket) {
+
+
+
+        }
+
+        return $bucket;
     }
 }

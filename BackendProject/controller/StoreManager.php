@@ -54,17 +54,10 @@ class StoreManager {
             
             $store->save();
 
-            $vipQueue = new Queue();
-            $vipQueue->type = "VIP";
-            $vipQueue->priority = 0;
-
             $bucketQueue = new Queue();
             $bucketQueue->type = 'BUCKETS';
-            $bucketQueue->priority = 1;
 
-            $store->queues()->saveMany([
-                $vipQueue, $bucketQueue
-            ]);
+            $store->queues()->save($bucketQueue);
 
             return [
                 'done' => true
