@@ -36,6 +36,7 @@ class LayoutDao {
         return $l->save();
     }
 
-    public function delete($id) {}
-
+    public function delete($id) {
+        return $this->findById($id)->delete();
+    }
 }

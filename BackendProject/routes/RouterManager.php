@@ -150,6 +150,18 @@ class RouterManager
             return (new LayoutManager())->save(\json_decode($body), 'TOTEMSCREEN');
         });
 
+        $router->post($prefix . '/layout-template', function () {
+            $body = file_get_contents('php://input');
+            return (new LayoutManager())->save(\json_decode($body), 'TEMPLATE');
+        });
+        $router->put($prefix . '/layout/{id}', function ($id) {
+            $body = file_get_contents('php://input');
+            return (new LayoutManager())->update(\json_decode($body),$id);
+        });
+        $router->delete($prefix . "/layout/{id}", function ($id) {
+            return (new LayoutManager())->delete($id);
+        });
+
 
         // -----------------------------------------------------------------
         // --------------------------- PUBLICITY ---------------------------

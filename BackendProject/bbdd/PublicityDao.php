@@ -11,16 +11,6 @@ class PublicityDao {
         return Publicity::all();
     }
 
-    public function findAllTurnsScreen() 
-    {
-        return Publicity::where('TYPE', 'TURNSCREEN')->get();
-    }
-    
-    public function findAllTotemScreen() 
-    {
-        return Publicity::where('TYPE', 'TOTEMSCREEN')->get();
-    }
-
     public function findByProperty($property, $value) 
     {
         return Publicity::where($property, $value)->get();

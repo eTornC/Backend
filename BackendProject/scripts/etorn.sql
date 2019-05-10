@@ -12,6 +12,7 @@ DROP TABLE IF EXISTS queues;
 DROP TABLE IF EXISTS stores;
 DROP TABLE IF EXISTS configs;
 DROP TABLE IF EXISTS layouts;
+DROP TABLE IF EXISTS publicity;
 
 -- CREATING TABLES
 
@@ -109,6 +110,14 @@ INSERT INTO configs (`key`, value) VALUES ('HOUR_START_ALL_BUCKETS', 9);
 INSERT INTO configs (`key`, value) VALUES ('HOUR_FINAL_ALL_BUCKET', 22);
 -- INSERT INTO config (name, VALUE) VALUES ('bucket_QUANITTY)
 
+
+
+-- Layout Template Data --
+INSERT INTO `layouts` (`id`, `name`, `description`, `layout`, `type`, `created_at`, `updated_at`) VALUES (1, 'template1', 'template1', '{\"height\":\"100\",\"cols\":[{\"height\":\"100\",\"width\":12,\"rows\":[{\"height\":\"100\",\"cols\":[{\"height\":\"100\",\"width\":6,\"id\":1},{\"height\":\"100\",\"width\":6,\"id\":1}]}]}]}', 'TEMPLATE', NOW(), NOW());
+INSERT INTO `layouts` (`id`, `name`, `description`, `layout`, `type`, `created_at`, `updated_at`) VALUES (2, 'template2', 'template2', '{\"height\":\"100\",\"cols\":[{\"height\":\"100\",\"width\":12,\"rows\":[{\"height\":\"50\",\"cols\":[{\"height\":\"100\",\"width\":6,\"id\":1},{\"height\":\"100\",\"width\":6,\"id\":1}]},{\"height\":\"50\",\"cols\":[{\"height\":\"100\",\"width\":6,\"id\":1},{\"height\":\"100\",\"width\":6,\"id\":1}]}]}]}', 'TEMPLATE', NOW(), NOW());
+INSERT INTO `layouts` (`id`, `name`, `description`, `layout`, `type`, `created_at`, `updated_at`) VALUES (5, 'template3', 'template3', '{\"height\":\"100\",\"cols\":[{\"height\":\"100\",\"width\":12,\"rows\":[{\"height\":\"100\",\"cols\":[{\"height\":\"100\",\"width\":6,\"id\":1},{\"height\":\"100\",\"width\":6,\"rows\":[{\"height\":\"50\",\"width\":6,\"id\":1},{\"height\":\"50\",\"width\":6,\"id\":1}]}]}]}]}', 'TEMPLATE', NOW(), NOW());
+
+
 -- store DATA --
 
 -- INSERT INTO store (name, created_at) VALUES ('Carnisseria', NOW());
@@ -190,8 +199,3 @@ WHERE hour_start = (SELECT MAX(hour_start)
 
 */
 
--- Layout Template Data --
-INSERT INTO `layouts` (`id`, `name`, `description`, `layout`, `type`, `created_at`, `updated_at`) VALUES
-(1, 'template1', 'template1', '{\"height\":\"100\",\"cols\":[{\"height\":\"100\",\"width\":12,\"rows\":[{\"height\":\"100\",\"cols\":[{\"height\":\"100\",\"width\":6,\"id\":1},{\"height\":\"100\",\"width\":6,\"id\":1}]}]}]}', 'TEMPLATE', '2019-05-08 12:07:19', '2019-05-08 12:07:19'),
-(2, 'template2', 'template2', '{\"height\":\"100\",\"cols\":[{\"height\":\"100\",\"width\":12,\"rows\":[{\"height\":\"50\",\"cols\":[{\"height\":\"100\",\"width\":6,\"id\":1},{\"height\":\"100\",\"width\":6,\"id\":1}]},{\"height\":\"50\",\"cols\":[{\"height\":\"100\",\"width\":6,\"id\":1},{\"height\":\"100\",\"width\":6,\"id\":1}]}]}]}', 'TEMPLATE', '2019-05-08 12:07:19', '2019-05-08 12:07:19'),
-(5, 'template3', 'template3', '{\"height\":\"100\",\"cols\":[{\"height\":\"100\",\"width\":12,\"rows\":[{\"height\":\"100\",\"cols\":[{\"height\":\"100\",\"width\":6,\"id\":1},{\"height\":\"100\",\"width\":6,\"rows\":[{\"height\":\"50\",\"width\":6,\"id\":1},{\"height\":\"50\",\"width\":6,\"id\":1}]}]}]}]}', 'TEMPLATE', '2019-05-08 12:07:19', '2019-05-08 12:07:19');
