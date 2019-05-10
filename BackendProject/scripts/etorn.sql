@@ -82,6 +82,16 @@ CREATE TABLE layouts (
   updated_at DATETIME DEFAULT NOW()
 );
 
+CREATE TABLE publicity (
+  id INTEGER PRIMARY KEY AUTO_INCREMENT,
+  name VARCHAR(50) NOT NULL,
+  description VARCHAR(50) NOT NULL,
+  html TEXT NOT NULL,
+  created_at DATETIME DEFAULT NOW(),
+  updated_at DATETIME DEFAULT NOW()
+);
+
+
 -- FK --
 
 ALTER TABLE tills ADD FOREIGN KEY (id_store) REFERENCES stores(id) ON DELETE CASCADE;
@@ -179,3 +189,9 @@ WHERE hour_start = (SELECT MAX(hour_start)
 
 
 */
+
+-- Layout Template Data --
+INSERT INTO `layouts` (`id`, `name`, `description`, `layout`, `type`, `created_at`, `updated_at`) VALUES
+(1, 'template1', 'template1', '{\"height\":\"100\",\"cols\":[{\"height\":\"100\",\"width\":12,\"rows\":[{\"height\":\"100\",\"cols\":[{\"height\":\"100\",\"width\":6,\"id\":1},{\"height\":\"100\",\"width\":6,\"id\":1}]}]}]}', 'TEMPLATE', '2019-05-08 12:07:19', '2019-05-08 12:07:19'),
+(2, 'template2', 'template2', '{\"height\":\"100\",\"cols\":[{\"height\":\"100\",\"width\":12,\"rows\":[{\"height\":\"50\",\"cols\":[{\"height\":\"100\",\"width\":6,\"id\":1},{\"height\":\"100\",\"width\":6,\"id\":1}]},{\"height\":\"50\",\"cols\":[{\"height\":\"100\",\"width\":6,\"id\":1},{\"height\":\"100\",\"width\":6,\"id\":1}]}]}]}', 'TEMPLATE', '2019-05-08 12:07:19', '2019-05-08 12:07:19'),
+(5, 'template3', 'template3', '{\"height\":\"100\",\"cols\":[{\"height\":\"100\",\"width\":12,\"rows\":[{\"height\":\"100\",\"cols\":[{\"height\":\"100\",\"width\":6,\"id\":1},{\"height\":\"100\",\"width\":6,\"rows\":[{\"height\":\"50\",\"width\":6,\"id\":1},{\"height\":\"50\",\"width\":6,\"id\":1}]}]}]}]}', 'TEMPLATE', '2019-05-08 12:07:19', '2019-05-08 12:07:19');

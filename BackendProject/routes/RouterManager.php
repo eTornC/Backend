@@ -2,6 +2,7 @@
 
 namespace eTorn\Routes;
 
+use eTorn\Controller\PublicityManager;
 use eTorn\Controller\StoreManager;
 use eTorn\Controller\TurnManager;
 use eTorn\Controller\ConfigManager;
@@ -147,6 +148,30 @@ class RouterManager
         $router->post($prefix . '/totem-screen', function () {
             $body = file_get_contents('php://input');
             return (new LayoutManager())->save(\json_decode($body), 'TOTEMSCREEN');
+        });
+
+
+        // -----------------------------------------------------------------
+        // --------------------------- PUBLICITY ---------------------------
+        // -----------------------------------------------------------------
+        $router->get($prefix . '/publicitys', function () {
+            return (new PublicityManager())->findAll();
+        });
+
+        $router->get($prefix . "/publicity/{id}", function ($id) {
+            return (new PublicityManager())->findById($id);
+        });
+
+        $router->post($prefix . '/publicity', function () {
+            $body = file_get_contents('php://input');
+            return (new PublicityManager())->save(json_decode($body));
+        });
+        $router->put($prefix . '/publicity/{id}', function ($id) {
+            $body = file_get_contents('php://input');
+            return (new PublicityManager())->update(json_decode($body), $id);
+        });
+        $router->delete($prefix . '/publicity/{id}', function ($id) {
+            return (new PublicityManager())->delete($id);
         });
     }
 }
