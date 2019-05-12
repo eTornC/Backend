@@ -35,13 +35,54 @@ class LayoutManager {
 	{
 		return $this->layoutsDao->findAllTotemScreen();
 	}
+	public function delete($id){
+        return $this->layoutsDao->delete($id);
+    }
+
+    public function update($body,$id){
+        $l = $this->layoutsDao->findById($id);
+
+        if (!$l) {
+            return [
+                'done' => false
+            ];
+        }
+
+        try {
+
+            if(!$body){
+                return [
+                    'done' => false
+                ];
+            }
+            if (array_key_exists('name', (array) $body)) {
+                $l->name = $body->name;
+            }
+            if (array_key_exists('description', (array) $body)) {
+                $l->description = $body->description;
+            }
+            if (array_key_exists('layout', (array) $body)) {
+                $l->layout = $body->layout;
+            }
+
+            return array(
+                'done' => $this->layoutsDao->save($l)
+            );
+        } catch (\Exception $e) {
+            return array(
+                'done' => false,
+                'err' => $e->getMessage(),
+            );
+        }
+
+    }
 
 	public function save($body, $type) 
 	{
 		try {
 			$l = new Layout();
 
-			if ($type === 'TURNSCREEN' || $type === 'TOTEMSCREEN') {
+			if ($type === 'TURNSCREEN' || $type === 'TOTEMSCREEN' || $type === 'TEMPLATE') {
 				$l->type = $type;
 			} else {
 				return array( 'done' => false );

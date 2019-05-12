@@ -2,6 +2,7 @@
 
 namespace eTorn\Routes;
 
+use eTorn\Controller\PublicityManager;
 use eTorn\Controller\StoreManager;
 use eTorn\Controller\TurnManager;
 use eTorn\Controller\ConfigManager;
@@ -105,6 +106,25 @@ class RouterManager
             return array('done' => false);
         });
 
+		// -----------------------------------------------------------------
+		// ---------------------------- TESTINGS  --------------------------
+		// -----------------------------------------------------------------
+
+		$router->get($prefix . '/test', function () {
+			$now = time();
+			$hour_start = (ceil($now/300)*300)-300;
+			return date('Y-m-d H:i:s', $hour_start);
+		});
+
+		$router->get($prefix . '/time', function () {
+			Logger::debug('aloha');
+			return time() . '   ' . (time() + 300);
+		});
+
+		$router->get($prefix . '/phpinfo', function () {
+			return phpinfo();
+		});
+
         // -----------------------------------------------------------------
         // ---------------------------- CONFIG -----------------------------
         // -----------------------------------------------------------------
@@ -149,19 +169,40 @@ class RouterManager
             return (new LayoutManager())->save(\json_decode($body), 'TOTEMSCREEN');
         });
 
-		$router->get($prefix . '/test', function () {
-			$now = time();
-			$hour_start = (ceil($now/300)*300)-300;
-			return date('Y-m-d H:i:s', $hour_start);
-		});
+        $router->post($prefix . '/layout-template', function () {
+            $body = file_get_contents('php://input');
+            return (new LayoutManager())->save(\json_decode($body), 'TEMPLATE');
+        });
+        $router->put($prefix . '/layout/{id}', function ($id) {
+            $body = file_get_contents('php://input');
+            return (new LayoutManager())->update(\json_decode($body),$id);
+        });
+        $router->delete($prefix . "/layout/{id}", function ($id) {
+            return (new LayoutManager())->delete($id);
+        });
 
-		$router->get($prefix . '/time', function () {
-			Logger::debug('aloha');
-			return time() . '   ' . (time() + 300);
-		});
 
-		$router->get($prefix . '/phpinfo', function () {
-			return phpinfo();
-		});
+        // -----------------------------------------------------------------
+        // --------------------------- PUBLICITY ---------------------------
+        // -----------------------------------------------------------------
+        $router->get($prefix . '/publicitys', function () {
+            return (new PublicityManager())->findAll();
+        });
+
+        $router->get($prefix . "/publicity/{id}", function ($id) {
+            return (new PublicityManager())->findById($id);
+        });
+
+        $router->post($prefix . '/publicity', function () {
+            $body = file_get_contents('php://input');
+            return (new PublicityManager())->save(json_decode($body));
+        });
+        $router->put($prefix . '/publicity/{id}', function ($id) {
+            $body = file_get_contents('php://input');
+            return (new PublicityManager())->update(json_decode($body), $id);
+        });
+        $router->delete($prefix . '/publicity/{id}', function ($id) {
+            return (new PublicityManager())->delete($id);
+        });
     }
 }
