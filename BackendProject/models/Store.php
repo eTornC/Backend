@@ -4,6 +4,16 @@ namespace eTorn\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * Class Store
+ * @package eTorn\Models
+ * @property int $id
+ * @property string $name
+ * @property string $photopath
+ * @property array $config
+ * @property string $created_at
+ * @property string $updated_at
+ */
 class Store extends Model
 {
     protected $table = 'stores';
@@ -11,7 +21,7 @@ class Store extends Model
     public $timestamps = true;
     
     protected $fillable = [
-        'id', 'name', 'date', 'photopath', 'config'
+        'id', 'name', 'photopath', 'config'
     ];
 
     protected $casts = [

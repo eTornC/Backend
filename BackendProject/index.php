@@ -3,7 +3,8 @@
     // ----------------------------------------------------------------------------------
     // ------------------------------- IMPORTS ------------------------------------------
     // ----------------------------------------------------------------------------------
-    use Illuminate\Database\Capsule\Manager as Capsule;
+	use eTorn\Controller\Logger;
+	use Illuminate\Database\Capsule\Manager as Capsule;
     use eTorn\Constants\ConstantsDB;
     use Phroute\Phroute\RouteCollector;
     use Phroute\Phroute\Exception\HttpRouteNotFoundException;
@@ -11,7 +12,6 @@
     use eTorn\Routes\RouterManager;
 
     require(dirname(__FILE__) . '/vendor/autoload.php');
-    require(dirname(__FILE__) . '/routes/RouterManager.php');
 
     // ----------------------------------------------------------------------------------
     // ------------------------------- ERRORS CONFIG ------------------------------------
@@ -67,7 +67,11 @@
         $response = array("Error" => "Route not found");
     } catch (HttpMethodNotAllowedException $e) {
         $response = array("Error" => "Route not found or incorrect method.");
-    }
+    } catch (\Exception $e) {
+    	Logger::debug($e->getMessage());
+		Logger::debug($e->getFile() . ' - ' . $e->getLine());
+		$response = array('Error' => 'Exception throwed');
+	}
 
     // ----------------------------------------------------------------------------------
     // ------------------------ CLOSING CONNECTION TO DATABASE --------------------------

@@ -30,9 +30,9 @@ class ConfigDao {
         return $this->findById($id)->delete();
     }
 
-    public function findByKey($key)
+    public function findByKey($key): ?Config
     {
-        return $this->findByProperty('key', $key)[0];
+        return Config::where('key', $key)->first();
     }
 
 }

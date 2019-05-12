@@ -2,6 +2,7 @@
 
 namespace eTorn\Controller;
 
+use eTorn\Bbdd\BucketDao;
 use eTorn\Bbdd\QueueDao;
 use eTorn\Bbdd\TurnDao;
 use eTorn\Models\Queue;
@@ -111,19 +112,33 @@ class TurnManager {
             ];
         }
 
-        return $bucketQueue->firstBucketNotFilled();
+        $bucketDao = new BucketDao();
+		$bucket = $bucketDao->getFirstFreeBucket($bucketQueue);
 
+		$turnDao = new TurnDao();
 
+		$turn = new Turn();
+		$turn->state = 'WAITING';
+		$turn->type  = 'normal';
+		$turn->number = $turnDao->getNextNumberForWaitingTurn($bucketQueue);
 
-        $lastTurn = $this->turnDao->getLastTurn($normalQueue->getId());
+		$turn = $bucket->turns()->save($turn);
 
-        $newTurn = $this->createTurn($lastTurn->getNumber(), $normalQueue->getId());
+		if ($bucket->turns()->count() >= $bucket->quantity) {
+			$bucket->filled = true;
+			$bucket->save();
+		}
 
-        if ($this->turnDao->save($newTurn)) {
-            return ['number' => $newTurn->getNumber()];
-        }
-
-        return ['done' => false];
+		if ($turn) {
+			return [
+				'done' => true,
+				'turn' => $turn
+			];
+		} else {
+			return [
+				'done' => false
+			];
+		}
     }
 
     public function newHourTurn($hour, $idStore) {
@@ -141,22 +156,36 @@ class TurnManager {
 
         $bucketQueue = $store->queues()->first();
 
-        $bucket = $bucketQueue->getBucketOfThisHour($hour);
-
         $bucketDao = new BucketDao();
-        $bucket = $bucketDao->getBucketOfThisHour($hour, $bucketQueue);
-        $bucketDao->close();
+
+		$bucket = $bucketDao->getBucketOfThisHour($hour, $bucketQueue);
 
         if ($bucket == null) {
             return array('done' => false);
         }
 
         $turn = new Turn();
-        $turn->setIdBucket($bucket->getId());
-        $turn->setState('WAITING');
-        $turn->setIdUser(0);
+        $turn->state = 'WAITING';
+        $turn->type  = 'hour';
 
-        return array('done' => ($this->turnDao->saveHourTurn($turn)));
+		$turn = $bucket->turns()->save($turn);
+
+		if ($bucket->turns()->count() >= $bucket->quantity) {
+			$bucket->filled = true;
+			$bucket->save();
+		}
+
+		if ($turn) {
+			return [
+				'done' => true,
+				'turn' => $turn
+			];
+		} else {
+			return [
+				'done' => false
+			];
+
+		}
     }
 
     public function newVipTurn($body, $idStore) {

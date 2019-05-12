@@ -71,8 +71,8 @@ class RouterManager
         // -----------------------------------------------------------------
 
         $router->post($prefix . '/store/{idStore}/nextTurn', function ($idStore) {
-                return (new TurnManager())->nextTurn($idStore);
-            });
+			return (new TurnManager())->nextTurn($idStore);
+		});
 
         $router->get($prefix . '/store/{idStore}/actualTurn', function ($idStore) {
             return (new TurnManager())->getActualTurn($idStore);
@@ -88,7 +88,7 @@ class RouterManager
             return (new TurnManager())->newVipTurn($body, $idStore);
         });
 
-        $router->post($prefix . '/store/{idStore}/hourTurn', function ($idStore) {
+        $router->post($prefix . '/store/{idStore}/hour-turn', function ($idStore) {
             $body = file_get_contents('php://input');
             $body = json_decode($body);
             return (new TurnManager())->newHourTurn($body->hour, $idStore); // timestamp!!!
@@ -148,5 +148,20 @@ class RouterManager
             $body = file_get_contents('php://input');
             return (new LayoutManager())->save(\json_decode($body), 'TOTEMSCREEN');
         });
+
+		$router->get($prefix . '/test', function () {
+			$now = time();
+			$hour_start = (ceil($now/300)*300)-300;
+			return date('Y-m-d H:i:s', $hour_start);
+		});
+
+		$router->get($prefix . '/time', function () {
+			Logger::debug('aloha');
+			return time() . '   ' . (time() + 300);
+		});
+
+		$router->get($prefix . '/phpinfo', function () {
+			return phpinfo();
+		});
     }
 }

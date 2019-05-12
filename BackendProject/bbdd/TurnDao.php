@@ -2,6 +2,7 @@
 
 namespace eTorn\Bbdd;
 
+use eTorn\Models\Queue;
 use eTorn\Models\Store;
 use eTorn\Models\Turn;
 
@@ -43,6 +44,19 @@ class TurnDao
             ->where('state', 'ATTENDING')
             ->get();
     }
+
+	public function getNextNumberForWaitingTurn(Queue $queue): ?int
+	{
+		$turn = $queue->buckets()
+			->join('turns', 'turns.id_bucket', '=', 'buckets.id')
+			->max('turns.number');
+
+		if ($turn) {
+			return $turn + 1;
+		}
+
+		return 1;
+	}
 
     public function getListNextsTurns($idStore) {
 

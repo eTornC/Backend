@@ -4,6 +4,14 @@ namespace eTorn\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * Class Turn
+ * @package eTorn\Models
+ * @property int $id
+ * @property int $number
+ * @property string $state
+ * @property string $type
+ */
 class Turn extends Model
 {
     protected $table = 'turns';

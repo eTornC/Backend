@@ -96,7 +96,7 @@ ALTER TABLE turns ADD FOREIGN KEY (id_till) REFERENCES tills(id) ON DELETE CASCA
 -- config DATA
 INSERT INTO configs (`key`, value) VALUES ('MIN_DURATION_BUCKETS', 5);
 INSERT INTO configs (`key`, value) VALUES ('HOUR_START_ALL_BUCKETS', 9);
-INSERT INTO configs (`key`, value) VALUES ('HOUR_FINAL_ALL_BUCKET', 22);
+INSERT INTO configs (`key`, value) VALUES ('HOUR_FINAL_ALL_BUCKETS', 22);
 -- INSERT INTO config (name, VALUE) VALUES ('bucket_QUANITTY)
 
 -- store DATA --

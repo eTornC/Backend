@@ -3,6 +3,7 @@
 namespace eTorn\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Queue extends Model 
 {
@@ -31,7 +32,7 @@ class Queue extends Model
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return HasMany
      */
     public function buckets()
     {
@@ -39,32 +40,13 @@ class Queue extends Model
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Collection
+     * @return Model|null
      */
     public function firstBucketNotFilled()
     {
         return $this->buckets()
                     ->where('filled', '=', false)
-                    ->get();
-    }
-
-    /**
-     * @param $hour
-     * @return Bucket
-     */
-    public function getBucketOfThisHour($hour)
-    {
-        $bucket = $this->buckets()
-                    ->where('hour_start', '<', $hour)
-                    ->where('hour_final', '>', $hour)
                     ->first();
-
-        if (!$bucket) {
-
-
-
-        }
-
-        return $bucket;
     }
+
 }

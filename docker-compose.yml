@@ -1,17 +1,26 @@
 version: "3.2"
 services:
   apache:
-    build: './docker/apache/'
+    build:
+      context: './docker/apache/'
+      dockerfile: Dockerfile
     networks:
       - frontend
       - backend
     ports:
       - "80:80"
       - "3306:3306"
+      - "9000:9000"
     volumes:
       - ./BackendProject/:/var/www/html/
     environment:
       - MYSQL_ADMIN_PASS=etorn
+      - MYSQL_USER_NAME=etorn
+      - MYSQL_USER_DB=etorn
+      - MYSQL_USER_PASS=etorn
+      - PHP_IDE_CONFIG=serverName=docker-server
+      - XDEBUG_CONFIG=remote_host=192.168.1.146 remote_port=9001
+      - XDEBUG_HOST=192.168.1.146
 networks:
   frontend:
   backend:

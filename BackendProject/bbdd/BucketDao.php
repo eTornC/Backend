@@ -3,6 +3,7 @@
 namespace eTorn\Bbdd;
 
 use eTorn\Models\Bucket;
+use eTorn\Models\Queue;
 
 class BucketDao
 {
@@ -21,42 +22,49 @@ class BucketDao
         return Bucket::where($property, $value)->get();
     }
 
-    public function getBucketOfThisHour($hour, Queue $bucketQueue)
+    public function getBucketOfThisHour($hour, Queue $bucketQueue): ?Bucket
     {
         $bucket = $this->searchBucket($hour, $bucketQueue);
 
         if ($bucket == null) {
 
             $configDao = new ConfigDao();
-            $minuteLenghtBucket = $configDao->findByKey('MIN_DURATION_BUCKETS')->getValue();
-            $hourOpen = $configDao->findByKey('HOUR_START_ALL_BUCKETS')->getValue();
-            $hourClose = $configDao->findByKey('HOUR_FINAL_ALL_BUCKETS')->getValue();
+            $minuteLenghtBucket = $configDao->findByKey('MIN_DURATION_BUCKETS')->value;
+            //$hourOpen = $configDao->findByKey('HOUR_START_ALL_BUCKETS')->value;
+            //$hourClose = $configDao->findByKey('HOUR_FINAL_ALL_BUCKETS')->value;
 
             $lastBucket = $this->getLastBucketInTime($bucketQueue);
 
-            // TODO from now
-
             if ($lastBucket == null) {
-                return null;
+
+				$now = time();
+				$hour_start = (ceil($now/300)*300)-300;
+
+				$lastBucket = new Bucket();
+                $lastBucket->hour_start = date('Y-m-d H:i:s', $hour_start);
+				$hourFinalTimeStamp = strtotime($lastBucket->hour_start) + ($minuteLenghtBucket * 60) - 1;
+				$lastBucket->hour_final = date('Y-m-d H:i:s', $hourFinalTimeStamp);;
+                $lastBucket->filled = false;
+                $lastBucket->quantity = 3; // TODO
+
+				$bucketQueue->buckets()->save($lastBucket);
              }
 
-            while ($lastBucket->getHourStart() < $hour) {
+            while ($lastBucket->hour_final < $hour) {
 
                 $auxBucket = new Bucket();
-                $auxBucket->setIdBucketQueue($bucketQueue->getId());
-                $auxBucket->setQuantity(3); // TODO with parameter
-                $auxBucket->setHourStart(date('Y-m-d H:i:s', strtotime($lastBucket->getHourFinal()) + 1));
+                $auxBucket->quantity = 3; // TODO with parameter
+                $auxBucket->hour_start = date('Y-m-d H:i:s', strtotime($lastBucket->hour_final) + 1);
 
-                $hourFinalTimeStamp = strtotime($auxBucket->getHourStart()) + ($minuteLenghtBucket * 60) - 1;
+				$hourFinalTimeStamp = strtotime($auxBucket->hour_start) + ($minuteLenghtBucket * 60) - 1;
+				$auxBucket->hour_final = date('Y-m-d H:i:s', $hourFinalTimeStamp);
 
-                $auxBucket->setHourFinal(date('Y-m-d H:i:s', $hourFinalTimeStamp));
+				$auxBucket->filled = false;
 
-                $this->save($auxBucket);
+				$bucketQueue->buckets()->save($auxBucket);
 
                 $lastBucket = $auxBucket;
             }
-
-            $lastBucket = $this->completeThisBucket($lastBucket);
 
             return $lastBucket;
 
@@ -65,109 +73,40 @@ class BucketDao
         }
     }
 
-    private function searchBucket($hour, Queue $bucketQueue)
+	/**
+	 * @param $hour
+	 * @param Queue $bucketQueue
+	 * @return Bucket
+	 */
+	private function searchBucket($hour, Queue $bucketQueue): ?Bucket
     {
-
-        $query = "SELECT * FROM BUCKET WHERE HOUR_START < '$hour' AND HOUR_FINAL > '$hour' " .
-                    "AND ID_BUCKET_QUEUE = " . $bucketQueue->getId();
-
-        $result = parent::query($query);
-
-        if ($row = $result->fetch_assoc()) {
-
-            $bucket = new Bucket();
-            $bucket->setId($row['ID']);
-            $bucket->setIdBucketQueue($row['ID_BUCKET_QUEUE']);
-            $bucket->setHourStart($row['HOUR_START']);
-            $bucket->setHourFinal($row['HOUR_FINAL']);
-            $bucket->setDateCreated($row['DATE_CREATED']);
-            $bucket->setQuantity($row['QUANTITY']);
-
-            return $bucket;
-        }
-
-        return null;
+    	return $bucketQueue->buckets()
+			->where('hour_start', '<=', $hour)
+			->where('hour_final', '>=', $hour)
+			->first();
     }
 
-    private function getLastBucketInTime(BucketQueue $bucketQueue) {
+    private function getLastBucketInTime(Queue $bucketQueue): ?Bucket
+	{
+		$maxHourStart = $bucketQueue->buckets()->max('hour_start');
+		$maxHourFinal = $bucketQueue->buckets()->max('hour_final');
 
-        $bucketQueueId = $bucketQueue->getId();
-
-        $query = "SELECT *
-                  FROM BUCKET
-                  WHERE HOUR_START = (SELECT MAX(HOUR_START)
-                                      FROM BUCKET
-                                      WHERE ID_BUCKET_QUEUE = $bucketQueueId)
-                  AND HOUR_FINAL = (SELECT MAX(HOUR_FINAL)
-                                      FROM BUCKET
-                                      WHERE ID_BUCKET_QUEUE = $bucketQueueId)
-                                      AND BUCKET.ID_BUCKET_QUEUE = $bucketQueueId";
-
-        $result = parent::query($query);
-
-        if ($row = $result->fetch_assoc()) {
-
-            $bucket = new Bucket();
-            $bucket->setId($row['ID']);
-            $bucket->setIdBucketQueue($row['ID_BUCKET_QUEUE']);
-            $bucket->setHourStart($row['HOUR_START']);
-            $bucket->setHourFinal($row['HOUR_FINAL']);
-            $bucket->setDateCreated($row['DATE_CREATED']);
-            $bucket->setQuantity($row['QUANTITY']);
-
-            return $bucket;
-        }
-
-        return null;
+		return $bucketQueue->buckets()
+					->where('hour_start', '=', $maxHourStart)
+					->where('hour_final', '=', $maxHourFinal)
+					->first();
     }
 
-    private function completeThisBucket(Bucket $bucket) {
+	public function getFirstFreeBucket(Queue $bucketQueue): ?Bucket
+	{
+		$now = date('Y-m-d H:i:s', time()+300); // avoid actual bucket (+300)
+		$bucket = null;
 
-        $query = "SELECT * FROM BUCKET WHERE ID_BUCKET_QUEUE = " . $bucket->getIdBucketQueue() .
-                    " AND HOUR_START = '" . $bucket->getHourStart() . "' AND HOUR_FINAL = '"
-                        . $bucket->getHourFinal() . "'";
+		do {
+			$bucket = $this->getBucketOfThisHour($now, $bucketQueue);
+			$now = date('Y-m-d H:i:s', strtotime($now)+300);
+		} while ($bucket == null || $bucket->filled);
 
-        $result = parent::query($query);
-
-        if ($row = $result->fetch_assoc()) {
-
-            $bucket = new Bucket();
-            $bucket->setId($row['ID']);
-            $bucket->setIdBucketQueue($row['ID_BUCKET_QUEUE']);
-            $bucket->setHourStart($row['HOUR_START']);
-            $bucket->setHourFinal($row['HOUR_FINAL']);
-            $bucket->setDateCreated($row['DATE_CREATED']);
-            $bucket->setQuantity($row['QUANTITY']);
-
-            return $bucket;
-        }
-
-        return null;
-    }
-
-    public function getActualBuckets() {
-
-        $query = "SELECT * FROM BUCKET WHERE HOUR_START < NOW() AND HOUR_FINAL > NOW()";
-
-        $result = parent::query($query);
-
-        $toReturn = array();
-
-        while ($row = $result->fetch_assoc()) {
-
-            $bucket = new Bucket();
-            $bucket->setId($row['ID']);
-            $bucket->setIdBucketQueue($row['ID_BUCKET_QUEUE']);
-            $bucket->setHourStart($row['HOUR_START']);
-            $bucket->setHourFinal($row['HOUR_FINAL']);
-            $bucket->setDateCreated($row['DATE_CREATED']);
-            $bucket->setQuantity($row['QUANTITY']);
-
-            $toReturn[] = $bucket;
-        }
-
-        return $toReturn;
-    }
+		return $bucket;
+	}
 }
-
-?>

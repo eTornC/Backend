@@ -3,7 +3,18 @@
 namespace eTorn\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo as BelongsToAlias;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
+/**
+ * Class Bucket
+ * @package eTorn\Models
+ * @property int $id
+ * @property string $hour_start
+ * @property string $hour_final
+ * @property int $quantity
+ * @property boolean $filled
+ */
 class Bucket extends Model
 {
     public $table = 'buckets';
@@ -19,7 +30,7 @@ class Bucket extends Model
     public $timestamps = true;
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return BelongsToAlias
      */
     public function queue()
     {
@@ -27,7 +38,7 @@ class Bucket extends Model
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return HasMany
      */
     public function turns()
     {
