@@ -2,8 +2,10 @@
 
 namespace eTorn\Bbdd;
 
+use eTorn\Controller\Logger;
 use eTorn\Models\Bucket;
 use eTorn\Models\Queue;
+use eTorn\Models\Turn;
 
 class BucketDao
 {
@@ -108,5 +110,21 @@ class BucketDao
 		} while ($bucket == null || $bucket->filled);
 
 		return $bucket;
+	}
+
+	public function getPendingBuckets(Queue $queue)
+	{
+		$minIdBucket = Turn::join('buckets', 'turns.id_bucket', '=', 'buckets.id')
+			->where('buckets.id_queue', '=', $queue->id)
+			->where('turns.state', '=', 'WAITING')
+			->min('turns.id_bucket');
+
+		$firstbucket = Bucket::find($minIdBucket);
+		$actualBucket = $this->getBucketOfThisHour(date('Y-m-d H:i:s'), $queue);
+
+		return $queue->buckets()
+			->where('hour_start', '>=', $firstbucket->hour_start)
+			->where('hour_final', '<=', $actualBucket->hour_final)
+			->get();
 	}
 }

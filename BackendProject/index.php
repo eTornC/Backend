@@ -68,9 +68,14 @@
     } catch (HttpMethodNotAllowedException $e) {
         $response = array("Error" => "Route not found or incorrect method.");
     } catch (\Exception $e) {
-    	Logger::debug($e->getMessage());
-		Logger::debug($e->getFile() . ' - ' . $e->getLine());
-		$response = array('Error' => 'Exception throwed');
+    	Logger::error($e->getMessage());
+		Logger::error($e->getFile() . ' - ' . $e->getLine());
+		$response = [
+			'Error' => 'Exception throwed',
+			'msg' => $e->getMessage(),
+			'file' => $e->getFile(),
+			'line' => $e->getLine()
+		];
 	}
 
     // ----------------------------------------------------------------------------------

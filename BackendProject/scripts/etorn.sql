@@ -7,7 +7,6 @@ USE etorn;
 DROP TABLE IF EXISTS turns;
 DROP TABLE IF EXISTS tills;
 DROP TABLE IF EXISTS buckets;
-DROP TABLE IF EXISTS bucket_queues;
 DROP TABLE IF EXISTS queues;
 DROP TABLE IF EXISTS stores;
 DROP TABLE IF EXISTS configs;
@@ -63,6 +62,7 @@ CREATE TABLE turns (
   created_at DATETIME DEFAULT NOW(),
   ended_at DATETIME,
   updated_at DATETIME DEFAULT NOW()
+-- atended_at?
 );
 
 CREATE TABLE configs (

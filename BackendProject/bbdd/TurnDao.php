@@ -38,11 +38,19 @@ class TurnDao
         return $this->findByProperty('ID_QUEUE', $idQueue);
     }
 
-    public function getActualTurn($idStore)
+	/**
+	 * @param Store $store
+	 * @return mixed
+	 */
+	public function getActualTurns(Store $store)
     {
-        return Turn::where('id_store', $idStore)
-            ->where('state', 'ATTENDING')
-            ->get();
+    	$queue = $store->queues()->first();
+
+    	return Turn::join('buckets', 'turns.id_bucket', '=', 'buckets.id')
+			->where('buckets.id_queue', '=', $queue->id)
+			->where('state', 'ATTENDING')
+			->select('turns.*')
+			->get();
     }
 
 	public function getNextNumberForWaitingTurn(Queue $queue): ?int
@@ -58,34 +66,24 @@ class TurnDao
 		return 1;
 	}
 
-    public function getListNextsTurns($idStore) {
+    public function getListNextsTurns(Store $store)
+	{
+		$queue = $store->queues()->first();
+			/*
+			return $queue->buckets()
+				->leftJoin('turns', 'turns.id_bucket', '=', 'buckets.id')
+				->where('turns.state' , '=', 'WAITING')
+				->orderBy('turns.created_at', 'asc')
+				->select('turns.*')
+				->get();
+			*/
 
-        $results = array();
+		return Turn::where('turns.state' , '=', 'WAITING')
+			->join('buckets', 'turns.id_bucket', '=', 'buckets.id')
+			->where('buckets.id_queue', '=', $queue->id)
+			->orderBy('turns.created_at', 'asc')
+			->get();
 
-        $query = "  SELECT T.*, Q.QUEUE_TYPE AS 'TYPE'
-                    FROM TURN T JOIN QUEUE Q ON T.ID_QUEUE=Q.ID
-                    WHERE T.STATE LIKE 'WAITING' AND Q.ID_STORE = $idStore 
-                    ORDER BY Q.PRIORITY, T.DATE_TURN, T.ID;
-                    ";
-
-        $res = $this->query($query);
-
-        while ($row = $res->fetch_assoc()) {
-
-            $turn = new Turn();
-            $turn->setId($row['ID']);
-            $turn->setNumber($row['NUMBER']);
-            $turn->setIdBucket($row['ID_BUCKET']);
-            $turn->setIdUser($row['ID_USER']);
-            $turn->setIdQueue($row['ID_QUEUE']);
-            $turn->setDateTurn($row['DATE_TURN']);
-            $turn->setState($row['STATE']);
-            $turn->setType($row['TYPE']);
-
-            $results[] = $turn;
-        }
-
-        return $results;
     }
 
     public function getFirstTurnInQueue($idQueue) {

@@ -20,13 +20,12 @@ class Queue extends Model
      */
     public function turns()
     {
-        $buckets = $this->buckets()->get();
+    	$turns = [];
 
-        $turns = [];
+        $this->buckets()->each(function (Bucket $b) use ($turns) {
 
-        foreach ($buckets as $bucket) {
-            array_push($turns, $bucket->turns());
-        }
+        	$b->turns();
+		});
 
         return $turns;
     }

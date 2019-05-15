@@ -7,6 +7,7 @@ use eTorn\Bbdd\QueueDao;
 use eTorn\Bbdd\TurnDao;
 use eTorn\Models\Queue;
 use eTorn\Models\Store;
+use eTorn\Models\Till;
 use eTorn\Models\Turn;
 
 class TurnManager {
@@ -29,70 +30,61 @@ class TurnManager {
         return $this->turnDao->findById($idTurn);
     }
 
-    public function save($body, $idStore, $idQueue) {
+    public function nextTurn($idStore, $idTill)
+	{
+		$store = Store::find($idStore);
 
-        $turn = new Turn();
+		if ($idTill) {
+			$till = Till::find($idTill);
+		}
 
-        $turn->setNumber($this->turnDao->getLastTurn($idQueue)->getNumber()+1);
-        $turn->setIdBucket('null');
-        $turn->setIdQueue($idQueue);
-        $turn->setState('WAITING');
-        $turn->setIdUser(0); // Body?
+		if (!$store) {
+			return [
+				'error' => 'Store not found'
+			];
+		}
 
-        return array('done' => $this->turnDao->save($turn));
-    }
+        $actualTurns = $this->turnDao->getActualTurns($store);
 
-    public function update($body, $idStore, $idQueue, $idTurn) {
-
-        $turn = new Turn();
-        $turn->setId($idTurn);
-        $turn->setState($body->state);
-        $turn->setIdQueue($idQueue);
-
-        return array('done' => $this->turnDao->update($turn));
-    }
-
-    public function delete($idTurn) {
-        return array('done' => $this->turnDao->delete($idTurn));
-    }
-
-    public function nextTurn($idStore) {
-
-        $actualTurn = $this->turnDao->getActualTurn($idStore);
-
-        $result = false;
-
-        if ($actualTurn == null) {
-
-            $listOfTurns = $this->turnDao->getListNextsTurns($idStore);
-
-            if (count($listOfTurns) > 0) {
-                $listOfTurns[0]->setState('ATTENDING');
-                $result = $this->turnDao->update($listOfTurns[0]);
-            }
-        } else {
-
-            $actualTurn->setState('ENDED');
-            $result = $this->turnDao->update($actualTurn);
-
-            if ($result) {
-
-                $listOfTurns = $this->turnDao->getListNextsTurns($idStore);
-
-                if (count($listOfTurns) > 0) {
-                    $listOfTurns[0]->setState('ATTENDING');
-                    $result = $this->turnDao->update($listOfTurns[0]);
-                }
-            }
+        if (count($actualTurns) > 0) {
+        	$actualTurns[0]->state = 'ENDED';
+			$actualTurns[0]->save();
         }
 
-        return ['done' => (bool) $result];
+        $bucketDao = new BucketDao();
+        $buckets = $bucketDao->getPendingBuckets($store->queues()->first());
+
+        if ($buckets->count() > 0) {
+        	$turn = $buckets[0]->turns()
+						->where('state', '=', 'WAITING')
+						->orderByRaw( "FIELD(type, 'vip', 'hour', 'normal')")
+						->orderBy('number')
+						->orderBy('created_at')
+						->first();
+
+        	$turn->state = 'ATTENDING';
+
+			return [
+				'done' => $turn->save()
+			];
+		}
+
+        return ['done' => false];
     }
 
-    public function getActualTurn($idStore) {
-        $turns = $this->turnDao->getActualTurn($idStore);
+    public function getActualTurns($idStore)
+	{
+    	$store = Store::find($idStore);
 
-        if (count($turns) == 0) {
+    	if (!$store) {
+    		return [
+    			'error' => 'Store not found'
+			];
+		}
+
+        $turns = $this->turnDao->getActualTurns($store);
+
+        if (count($turns) === 0) {
             return ['error' => 'no turn'];
         }
 
@@ -255,7 +247,8 @@ class TurnManager {
         return array('done' => true);
     }
 
-    public function waitingTurns($idStore) {
+    public function waitingTurns($idStore)
+	{
         return $this->turnDao->getListNextsTurns($idStore);
     }
 

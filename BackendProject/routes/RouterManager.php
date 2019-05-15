@@ -72,11 +72,18 @@ class RouterManager
         // -----------------------------------------------------------------
 
         $router->post($prefix . '/store/{idStore}/nextTurn', function ($idStore) {
-			return (new TurnManager())->nextTurn($idStore);
+
+        	if (isset($_REQUEST['till'])) {
+				$idTill = $_REQUEST['till'];
+			} else {
+				$idTill = null;
+			}
+
+			return (new TurnManager())->nextTurn($idStore, $idTill);
 		});
 
         $router->get($prefix . '/store/{idStore}/actualTurn', function ($idStore) {
-            return (new TurnManager())->getActualTurn($idStore);
+            return (new TurnManager())->getActualTurns($idStore);
         });
 
         $router->post($prefix . '/store/{idStore}/turn', function ($idStore) {
@@ -185,7 +192,7 @@ class RouterManager
         // -----------------------------------------------------------------
         // --------------------------- PUBLICITY ---------------------------
         // -----------------------------------------------------------------
-        $router->get($prefix . '/publicitys', function () {
+        $router->get($prefix . '/publicities', function () {
             return (new PublicityManager())->findAll();
         });
 
