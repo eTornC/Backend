@@ -249,7 +249,9 @@ class TurnManager {
 
     public function waitingTurns($idStore)
 	{
-        return $this->turnDao->getListNextsTurns($idStore);
+		$store = Store::find($idStore);
+		// TODO FAILS
+        return $this->turnDao->getListNextsTurns($store);
     }
 
 }

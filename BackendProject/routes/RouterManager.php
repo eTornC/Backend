@@ -86,6 +86,10 @@ class RouterManager
             return (new TurnManager())->getActualTurns($idStore);
         });
 
+		$router->get($prefix . '/store/{idStore}/waitingTurns', function ($idStore) {
+			return (new TurnManager())->waitingTurns($idStore);
+		});
+
         $router->post($prefix . '/store/{idStore}/turn', function ($idStore) {
             $body = file_get_contents('php://input');
             return (new TurnManager())->newNormalTurn($body, $idStore);
@@ -96,7 +100,7 @@ class RouterManager
             return (new TurnManager())->newVipTurn($body, $idStore);
         });
 
-        $router->post($prefix . '/store/{idStore}/hour-turn', function ($idStore) {
+        $router->post($prefix . '/store/{idStore}/hourTurn', function ($idStore) {
             $body = file_get_contents('php://input');
             $body = json_decode($body);
             return (new TurnManager())->newHourTurn($body->hour, $idStore); // timestamp!!!
