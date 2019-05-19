@@ -88,6 +88,8 @@ CREATE TABLE publicity (
   name VARCHAR(50) NOT NULL,
   description VARCHAR(50) NOT NULL,
   html TEXT NOT NULL,
+  height INTEGER DEFAULT 100,
+  width INTEGER DEFAULT 100,
   created_at DATETIME DEFAULT NOW(),
   updated_at DATETIME DEFAULT NOW()
 );
@@ -116,6 +118,13 @@ INSERT INTO configs (`key`, value) VALUES ('HOUR_FINAL_ALL_BUCKETS', 22);
 INSERT INTO `layouts` (`id`, `name`, `description`, `layout`, `type`, `created_at`, `updated_at`) VALUES (1, 'template1', 'template1', '{\"height\":\"100\",\"cols\":[{\"height\":\"100\",\"width\":12,\"rows\":[{\"height\":\"100\",\"cols\":[{\"height\":\"100\",\"width\":6,\"id\":1},{\"height\":\"100\",\"width\":6,\"id\":1}]}]}]}', 'TEMPLATE', NOW(), NOW());
 INSERT INTO `layouts` (`id`, `name`, `description`, `layout`, `type`, `created_at`, `updated_at`) VALUES (2, 'template2', 'template2', '{\"height\":\"100\",\"cols\":[{\"height\":\"100\",\"width\":12,\"rows\":[{\"height\":\"50\",\"cols\":[{\"height\":\"100\",\"width\":6,\"id\":1},{\"height\":\"100\",\"width\":6,\"id\":1}]},{\"height\":\"50\",\"cols\":[{\"height\":\"100\",\"width\":6,\"id\":1},{\"height\":\"100\",\"width\":6,\"id\":1}]}]}]}', 'TEMPLATE', NOW(), NOW());
 INSERT INTO `layouts` (`id`, `name`, `description`, `layout`, `type`, `created_at`, `updated_at`) VALUES (5, 'template3', 'template3', '{\"height\":\"100\",\"cols\":[{\"height\":\"100\",\"width\":12,\"rows\":[{\"height\":\"100\",\"cols\":[{\"height\":\"100\",\"width\":6,\"id\":1},{\"height\":\"100\",\"width\":6,\"rows\":[{\"height\":\"50\",\"width\":6,\"id\":1},{\"height\":\"50\",\"width\":6,\"id\":1}]}]}]}]}', 'TEMPLATE', NOW(), NOW());
+
+
+-- publicity --
+INSERT INTO `publicity` (`id`, `name`, `description`, `html`, `height`, `width`, `created_at`, `updated_at`) VALUES
+(1, 'Oferta1', 'Cuadrado', '<div style=\" background-image: url(\'https://images.assetsdelivery.com/compings_v2/romastudio/romastudio1603/romastudio160300280.jpg\');\n background-repeat: no-repeat;\n background-size: 100% 100%;\n height:100%;\n;\">\n<div class=\"row d-flex align-items-center\" style=\"height:100%;\">\n<div class=\"col-4\">\n<img width=\"150px\" src=\" https://i1.wp.com/freepngimages.com/wp-content/uploads/2015/11/apple-transparent-background-image.png?fit=600%2C600\"/>\n</div>\n<div class=\"col-8\"><h1 class=\"h1\">Oferta</h1>\n<p class=\"text- h3\">Rebaja 10% las manzanas</p></div>\n</div>\n</div>', 100, 100, '2019-05-19 16:01:06', '2019-05-19 17:23:24'),
+(2, 'Oferta2', 'Horizontal', '<div style=\" background-image: url(\'https://images.assetsdelivery.com/compings_v2/romastudio/romastudio1603/romastudio160300280.jpg\');\n background-repeat: no-repeat;\n background-size: 100% 100%;\n height:100%;\n;\">\n<div class=\"row d-flex align-items-center\" style=\"height:100%\">\n<div class=\"col-4 \">\n<img width=\"100px\" src=\" https://i1.wp.com/freepngimages.com/wp-content/uploads/2015/11/apple-transparent-background-image.png?fit=600%2C600\"/>\n</div>\n<div class=\"col-8\"><h1 class=\"h1\">Oferta</h1>\n<p class=\"text- h3\">Rebaja 10% las manzanas</p></div>\n</div>\n</div>', 40, 100, '2019-05-19 16:01:27', '2019-05-19 17:25:07'),
+(3, 'Oferta3', 'Vertical', '<div style=\" background-image: url(\'https://images.assetsdelivery.com/compings_v2/romastudio/romastudio1603/romastudio160300280.jpg\');\n background-repeat: no-repeat;\n background-size: 100% 100%;\n height:100%;\n;\">\n<div class=\"row d-flex justify-content-cente\">\n<div class=\"col-12 ml-2 mt-5 pt-4 \">\n<img width=\"100px\" src=\" https://i1.wp.com/freepngimages.com/wp-content/uploads/2015/11/apple-transparent-background-image.png?fit=600%2C600\"/>\n</div>\n<div class=\"col-12 p-3\"><h1 class=\"h1\">Oferta</h1>\n<p class=\"text- h3\">Rebaja 10% las manzanas</p></div>\n</div>\n</div>', 100, 40, '2019-05-19 17:06:37', '2019-05-19 17:19:42');
 
 
 -- store DATA --

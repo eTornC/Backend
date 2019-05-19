@@ -12,7 +12,7 @@ class Publicity extends Model
 	public $timestamps = true;
 
 	protected $fillable = [
-		'id', 'name', 'description', 'html'
+		'id', 'name', 'description', 'html', 'height', 'width'
 	];
 
 	protected $casts = [

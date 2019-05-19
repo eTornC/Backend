@@ -50,6 +50,12 @@ class PublicityManager {
             if (array_key_exists('html', (array) $body)) {
                 $publicity->html = $body->html;
             }
+            if (array_key_exists('height', (array) $body)) {
+                $publicity->height = $body->height;
+            }
+            if (array_key_exists('width', (array) $body)) {
+                $publicity->width = $body->width;
+            }
 
             return array(
                 'done' => $this->publicityDao->save($publicity)
@@ -70,7 +76,9 @@ class PublicityManager {
 
 			$p->name = $body->name;
 			$p->description = $body->description;
-			$p->html = $body->html;
+            $p->html = $body->html;
+            $p->height = $body->height;
+            $p->width = $body->width;
 
             return array(
 				'done' => $this->publicityDao->save($p)
