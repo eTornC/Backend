@@ -51,10 +51,12 @@ class TurnManager {
 			$actualTurns[0]->save();
         }
 
-        $bucketDao = new BucketDao();
-        $buckets = $bucketDao->getPendingBuckets($store->queues()->first());
+        $queue = $store->queues()->first();
 
-        if ($buckets->count() > 0) {
+        $bucketDao = new BucketDao();
+        $buckets = $bucketDao->getPendingBuckets($queue);
+
+        if ($buckets && $buckets->count() > 0) {
         	$turn = $buckets[0]->turns()
 						->where('state', '=', 'WAITING')
 						->orderByRaw( "FIELD(type, 'vip', 'hour', 'normal')")
@@ -69,7 +71,20 @@ class TurnManager {
 			];
 		}
 
-        return ['done' => false];
+		$turns = $this->turnDao->getNextsNormalTurns($queue);
+
+        if (count($turns) > 0) {
+			$turns[0]->state = 'ATTENDING';
+
+			return [
+				'done' => $turns[0]->save()
+			];
+		}
+
+        return [
+        	'done' => false,
+			'msg' => 'No turns'
+		];
     }
 
     public function getActualTurns($idStore)
@@ -256,4 +271,3 @@ class TurnManager {
 
 }
 
-?>

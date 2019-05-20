@@ -122,9 +122,13 @@ class BucketDao
 		$firstbucket = Bucket::find($minIdBucket);
 		$actualBucket = $this->getBucketOfThisHour(date('Y-m-d H:i:s'), $queue);
 
-		return $queue->buckets()
-			->where('hour_start', '>=', $firstbucket->hour_start)
-			->where('hour_final', '<=', $actualBucket->hour_final)
-			->get();
+		if ($firstbucket && $actualBucket) {
+			return $queue->buckets()
+				->where('hour_start', '>=', $firstbucket->hour_start)
+				->where('hour_final', '<=', $actualBucket->hour_final)
+				->get();
+		}
+
+		return null;
 	}
 }

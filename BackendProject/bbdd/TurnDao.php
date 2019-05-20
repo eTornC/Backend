@@ -161,4 +161,14 @@ class TurnDao
         return $results;
     }
 
+	public function getNextsNormalTurns(Queue $queue)
+	{
+		return Turn::where('turns.state' , '=', 'WAITING')
+			->join('buckets', 'turns.id_bucket', '=', 'buckets.id')
+			->where('buckets.id_queue', '=', $queue->id)
+			->where('turns.type', '=', 'normal')
+			->orderBy('turns.created_at', 'asc')
+			->get();
+	}
+
 }
