@@ -208,6 +208,7 @@ class RouterManager
             $body = file_get_contents('php://input');
             return (new PublicityManager())->save(json_decode($body));
         });
+
         $router->put($prefix . '/publicity/{id}', function ($id) {
             $body = file_get_contents('php://input');
             return (new PublicityManager())->update(json_decode($body), $id);

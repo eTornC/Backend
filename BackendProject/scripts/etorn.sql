@@ -59,10 +59,10 @@ CREATE TABLE turns (
   state VARCHAR(10) NOT NULL,
   id_till INTEGER,
   type VARCHAR(15) NOT NULL,
-  created_at DATETIME DEFAULT NOW(),
   ended_at DATETIME,
+  atended_at DATETIME,
+  created_at DATETIME DEFAULT NOW(),
   updated_at DATETIME DEFAULT NOW()
--- atended_at?
 );
 
 CREATE TABLE configs (

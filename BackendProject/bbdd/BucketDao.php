@@ -32,25 +32,26 @@ class BucketDao
 
             $configDao = new ConfigDao();
             $minuteLenghtBucket = $configDao->findByKey('MIN_DURATION_BUCKETS')->value;
-            //$hourOpen = $configDao->findByKey('HOUR_START_ALL_BUCKETS')->value;
-            //$hourClose = $configDao->findByKey('HOUR_FINAL_ALL_BUCKETS')->value;
+            //s$hourOpen = $configDao->findByKey('HOUR_START_ALL_BUCKETS')->value;
+			//$hourClose = $configDao->findByKey('HOUR_FINAL_ALL_BUCKETS')->value;
 
             $lastBucket = $this->getLastBucketInTime($bucketQueue);
 
-            if ($lastBucket == null) {
+			$now = time();
 
-				$now = time();
-				$hour_start = (ceil($now/300)*300)-300;
+            if ($lastBucket == null || strtotime($lastBucket->hour_final) < ($now - 3600)) {
+
+				$hour_start = (ceil($now / 300) * 300) - 300;
 
 				$lastBucket = new Bucket();
-                $lastBucket->hour_start = date('Y-m-d H:i:s', $hour_start);
+				$lastBucket->hour_start = date('Y-m-d H:i:s', $hour_start);
 				$hourFinalTimeStamp = strtotime($lastBucket->hour_start) + ($minuteLenghtBucket * 60) - 1;
 				$lastBucket->hour_final = date('Y-m-d H:i:s', $hourFinalTimeStamp);;
-                $lastBucket->filled = false;
-                $lastBucket->quantity = 3; // TODO
+				$lastBucket->filled = false;
+				$lastBucket->quantity = 3; // TODO
 
 				$bucketQueue->buckets()->save($lastBucket);
-             }
+			}
 
             while ($lastBucket->hour_final < $hour) {
 

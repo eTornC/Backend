@@ -10,6 +10,8 @@ use eTorn\Models\Store;
 use eTorn\Models\Till;
 use eTorn\Models\Turn;
 
+use Illuminate\Database\Capsule\Manager as DB;
+
 class TurnManager {
 
     private $turnDao;
@@ -48,6 +50,7 @@ class TurnManager {
 
         if (count($actualTurns) > 0) {
         	$actualTurns[0]->state = 'ENDED';
+			$actualTurns[0]->ended_at = date('Y-m-d H:i:s');
 			$actualTurns[0]->save();
         }
 
@@ -64,17 +67,26 @@ class TurnManager {
 						->orderBy('created_at')
 						->first();
 
-        	$turn->state = 'ATTENDING';
+			if ($turn instanceof Turn) {
+				$turn->state = 'ATTENDING';
+				$turn->atended_at = date('Y-m-d H:i:s');
 
-			return [
-				'done' => $turn->save()
-			];
+				return [
+					'done' => $turn->save()
+				];
+			}
 		}
+        DB::enableQueryLog();
 
 		$turns = $this->turnDao->getNextsNormalTurns($queue);
 
+		//Logger::debug(json_encode(DB::getQueryLog()));
+
         if (count($turns) > 0) {
 			$turns[0]->state = 'ATTENDING';
+			$turns[0]->atended_at = date('Y-m-d H:i:s');
+			Logger::debug('akitamo2');
+			Logger::debug(json_encode($turns[0]));
 
 			return [
 				'done' => $turns[0]->save()
@@ -109,6 +121,13 @@ class TurnManager {
     public function newNormalTurn($body, $idStore)
     {
         $store = Store::find($idStore);
+
+        if (!$store) {
+			return [
+				'done' => false,
+				'error' => 'Store not found.'
+			];
+		}
 
         $bucketQueue = $store->queues()->first();
 
@@ -222,42 +241,45 @@ class TurnManager {
         return array('done' => false);
     }
 
-    public function updateHourTurns() {
+	/**
+	 * @return array
+	 */
+	public function updateHourTurns()
+	{
+        $stores = Store::all();
 
-        $bucketDao = new BucketDao();
-        $bucketQueueDao = new BucketQueueDao();
-        $queueDao = new QueueDao();
+        foreach ($stores as $store) {
 
-        $actualBuckets = $bucketDao->getActualBuckets();
+        	$queue = $store->queue();
 
-        foreach ($actualBuckets as $bucket) { // TODO notifications
+        	$now = date('Y-m-d H:i:s', (time()+300));
 
-            $bucketQueue = $bucketQueueDao->findById($bucket->getIdBucketQueue());
+			$actualBuckets = $queue->buckets()
+								->where('hour_start', '<=', $now)
+								->where('hour_final', '>=', $now)
+								->get();
 
-            $turnsToUpdate = $this->turnDao->getMobileTurnsToUpdate($bucket);
+			if (count($actualBuckets) > 0) {
 
-            if (count($turnsToUpdate) > 0) {
+				foreach ($actualBuckets as $bucket) {
 
-                $queue = $queueDao->findById($bucketQueue->getIdDestinationQueue());
+					$turns = $bucket->turns()
+								->where('type', '=', 'hour')
+								->get();
 
-                $lastTurnNum = $this->turnDao->getLastTurn($queue->getId())->getNumber();
+					if (count($turns) > 0) {
 
-                $turnNumber = $lastTurnNum + 1;
+						foreach ($turns as $turn) {
 
-                foreach ($turnsToUpdate as $turn) {
-                    if ($turn instanceof Turn) {
-                        $turn->setNumber($turnNumber);
-                        $turn->setIdQueue($queue->getId());
-                        $this->turnDao->update($turn);
-                        $turnNumber++;
-                    }
-                }
-            }
-        }
-
-        $bucketDao->close();
-        $bucketQueueDao->close();
-        $queueDao->close();
+							$lastTurnNum = $this->turnDao->getNextNumberForHourTurn($queue);
+							$turn->number = $lastTurnNum;
+							$turn->notifyNewTurn();
+							$turn->save();
+						}
+					}
+				}
+			}
+		}
 
         return array('done' => true);
     }
@@ -265,7 +287,14 @@ class TurnManager {
     public function waitingTurns($idStore)
 	{
 		$store = Store::find($idStore);
-		// TODO FAILS
+
+		if (!$store) {
+			return [
+				'done' => false,
+				'err' => 'store not found'
+			];
+		}
+
         return $this->turnDao->getListNextsTurns($store);
     }
 

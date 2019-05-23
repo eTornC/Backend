@@ -3,6 +3,7 @@
 namespace eTorn\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
  * Class Turn
@@ -11,6 +12,8 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $number
  * @property string $state
  * @property string $type
+ * @property string $atended_at
+ * @property string $ended_at
  */
 class Turn extends Model
 {
@@ -19,16 +22,28 @@ class Turn extends Model
     public $timestamps = true;
 
     protected $fillable = [
-        'id', 'number', 'state', 'type'
+        'id', 'number', 'state', 'type',
+		'atended_at', 'ended_at'
     ];
 
-    public function bucket()
+	/**
+	 * @return BelongsTo
+	 */
+	public function bucket(): BelongsTo
     {
         return $this->belongsTo('eTorn\Models\Bucket', 'id_bucket');
     }
 
-    public function till()
+	/**
+	 * @return BelongsTo
+	 */
+	public function till(): BelongsTo
     {
         return $this->belongsTo('eTorn\Models\till', 'id_till');
     }
+
+    public function notifyNewTurn(): void
+	{
+
+	}
 }

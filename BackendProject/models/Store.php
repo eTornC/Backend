@@ -28,10 +28,21 @@ class Store extends Model
         'config' => 'array'
     ];
 
-    public function queues()
+	/**
+	 * @return \Illuminate\Database\Eloquent\Relations\HasMany
+	 */
+	public function queues()
     {
         return $this->hasMany('eTorn\Models\Queue', 'id_store');
     }
+
+	/**
+	 * @return Queue
+	 */
+	public function queue(): Queue
+	{
+		return $this->queues()->first();
+	}
 
     public function tills()
     {
