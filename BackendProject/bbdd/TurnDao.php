@@ -95,7 +95,7 @@ class TurnDao
 
     }
 
-	public function getNextsNormalTurns(Queue $queue)
+	public function getNextsNormalTurns(Queue $queue): array
 	{
 		$buckets = $queue->buckets()->get();
 
@@ -116,5 +116,26 @@ class TurnDao
 
 		return $turns;
 	}
+
+	public function getNextNormalTurn(Queue $queue): ?Turn
+    {
+	    $turns = $this->getNextsNormalTurns($queue);
+
+	    if (count($turns) > 0) {
+	        return $turns[0];
+        }
+
+	    return null;
+    }
+
+    public function getNextTurnOfThisBucket(Bucket $bucket): ?Turn
+    {
+        return $bucket->turns()
+            ->where('state', '=', 'WAITING')
+            ->orderByRaw( "FIELD(type, 'vip', 'hour', 'normal')")
+            ->orderBy('number')
+            ->orderBy('created_at')
+            ->first();
+    }
 
 }

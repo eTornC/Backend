@@ -4,7 +4,12 @@
     // ------------------------------- IMPORTS ------------------------------------------
     // ----------------------------------------------------------------------------------
 	use eTorn\Controller\Logger;
-	use Illuminate\Database\Capsule\Manager as Capsule;
+use eTorn\Routes\ActionsRoutes;
+use eTorn\Routes\ConfigRoutes;
+use eTorn\Routes\LayoutsRoutes;
+use eTorn\Routes\StoresRoutes;
+use eTorn\Routes\TestRoutes;
+use Illuminate\Database\Capsule\Manager as Capsule;
     use eTorn\Constants\ConstantsDB;
     use Phroute\Phroute\RouteCollector;
     use Phroute\Phroute\Exception\HttpRouteNotFoundException;
@@ -55,7 +60,11 @@
 
     $router = new RouteCollector();
 
-    RouterManager::manageRoutes($router);
+    ActionsRoutes::manageRoutes($router);
+    ConfigRoutes::manageRoutes($router);
+    LayoutsRoutes::manageRoutes($router);
+    StoresRoutes::manageRoutes($router);
+    TestRoutes::manageRoutes($router);
 
     $dispatcher = new Phroute\Phroute\Dispatcher($router->getData());
 
@@ -91,5 +100,6 @@
         header('Content-type: application/json; charset=utf-8');
         echo json_encode($response);
     } else {
+        header('Content-type: text/html; charset=utf-8');
         echo $response;
     }

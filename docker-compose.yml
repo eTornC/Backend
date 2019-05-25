@@ -19,8 +19,8 @@ services:
       - MYSQL_USER_DB=etorn
       - MYSQL_USER_PASS=etorn
       - PHP_IDE_CONFIG=serverName=docker-server
-      - XDEBUG_CONFIG=remote_host=192.168.1.146 remote_port=9001
-      - XDEBUG_HOST=192.168.1.146
+      - XDEBUG_CONFIG=remote_host=192.168.1.120 remote_port=9001
+      - XDEBUG_HOST=192.168.1.120
 networks:
   frontend:
   backend:
