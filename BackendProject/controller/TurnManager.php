@@ -179,6 +179,13 @@ class TurnManager {
             return array('done' => false);
         }
 
+        if ($bucket->filled) {
+            return [
+                'done' => false,
+                'err' => 'Bucked Filled'
+            ];
+        }
+
         $turn = new Turn();
         $turn->state = 'WAITING';
         $turn->type  = 'hour';
@@ -199,7 +206,6 @@ class TurnManager {
 			return [
 				'done' => false
 			];
-
 		}
     }
 

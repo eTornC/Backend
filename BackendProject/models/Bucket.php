@@ -3,7 +3,7 @@
 namespace eTorn\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo as BelongsToAlias;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
@@ -30,11 +30,16 @@ class Bucket extends Model
     public $timestamps = true;
 
     /**
-     * @return BelongsToAlias
+     * @return BelongsTo
      */
     public function queue()
     {
         return $this->belongsTo('eTorn\Models\Queue', 'id_queue');
+    }
+
+    public function queueInstance(): Queue
+    {
+        return $this->queue()->first();
     }
 
     /**
