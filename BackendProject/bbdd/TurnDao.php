@@ -107,10 +107,9 @@ class TurnDao
 			->where('buckets.id_queue', '=', $queue->id)
 			->orderBy('turns.created_at', 'asc')
 			->get();
-
     }
 
-	public function getNextsNormalTurns(Queue $queue)
+	public function getNextsNormalTurns(Queue $queue): array
 	{
 		$buckets = $queue->buckets()->get();
 
@@ -132,5 +131,48 @@ class TurnDao
 		return $turns;
 	}
 
+	public function getNextNormalTurn(Queue $queue): ?Turn
+    {
+	    $turns = $this->getNextsNormalTurns($queue);
+
+	    if (count($turns) > 0) {
+	        return $turns[0];
+        }
+
+	    return null;
+    }
+
+    public function getNextTurnOfThisBucket(Bucket $bucket): ?Turn
+    {
+        return $bucket->turns()
+                ->where('state', '=', 'WAITING')
+                ->orderByRaw( "FIELD(type, 'vip', 'hour', 'normal')")
+                ->orderBy('number')
+                ->orderBy('created_at')
+                ->first();
+    }
+
+    public function calculationBucketSize(Bucket $bucket, Queue $queue): int
+    {
+        $timeHourStart = strtotime($bucket->hour_start);
+
+        Logger::debug(date('Y-m-d H:i:s', $timeHourStart-3600));
+
+        $avg = $queue->buckets()
+                    ->join('turns', 'buckets.id', '=', 'turns.id_bucket')
+                    ->where('turns.ended_at', '>', date('Y-m-d H:i:s', time()-3600)) // TODO param!!
+                    ->where('turns.state', '=', 'ENDED')
+                    ->selectRaw(" AVG(TIMESTAMPDIFF(SECOND, atended_at, ended_at)) as time")
+                    ->first();
+
+        Logger::debug(json_encode($avg));
+
+        if ($avg['time']) {
+            Logger::debug(floor(300 / $avg['time']));
+            return floor(300 / $avg['time']);
+        }
+
+        return 3; // TODO param!!
+    }
 
 }

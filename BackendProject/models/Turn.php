@@ -42,6 +42,11 @@ class Turn extends Model
         return $this->belongsTo('eTorn\Models\till', 'id_till');
     }
 
+    public function hasNumber(): bool
+    {
+        return ($this->number != null);
+    }
+
     public function notifyNewTurn(): void
 	{
 
