@@ -1,0 +1,16 @@
+{
+  "name": "etorn-scripts",
+  "version": "1.0.0",
+  "description": "",
+  "main": "clockUpdate.js",
+  "private": true,
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "node clockUpdate.js"
+  },
+  "author": "Joseff",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.18.0"
+  }
+}

@@ -11,6 +11,9 @@ BackendProject/.idea
 BackendProject/vendor
 BackendProject/logs/*
 BackendProject/images/*
+BackendProject/scripts/node_modules
+BackendProject/scripts/package-lock.json
+
 .vscode
 *.suo
 *.ntvs*
