@@ -71,7 +71,7 @@ class RouterManager
         // ---------------------------- ACTIONS ----------------------------
         // -----------------------------------------------------------------
 
-        $router->post($prefix . '/store/{idStore}/nextTurn', function ($idStore) {
+        $router->get($prefix . '/store/{idStore}/nextTurn', function ($idStore) {
 
         	if (isset($_REQUEST['till'])) {
 				$idTill = $_REQUEST['till'];

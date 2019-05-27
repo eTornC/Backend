@@ -1,3 +1,5 @@
+CREATE USER 'etorn'@'%' IDENTIFIED BY 'etorn';
+GRANT ALL PRIVILEGES ON * . * TO 'etorn'@'%';
 
 CREATE DATABASE IF NOT EXISTS etorn;
 
