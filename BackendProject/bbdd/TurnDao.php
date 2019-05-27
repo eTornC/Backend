@@ -55,7 +55,7 @@ class TurnDao
 			->get();
     }
 
-	public function getNextNumberForWaitingTurn(Queue $queue): ?int
+	public function getNextNumberForWaitingTurn(Queue $queue): ?int // TODO of only today
 	{
 		$turn = $queue->buckets()
 			->join('turns', 'turns.id_bucket', '=', 'buckets.id')
@@ -69,11 +69,26 @@ class TurnDao
 		return 1;
 	}
 
-	public function getNextNumberForHourTurn(Queue $queue): ?int
+	public function getNextNumberForHourTurn(Queue $queue): ?int // TODO of only today
+	{
+		$turn = $queue->buckets()
+					->join('turns', 'turns.id_bucket', '=', 'buckets.id')
+					->where('turns.type', '=', 'hour')
+					->max('turns.number');
+
+		if ($turn) {
+			return $turn + 1;
+		}
+
+		return 1;
+	}
+
+
+	public function getNextNumberForVipTurn(Queue $queue): int // TODO of only today
 	{
 		$turn = $queue->buckets()
 			->join('turns', 'turns.id_bucket', '=', 'buckets.id')
-			->where('turns.type', '=', 'hour')
+			->where('turns.type', '=', 'vip')
 			->max('turns.number');
 
 		if ($turn) {
@@ -116,5 +131,6 @@ class TurnDao
 
 		return $turns;
 	}
+
 
 }

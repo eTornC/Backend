@@ -3,7 +3,6 @@
 namespace eTorn\Controller;
 
 use eTorn\Bbdd\BucketDao;
-use eTorn\Bbdd\QueueDao;
 use eTorn\Bbdd\TurnDao;
 use eTorn\Models\Queue;
 use eTorn\Models\Store;
@@ -180,6 +179,13 @@ class TurnManager {
 
         $store = Store::find($idStore);
 
+		if (!$store) {
+			return [
+				'done' => false,
+				'error' => 'Store not found.'
+			];
+		}
+
         $bucketQueue = $store->queues()->first();
 
         $bucketDao = new BucketDao();
@@ -214,31 +220,44 @@ class TurnManager {
 		}
     }
 
-    public function newVipTurn($body, $idStore) {
+    public function newVipTurn($body, $idStore)
+	{
+		$store = Store::find($idStore);
 
-        $queueDao = new QueueDao();
+		if (!$store) {
+			return [
+				'done' => false,
+				'error' => 'Store not found.'
+			];
+		}
 
-        $vipQueue = $queueDao->getVipQueue($idStore);
+		$queue = $store->queue();
 
-        if (!$vipQueue) {
-            return array('error' => 'No VIP queue for this store');
-        }
+		$bucketDao = new BucketDao();
 
-        $lastTurn = $vipQueue->getLastTurn();
+		$bucket = $bucketDao->getFirstBucketWithTotemTurns($queue);
 
-        $newTurn = new Turn([
-            'number' => $lastTurn->number+1,
-            'state' => 'WAITING'
-        ]);
+		if (!$bucket->filled) {
 
-        if ($vipQueue->turns()->save($newTurn)){
-            return [
-                'done' => true,
-                'number' => $newTurn->number
-            ];
-        }
+			$vipTurn = new Turn();
+			$vipTurn->type = 'vip';
+			$vipTurn->number = $this->turnDao->getNextNumberForVipTurn($queue);
 
-        return array('done' => false);
+			$result = $bucket->turns()->save($vipTurn);
+
+			if ($result === false) {
+				return [
+					'done' => false
+				];
+			} else {
+				return [
+					'done' => true,
+					'turn' => $vipTurn
+				];
+			}
+		}
+
+
     }
 
 	/**
