@@ -21,3 +21,4 @@ BackendProject/scripts/package-lock.json
 *.sln
 
 BackendProject/constants/ConstantsDB.php
+BackendProject/constants/ConstantsFirebase.php

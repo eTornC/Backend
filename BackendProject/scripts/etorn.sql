@@ -1,5 +1,3 @@
-CREATE USER 'etorn'@'%' IDENTIFIED BY 'etorn';
-GRANT ALL PRIVILEGES ON * . * TO 'etorn'@'%';
 
 CREATE DATABASE IF NOT EXISTS etorn;
 
@@ -63,6 +61,7 @@ CREATE TABLE turns (
   type VARCHAR(15) NOT NULL,
   ended_at DATETIME,
   atended_at DATETIME,
+  config TEXT,
   created_at DATETIME DEFAULT NOW(),
   updated_at DATETIME DEFAULT NOW()
 );
@@ -129,6 +128,8 @@ INSERT INTO `publicity` (`id`, `name`, `description`, `html`, `height`, `width`,
 (2, 'Oferta2', 'Horizontal', '<div style=\" background-image: url(\'https://images.assetsdelivery.com/compings_v2/romastudio/romastudio1603/romastudio160300280.jpg\');\n background-repeat: no-repeat;\n background-size: 100% 100%;\n height:100%;\n;\">\n<div class=\"row d-flex align-items-center\" style=\"height:100%\">\n<div class=\"col-4 \">\n<img width=\"100px\" src=\" https://i1.wp.com/freepngimages.com/wp-content/uploads/2015/11/apple-transparent-background-image.png?fit=600%2C600\"/>\n</div>\n<div class=\"col-8\"><h1 class=\"h1\">Oferta</h1>\n<p class=\"text- h3\">Rebaja 10% las manzanas</p></div>\n</div>\n</div>', 40, 100, '2019-05-19 16:01:27', '2019-05-19 17:25:07'),
 (3, 'Oferta3', 'Vertical', '<div style=\" background-image: url(\'https://images.assetsdelivery.com/compings_v2/romastudio/romastudio1603/romastudio160300280.jpg\');\n background-repeat: no-repeat;\n background-size: 100% 100%;\n height:100%;\n;\">\n<div class=\"row d-flex justify-content-cente\">\n<div class=\"col-12 ml-2 mt-5 pt-4 \">\n<img width=\"100px\" src=\" https://i1.wp.com/freepngimages.com/wp-content/uploads/2015/11/apple-transparent-background-image.png?fit=600%2C600\"/>\n</div>\n<div class=\"col-12 p-3\"><h1 class=\"h1\">Oferta</h1>\n<p class=\"text- h3\">Rebaja 10% las manzanas</p></div>\n</div>\n</div>', 100, 40, '2019-05-19 17:06:37', '2019-05-19 17:19:42');
 
+CREATE USER 'etorn'@'%' IDENTIFIED BY 'etorn';
+GRANT ALL PRIVILEGES ON * . * TO 'etorn'@'%';
 
 -- store DATA --
 

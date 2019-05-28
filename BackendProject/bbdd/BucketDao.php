@@ -6,6 +6,7 @@ use eTorn\Controller\Logger;
 use eTorn\Models\Bucket;
 use eTorn\Models\Queue;
 use eTorn\Models\Turn;
+use Illuminate\Database\Eloquent\Collection;
 
 class BucketDao
 {
@@ -147,42 +148,16 @@ class BucketDao
 		return null;
 	}
 
-	public function createTurnVip(Queue $queue): ?Turn
-	{
-		$bucket = $this->getFirstBucketWithTotemTurns($queue);
-
-		if (!$bucket->filled) {
-
-			$turnDao = new TurnDao();
-
-			$turn = new Turn();
-			$turn->type = 'vip';
-			$turn->number = $turnDao->getNextNumberForVipTurn($queue);
-
-			$result = $bucket->turns()->save($turn);
-
-			if ($result == false) {
-				return null;
-			} else {
-				return $turn;
-			}
-		}
-
-
-
-
-	}
-
-	public function getFirstBucketWithTotemTurns(Queue $queue): ?Bucket
+	public function getBucketsWithTotemTurns(Queue $queue): Collection
 	{
 		$now = date('Y-m-d H:i:s', time()+300);
 
 		return $queue->buckets()
 				->join('turns', 'turns.id_bucket', '=', 'buckets.id')
-				->where('bucket.hour_start', '>=', $now)
+				->where('buckets.hour_start', '>=', $now)
 				->where('turns.type', '=', 'normal')
 				->where('turns.state', '=', 'WAITING')
-				->orderBy('bucket.hour_start', 'asc')
-				->first();
+				->orderBy('buckets.hour_start', 'asc')
+				->get('buckets.*');
 	}
 }

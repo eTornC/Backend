@@ -12,7 +12,8 @@
   "require": {
     "phroute/phroute": "v2.1.0",
     "illuminate/database": "^5.7",
-    "ext-json": "*"
+    "ext-json": "*",
+    "guzzlehttp/guzzle": "^6.3"
   },
   "autoload": {
     "psr-4": {

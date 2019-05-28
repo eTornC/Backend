@@ -155,7 +155,10 @@ class TurnManager {
 		}
     }
 
-    public function newHourTurn($hour, $idStore) {
+    public function newHourTurn($body, $idStore)
+	{
+		$hour = $body->hour;
+		$token = $body->token;
 
         if ($hour < strtotime('now')) {
             return [
@@ -195,6 +198,9 @@ class TurnManager {
         $turn = new Turn();
         $turn->state = 'WAITING';
         $turn->type  = 'hour';
+        $turn->config = [
+        	'token' => $token
+		];
 
 		$turn = $bucket->turns()->save($turn);
 
@@ -228,31 +234,54 @@ class TurnManager {
 
 		$queue = $store->queue();
 
+		//$now = date('Y-m-d H:i:s', (time()+300));
+
+		$turn = new Turn();
+		$turn->type = 'vip';
+		$turn->state = 'WAITING';
+		$turn->number = $this->turnDao->getNextNumberForVipTurn($queue);
+
 		$bucketDao = new BucketDao();
 
-		$bucket = $bucketDao->getFirstBucketWithTotemTurns($queue);
+		$buckets = $bucketDao->getBucketsWithTotemTurns($queue);
 
-		if (!$bucket->filled) {
+		$lastBucket = null;
+		//$lastTurn =
 
-			$vipTurn = new Turn();
-			$vipTurn->type = 'vip';
-			$vipTurn->number = $this->turnDao->getNextNumberForVipTurn($queue);
+		foreach ($buckets as $bucket) {
 
-			$result = $bucket->turns()->save($vipTurn);
+			if ($bucket->filled) {
 
-			if ($result === false) {
-				return [
-					'done' => false
-				];
+				$bucket->turns()
+					->where('type', '=', 'normal');
+
 			} else {
-				return [
-					'done' => true,
-					'turn' => $vipTurn
-				];
+				$result = $bucket->turns()->save($turn);
+
+				if ($bucket->turns()->count() >= $bucket->quantity) {
+					$bucket->filled = true;
+					$bucket->save();
+				}
+
+				if ($result === false) {
+					return [
+						'done' => false
+					];
+				} else {
+					return [
+						'done' => true,
+						'turn' => $turn
+					];
+				}
 			}
+
+			$lastBucket = $bucket;
 		}
 
-
+		$bucket = $bucketDao->getBucketOfThisHour(
+			date('Y-m-d H:i:s',strtotime($lastBucket->hour_start) + 300),
+			$queue
+		);
     }
 
 	/**

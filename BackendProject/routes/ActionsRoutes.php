@@ -48,7 +48,7 @@ class ActionsRoutes
         $router->post($prefix . '/store/{idStore}/hourTurn', function ($idStore) {
             $body = file_get_contents('php://input');
             $body = json_decode($body);
-            return (new TurnManager())->newHourTurn($body->hour, $idStore); // timestamp!!!
+            return (new TurnManager())->newHourTurn($body, $idStore); // timestamp!!!
         });
 
         $router->post($prefix . '/clockUpdate', function () {
