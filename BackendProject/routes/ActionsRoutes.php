@@ -37,6 +37,7 @@ class ActionsRoutes
 
         $router->post($prefix . '/store/{idStore}/turn', function ($idStore) {
             $body = file_get_contents('php://input');
+			$body = json_decode($body);
             return (new TurnManager())->newNormalTurn($body, $idStore);
         });
 
