@@ -119,7 +119,8 @@ class TurnDao
 
 			$turnsBucket = $bucket->turns()
 				->where('state', '=', 'WAITING')
-				->where('type', '=', 'normal')
+				->whereRaw("type = 'normal' OR type = 'vip'")
+				->orderByRaw( "FIELD(type, 'vip', 'hour', 'normal')")
 				->orderBy('number')
 				->get();
 

@@ -57,11 +57,10 @@ class ActionsRoutes
 
             $minuteInterval = (int) Config::where('key', 'MIN_DURATION_BUCKETS')->first()->value;
 
-            if (date('i') % $minuteInterval == 0) {
-                return (new TurnManager())->updateHourTurns();
-            }
+			return (new TurnManager())->updateHourTurns();
 
-            return array('done' => false);
+
+            //return array('done' => false);
         });
 
 		$router->get($prefix . '/store/{id}/bucketsNextHour', function ($id) {
