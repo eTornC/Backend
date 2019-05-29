@@ -46,6 +46,7 @@ class TestRoutes
         $router->get($prefix . '/time', function ()
         {
             Logger::debug('aloha');
+            return date("Y-m-d H:i:s");
             return time() . '   ' . (time() + 300);
         });
 

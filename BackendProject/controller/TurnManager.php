@@ -219,7 +219,7 @@ class TurnManager {
         	'token' => $token
 		];
 
-		$turn = $bucket->turns()->save($turn);
+		$bucket->turns()->save($turn);
 
 		if ($bucket->turns()->count() >= $bucket->quantity) {
 			$bucket->filled = true;
