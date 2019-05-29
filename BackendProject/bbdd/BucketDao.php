@@ -155,16 +155,13 @@ class BucketDao
 		return null;
 	}
 
-	public function getBucketsWithTotemTurns(Queue $queue): Collection
+	public function getBucketsFromNow(Queue $queue): Collection
 	{
 		$now = date('Y-m-d H:i:s', time()+300);
 
 		return $queue->buckets()
-				->join('turns', 'turns.id_bucket', '=', 'buckets.id')
-				->where('buckets.hour_start', '>=', $now)
-				->where('turns.type', '=', 'normal')
-				->where('turns.state', '=', 'WAITING')
-				->orderBy('buckets.hour_start', 'asc')
-				->get('buckets.*');
+				->where('hour_start', '>=', $now)
+				->orderBy('hour_start', 'asc')
+				->get();
 	}
 }

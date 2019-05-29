@@ -251,29 +251,29 @@ class TurnManager {
 
 		$queue = $store->queue();
 
-		//$now = date('Y-m-d H:i:s', (time()+300));
-
-		$turn = new Turn();
-		$turn->type = 'vip';
-		$turn->state = 'WAITING';
-		$turn->number = $this->turnDao->getNextNumberForVipTurn($queue);
+		$vipTurn = new Turn();
+		$vipTurn->type = 'vip';
+		$vipTurn->state = 'WAITING';
+		$vipTurn->number = $this->turnDao->getNextNumberForVipTurn($queue);
 
 		$bucketDao = new BucketDao();
 
-		$buckets = $bucketDao->getBucketsWithTotemTurns($queue);
+		$buckets = $bucketDao->getBucketsFromNow($queue);
 
 		$lastBucket = null;
-		//$lastTurn =
+		$auxTurn = $vipTurn;
 
 		foreach ($buckets as $bucket) {
 
 			if ($bucket->filled) {
 
-				$bucket->turns()
-					->where('type', '=', 'normal');
+				if ($bucket->hasNormalTurns()) {
+					$bucket->turns()->save($auxTurn);
+					$auxTurn = $bucket->lastNormalTurn();
+				}
 
 			} else {
-				$result = $bucket->turns()->save($turn);
+				$result = $bucket->turns()->save($auxTurn);
 
 				if ($bucket->turns()->count() >= $bucket->quantity) {
 					$bucket->filled = true;
@@ -287,7 +287,7 @@ class TurnManager {
 				} else {
 					return [
 						'done' => true,
-						'turn' => $turn
+						'turn' => $vipTurn
 					];
 				}
 			}
@@ -299,6 +299,19 @@ class TurnManager {
 			date('Y-m-d H:i:s',strtotime($lastBucket->hour_start) + 300),
 			$queue
 		);
+
+		$result = $bucket->turns()->save($auxTurn);
+
+		if ($result === false) {
+			return [
+				'done' => false
+			];
+		} else {
+			return [
+				'done' => true,
+				'turn' => $vipTurn
+			];
+		}
     }
 
 	/**
