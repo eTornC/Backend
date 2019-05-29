@@ -333,10 +333,17 @@ class TurnManager {
 						foreach ($turns as $turn) {
 
 						    if (!$turn->hasNumber())  {
-                                $lastTurnNum = $this->turnDao->getNextNumberForHourTurn($queue);
-                                $turn->number = $lastTurnNum;
-                                $turn->notifyNewTurn();
-                                $turn->save();
+						    	try {
+									$lastTurnNum = $this->turnDao->getNextNumberForHourTurn($queue);
+									$turn->number = $lastTurnNum;
+									$turn->save();
+									$turn->notify(
+										'Torn assingat (A' . $turn->number . ')',
+										'Ves tirant cap a la parada ' . $store->name . ' en pocs minuts t\'arribarà el torn (A' . $turn->number . ')'
+									);
+								} catch (\Exception $e) {
+						    		Logger::error($e->getMessage());
+								}
                             }
 						}
 					}
