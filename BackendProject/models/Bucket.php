@@ -50,4 +50,25 @@ class Bucket extends Model
         return $this->hasMany('eTorn\Models\Turn', 'id_bucket');
     }
 
+    public function hasNormalTurns(): bool
+	{
+		$turns = $this->turns()->get();
+
+		foreach ($turns as $turn) {
+			if ($turn->type === 'normal') {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	public function lastNormalTurn(): ?Turn
+	{
+		return $this->turns()
+				->where('type', '=', 'normal')
+				->orderBy('created_at', 'desc')
+				->first();
+	}
+
 }

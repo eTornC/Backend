@@ -4,7 +4,8 @@ RUN apt-get update; \
     apt-get upgrade -y; \
     apt-get install -y php-xdebug; \
     apt-get install -y nano; \
-    cp /usr/share/zoneinfo/Europe/Madrid /etc/localtime
+    #cp /usr/share/zoneinfo/Europe/Madrid /etc/localtime
+    cp /usr/share/zoneinfo/Europe/Berlin /etc/localtime
 
 COPY xdebug.ini /etc/php/7.2/mods-available/xdebug.ini
 

@@ -67,19 +67,26 @@ class BucketDao
 				$hourFinalTimeStamp = strtotime($hour_start) + ($minuteLenghtBucket * 60) - 1;
 				$hour_final = date('Y-m-d H:i:s', $hourFinalTimeStamp);
 
-                $auxBucket = new Bucket();
-                $auxBucket->hour_start = $hour_start;
-				$auxBucket->hour_final = $hour_final;
+				$auxBucket = $bucketQueue->buckets()
+					->where('hour_start', '=', $hour_start)
+					->where('hour_final', '=', $hour_final)
+					->first();
 
-                $auxBucket->quantity = $turnDao->calculationBucketSize($auxBucket, $bucketQueue);
+				if (!$auxBucket) {
+					$auxBucket = new Bucket();
+					$auxBucket->hour_start = $hour_start;
+					$auxBucket->hour_final = $hour_final;
 
-                if ($auxBucket->quantity == 0) {
-                    $auxBucket->filled = true;
-                } else {
-                    $auxBucket->filled = false;
-                }
+					$auxBucket->quantity = $turnDao->calculationBucketSize($auxBucket, $bucketQueue);
 
-				$bucketQueue->buckets()->save($auxBucket);
+					if ($auxBucket->quantity == 0) {
+						$auxBucket->filled = true;
+					} else {
+						$auxBucket->filled = false;
+					}
+
+					$bucketQueue->buckets()->save($auxBucket);
+				}
 
                 $lastBucket = $auxBucket;
             }
@@ -148,16 +155,13 @@ class BucketDao
 		return null;
 	}
 
-	public function getBucketsWithTotemTurns(Queue $queue): Collection
+	public function getBucketsFromNow(Queue $queue): Collection
 	{
 		$now = date('Y-m-d H:i:s', time()+300);
 
 		return $queue->buckets()
-				->join('turns', 'turns.id_bucket', '=', 'buckets.id')
-				->where('buckets.hour_start', '>=', $now)
-				->where('turns.type', '=', 'normal')
-				->where('turns.state', '=', 'WAITING')
-				->orderBy('buckets.hour_start', 'asc')
-				->get('buckets.*');
+				->where('hour_start', '>=', $now)
+				->orderBy('hour_start', 'asc')
+				->get();
 	}
 }
