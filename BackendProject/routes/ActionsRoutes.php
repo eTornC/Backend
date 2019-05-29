@@ -2,6 +2,7 @@
 
 namespace eTorn\Routes;
 
+use eTorn\Controller\BucketManager;
 use eTorn\Controller\TurnManager;
 use eTorn\Models\Config;
 use Phroute\Phroute\RouteCollector;
@@ -62,5 +63,9 @@ class ActionsRoutes
 
             return array('done' => false);
         });
+
+		$router->get($prefix . '/store/{id}/bucketsNextHour', function ($id) {
+			return (new BucketManager())->findNextBuckets($id);
+		});
     }
 }

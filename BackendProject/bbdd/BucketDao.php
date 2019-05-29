@@ -63,13 +63,13 @@ class BucketDao
 
             while ($lastBucket->hour_final < $hour) {
 
+            	$hour_start = date('Y-m-d H:i:s', strtotime($lastBucket->hour_final) + 1);
+				$hourFinalTimeStamp = strtotime($hour_start) + ($minuteLenghtBucket * 60) - 1;
+				$hour_final = date('Y-m-d H:i:s', $hourFinalTimeStamp);
+
                 $auxBucket = new Bucket();
-
-                $auxBucket->hour_start = date('Y-m-d H:i:s', strtotime($lastBucket->hour_final) + 1);
-
-				$hourFinalTimeStamp = strtotime($auxBucket->hour_start) + ($minuteLenghtBucket * 60) - 1;
-				$auxBucket->hour_final = date('Y-m-d H:i:s', $hourFinalTimeStamp);
-
+                $auxBucket->hour_start = $hour_start;
+				$auxBucket->hour_final = $hour_final;
 
                 $auxBucket->quantity = $turnDao->calculationBucketSize($auxBucket, $bucketQueue);
 

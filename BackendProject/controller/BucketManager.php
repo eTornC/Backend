@@ -4,6 +4,7 @@ namespace eTorn\Controller;
 
 use eTorn\Models\Bucket;
 use eTorn\Bbdd\BucketDao;
+use eTorn\Models\Store;
 
 
 class BucketManager {
@@ -48,5 +49,18 @@ class BucketManager {
     public function delete($id) {
         return $this->bucketDao->delete($id);
     }
+
+	public function findNextBuckets($id)
+	{
+		$store = Store::find($id);
+		$queue = $store->queue();
+
+		$this->bucketDao->getBucketOfThisHour(date("Y-m-d H:i:s",time()+3600), $queue); //TODO param temps
+
+		return $queue->buckets()
+			->where('hour_start', '>=', date("Y-m-d H:i:s",time()))
+			->where('hour_final', '<=', date("Y-m-d H:i:s",time()+60*60))
+			->get();
+	}
 
 }
