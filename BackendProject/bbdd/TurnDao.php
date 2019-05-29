@@ -175,5 +175,20 @@ class TurnDao
 
         return 3; // TODO param!!
     }
+    //Joan
+     public function getListTurns(Store $store, $initial_date, $final_date){
+		$queue = $store->queues()->first();
+		return Turn::join('buckets', 'turns.id_bucket', '=', 'buckets.id')
+			->where('buckets.id_queue', '=', $queue->id)
+			->orderBy('turns.created_at', 'asc')
+			->get();
+    }
 
+     public function getListAllTurns(Store $store){
+		$queue = $store->queues()->first();
+		return Turn::join('buckets', 'turns.id_bucket', '=', 'buckets.id')
+			->where('buckets.id_queue', '=', $queue->id)
+			->orderBy('turns.created_at', 'asc')
+			->get();
+    }
 }

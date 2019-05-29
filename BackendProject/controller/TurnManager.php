@@ -360,6 +360,18 @@ class TurnManager {
 
         return $this->turnDao->getListNextsTurns($store);
     }
+    public function allStoreTurns($idStore) {
+		$store = Store::find($idStore);
+
+		if (!$store) {
+			return [
+				'done' => false,
+				'err' => 'store not found'
+			];
+		}
+
+        return $this->turnDao->getListTurns($store);
+    }
 
 }
 
