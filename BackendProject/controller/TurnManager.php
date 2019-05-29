@@ -141,11 +141,15 @@ class TurnManager {
 		$turn->type  = 'normal';
 		$turn->number = $turnDao->getNextNumberForWaitingTurn($bucketQueue);
 
-		if ($body->token) {
-			$turn->config = [
-				'token' => $body->token
-			];
-		} else {
+		try {
+			if (property_exists($turn, 'token ')) {
+				$turn->config = [
+					'token' => $body->token
+				];
+			} else {
+				$turn->config = [];
+			}
+		} catch (\Exception $e) {
 			$turn->config = [];
 		}
 
