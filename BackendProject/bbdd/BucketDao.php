@@ -67,19 +67,26 @@ class BucketDao
 				$hourFinalTimeStamp = strtotime($hour_start) + ($minuteLenghtBucket * 60) - 1;
 				$hour_final = date('Y-m-d H:i:s', $hourFinalTimeStamp);
 
-                $auxBucket = new Bucket();
-                $auxBucket->hour_start = $hour_start;
-				$auxBucket->hour_final = $hour_final;
+				$auxBucket = $bucketQueue->buckets()
+					->where('hour_start', '=', $hour_start)
+					->where('hour_final', '=', $hour_final)
+					->first();
 
-                $auxBucket->quantity = $turnDao->calculationBucketSize($auxBucket, $bucketQueue);
+				if (!$auxBucket) {
+					$auxBucket = new Bucket();
+					$auxBucket->hour_start = $hour_start;
+					$auxBucket->hour_final = $hour_final;
 
-                if ($auxBucket->quantity == 0) {
-                    $auxBucket->filled = true;
-                } else {
-                    $auxBucket->filled = false;
-                }
+					$auxBucket->quantity = $turnDao->calculationBucketSize($auxBucket, $bucketQueue);
 
-				$bucketQueue->buckets()->save($auxBucket);
+					if ($auxBucket->quantity == 0) {
+						$auxBucket->filled = true;
+					} else {
+						$auxBucket->filled = false;
+					}
+
+					$bucketQueue->buckets()->save($auxBucket);
+				}
 
                 $lastBucket = $auxBucket;
             }
