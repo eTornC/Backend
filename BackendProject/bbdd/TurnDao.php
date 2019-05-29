@@ -167,7 +167,8 @@ class TurnDao
 
         Logger::debug(json_encode($avg));
 
-        if ($avg['time']) {
+        if ($avg['time'] && $avg['time'] > 0) {
+
             Logger::debug(floor(300 / $avg['time']));
             return floor(300 / $avg['time']);
         }
