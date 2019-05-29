@@ -67,5 +67,8 @@ class ActionsRoutes
 		$router->get($prefix . '/store/{id}/bucketsNextHour', function ($id) {
 			return (new BucketManager())->findNextBuckets($id);
 		});
+        $router->get($prefix . '/store/{idStore}/allTurns', function ($idStore) {
+            return (new TurnManager())->allStoreTurns($idStore);
+        });
     }
 }
