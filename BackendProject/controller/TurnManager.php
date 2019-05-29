@@ -48,6 +48,7 @@ class TurnManager {
         if (count($actualTurns) > 0) {
         	$actualTurns[0]->state = 'ENDED';
 			$actualTurns[0]->ended_at = date('Y-m-d H:i:s');
+			$actualTurns[0]->notify('Torn acabat', "El seu torn amb numero " . $actualTurns[0]->number . " ha estat finalitzat.");
 			$actualTurns[0]->save();
         }
 
@@ -64,6 +65,8 @@ class TurnManager {
 				$turn->state = 'ATTENDING';
 				$turn->atended_at = date('Y-m-d H:i:s');
 
+				$turn->notify('Li toca', "El seu torn amb numero " . $turn->number . " comença a atendre's.");
+
 				return [
 					'done' => $turn->save()
 				];
@@ -75,6 +78,8 @@ class TurnManager {
         if ($turn) {
 			$turn->state = 'ATTENDING';
 			$turn->atended_at = date('Y-m-d H:i:s');
+
+			$turn->notify('Li toca', "El seu torn amb numero " . $turn->number . " comença a atendre's.");
 
 			return [
 				'done' => $turn->save()
