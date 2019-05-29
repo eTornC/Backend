@@ -5,6 +5,7 @@ namespace eTorn\Routes;
 use eTorn\Controller\BucketManager;
 use eTorn\Controller\TurnManager;
 use eTorn\Models\Config;
+use eTorn\Models\Turn;
 use Phroute\Phroute\RouteCollector;
 
 class ActionsRoutes
@@ -54,20 +55,28 @@ class ActionsRoutes
         });
 
         $router->post($prefix . '/clockUpdate', function () {
-
-            $minuteInterval = (int) Config::where('key', 'MIN_DURATION_BUCKETS')->first()->value;
-
+            //$minuteInterval = (int) Config::where('key', 'MIN_DURATION_BUCKETS')->first()->value;
 			return (new TurnManager())->updateHourTurns();
-
-
             //return array('done' => false);
         });
 
 		$router->get($prefix . '/store/{id}/bucketsNextHour', function ($id) {
 			return (new BucketManager())->findNextBuckets($id);
 		});
-        $router->get($prefix . '/store/{idStore}/allTurns', function ($idStore) {
+
+		$router->get($prefix . '/store/{idStore}/allTurns', function ($idStore) {
             return (new TurnManager())->allStoreTurns($idStore);
         });
+
+		$router->get($prefix . '/tokenTurns', function () {
+			$body = file_get_contents('php://input');
+			$body = json_decode($body);
+
+			if (!isset($body->token)) {
+				return [];
+			}
+
+			return (new TurnManager())->turnsOfThisToken($body->token);
+		});
     }
 }

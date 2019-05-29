@@ -44,12 +44,18 @@ class TurnManager {
 		}
 
         $actualTurns = $this->turnDao->getActualTurns($store);
-
+ 
         if (count($actualTurns) > 0) {
-        	$actualTurns[0]->state = 'ENDED';
-			$actualTurns[0]->ended_at = date('Y-m-d H:i:s');
-			$actualTurns[0]->notify('Torn acabat', "El seu torn amb numero " . $actualTurns[0]->number . " ha estat finalitzat.");
-			$actualTurns[0]->save();
+        	try {
+				$actualTurns[0]->state = 'ENDED';
+				$actualTurns[0]->ended_at = date('Y-m-d H:i:s');
+				$actualTurns[0]->notify('Torn acabat', "El seu torn amb numero " . $actualTurns[0]->number . " ha estat finalitzat.");
+				$actualTurns[0]->save();
+			} catch (\Exception $e) {
+        		Logger::error('TurnManager::nextTurn - ' . $e->getMessage());
+			}
+
+			Logger::debug(json_encode($actualTurns[0]));
         }
 
         $queue = $store->queues()->first();
@@ -60,8 +66,9 @@ class TurnManager {
         if ($buckets && $buckets->count() > 0) {
 
             $turn = $this->turnDao->getNextTurnOfThisBucket($buckets[0]);
-
+			Logger::debug('akitamo2');
 			if ($turn) {
+				Logger::debug('akitamo3');
 				$turn->state = 'ATTENDING';
 				$turn->atended_at = date('Y-m-d H:i:s');
 
@@ -76,6 +83,7 @@ class TurnManager {
 		$turn = $this->turnDao->getNextNormalTurn($queue);
 
         if ($turn) {
+			Logger::debug('akitamo4');
 			$turn->state = 'ATTENDING';
 			$turn->atended_at = date('Y-m-d H:i:s');
 
@@ -396,7 +404,9 @@ class TurnManager {
 
         return $this->turnDao->getListNextsTurns($store);
     }
-    public function allStoreTurns($idStore) {
+
+    public function allStoreTurns($idStore)
+	{
 		$store = Store::find($idStore);
 
 		if (!$store) {
@@ -408,6 +418,11 @@ class TurnManager {
 
         return $this->turnDao->getListTurns($store);
     }
+
+	public function turnsOfThisToken($token)
+	{
+		return $this->turnDao->turnsOfThisToken($token);
+	}
 
 }
 
