@@ -306,11 +306,15 @@ class TurnManager {
 
 			$lastBucket = $bucket;
 		}
+		$hour = '';
 
-		$bucket = $bucketDao->getBucketOfThisHour(
-			date('Y-m-d H:i:s',strtotime($lastBucket->hour_start) + 300),
-			$queue
-		);
+		if ($lastBucket === null) {
+			$hour = date('Y-m-d H:i:s',time() + 300);
+		} else {
+			$hour = date('Y-m-d H:i:s',strtotime($lastBucket->hour_start) + 300);
+		}
+
+		$bucket = $bucketDao->getBucketOfThisHour($hour, $queue);
 
 		$result = $bucket->turns()->save($auxTurn);
 
