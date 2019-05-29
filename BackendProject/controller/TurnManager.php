@@ -256,6 +256,18 @@ class TurnManager {
 		$vipTurn->state = 'WAITING';
 		$vipTurn->number = $this->turnDao->getNextNumberForVipTurn($queue);
 
+		try {
+			if (isset($body->token)) {
+				$vipTurn->config = [
+					'token' => $body->token
+				];
+			} else {
+				$vipTurn->config = [];
+			}
+		} catch (\Exception $e) {
+			$vipTurn->config = [];
+		}
+
 		$bucketDao = new BucketDao();
 
 		$buckets = $bucketDao->getBucketsFromNow($queue);

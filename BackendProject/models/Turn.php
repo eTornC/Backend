@@ -65,24 +65,28 @@ class Turn extends Model
 			return false;
 		}
 
-		$client = new Client();
+		try {
+			$client = new Client();
 
-		$response = $client->post(ConstantsFirebase::FCM_URI, [
-			'headers' => [
-				'authorization' => 'key=' . ConstantsFirebase::FCM_TOKEN,
-				'content-type' => 'application/json'
-			],
-			'body' => json_encode([
-				'to' => $this->config['token'],
-				'notification' => [
-					'title' => $title,
-					'body' => $body
-				]
-			])
-		]);
+			$response = $client->post(ConstantsFirebase::FCM_URI, [
+				'headers' => [
+					'authorization' => 'key=' . ConstantsFirebase::FCM_TOKEN,
+					'content-type' => 'application/json'
+				],
+				'body' => json_encode([
+					'to' => $this->config['token'],
+					'notification' => [
+						'title' => $title,
+						'body' => $body
+					]
+				])
+			]);
 
-		$responseArray = json_decode($response->getBody()->getContents(), true);
+			$responseArray = json_decode($response->getBody()->getContents(), true);
 
-		return (bool) $responseArray['success'];
+			return (bool) $responseArray['success'];
+		} catch (\Exception $e) {
+			return false;
+		}
 	}
 }
