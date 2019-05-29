@@ -72,13 +72,13 @@ class Turn extends Model
 				'authorization' => 'key=' . ConstantsFirebase::FCM_TOKEN,
 				'content-type' => 'application/json'
 			],
-			'body' => [
+			'body' => json_encode([
 				'to' => $this->config['token'],
 				'notification' => [
 					'title' => $title,
 					'body' => $body
 				]
-			]
+			])
 		]);
 
 		$responseArray = json_decode($response->getBody()->getContents(), true);
