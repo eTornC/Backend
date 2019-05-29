@@ -136,6 +136,14 @@ class TurnManager {
 		$turn->type  = 'normal';
 		$turn->number = $turnDao->getNextNumberForWaitingTurn($bucketQueue);
 
+		if ($body->token) {
+			$turn->config = [
+				'token' => $body->token
+			];
+		} else {
+			$turn->config = [];
+		}
+
 		$turn = $bucket->turns()->save($turn);
 
 		if ($bucket->turns()->count() >= $bucket->quantity) {
