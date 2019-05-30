@@ -32,7 +32,9 @@ class Logger
 
 	public function logMessage($message)
 	{
-		if (is_array($message)) {
+		if (is_object($message)) {
+			$this->write($this->debug_log, json_encode($message));
+		} else if (is_array($message)) {
 			foreach($message as $msg) {
 				$this->write($this->debug_log, $msg);	
 			}

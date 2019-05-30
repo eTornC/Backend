@@ -74,7 +74,7 @@ class ActionsRoutes
 			$body = json_decode($body);
 
 			if (!isset($body->token)) {
-				return ['null'];
+				return [];
 			}
 
 			return (new TurnManager())->turnsOfThisToken($body->token);

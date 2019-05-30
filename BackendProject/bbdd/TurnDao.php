@@ -35,11 +35,6 @@ class TurnDao
         return $this->findById($id)->delete();
     }
 
-    public function findByIdQueue($idQueue)
-    {
-        return $this->findByProperty('ID_QUEUE', $idQueue);
-    }
-
 	/**
 	 * @param Store $store
 	 * @return mixed
@@ -50,7 +45,7 @@ class TurnDao
 
     	return Turn::join('buckets', 'turns.id_bucket', '=', 'buckets.id')
 			->where('buckets.id_queue', '=', $queue->id)
-			->where('state', 'ATTENDING')
+			->where('state', '=', 'ATTENDING')
 			->select('turns.*')
 			->get();
     }
@@ -111,15 +106,16 @@ class TurnDao
 
 	public function getNextsNormalTurns(Queue $queue): array
 	{
-		$buckets = $queue->buckets()->get();
+		$buckets = $queue->buckets()
+						->where('hour_start', '>', date('Y-m-d H:i:s'))
+						->get();
 
 		$turns = [];
 
 		$buckets->each(function (Bucket $bucket) use (&$turns) {
 
 			$turnsBucket = $bucket->turns()
-				->where('state', '=', 'WAITING')
-				->whereRaw("type = 'normal' OR type = 'vip'")
+				->whereRaw("( type = 'normal' OR type = 'vip' ) AND state = 'WAITING' ")
 				->orderByRaw( "FIELD(type, 'vip', 'hour', 'normal')")
 				->orderBy('number')
 				->get();
@@ -135,6 +131,8 @@ class TurnDao
 	public function getNextNormalTurn(Queue $queue): ?Turn
     {
 	    $turns = $this->getNextsNormalTurns($queue);
+
+	    Logger::debug($turns);
 
 	    if (count($turns) > 0) {
 	        return $turns[0];
@@ -178,17 +176,20 @@ class TurnDao
     }
 
     //Joan
-     public function getListTurns(Store $store, $initial_date, $final_date){
+	public function getListTurns(Store $store, $initial_date, $final_date)
+	{
 		$queue = $store->queues()->first();
+
 		return Turn::join('buckets', 'turns.id_bucket', '=', 'buckets.id')
 			->where('buckets.id_queue', '=', $queue->id)
 			->orderBy('turns.created_at', 'asc')
 			->get();
-    }
+	}
 
  	public function getListAllTurns(Store $store)
  	{
 		$queue = $store->queues()->first();
+
 		return Turn::join('buckets', 'turns.id_bucket', '=', 'buckets.id')
 			->where('buckets.id_queue', '=', $queue->id)
 			->orderBy('turns.created_at', 'asc')

@@ -82,16 +82,20 @@ class TurnManager {
 
 		$turn = $this->turnDao->getNextNormalTurn($queue);
 
+        Logger::debug($turn);
+
         if ($turn) {
-			Logger::debug('akitamo4');
-			$turn->state = 'ATTENDING';
-			$turn->atended_at = date('Y-m-d H:i:s');
 
-			$turn->notify('Li toca', "El seu torn amb numero " . $turn->number . " comença a atendre's.");
+        	if ($turn->state == 'WAITING') {
+				$turn->state = 'ATTENDING';
+				$turn->atended_at = date('Y-m-d H:i:s');
 
-			return [
-				'done' => $turn->save()
-			];
+				$turn->notify('Li toca', "El seu torn amb numero " . $turn->number . " comença a atendre's.");
+
+				return [
+					'done' => $turn->save()
+				];
+			}
 		}
 
         return [

@@ -4,12 +4,12 @@
     // ------------------------------- IMPORTS ------------------------------------------
     // ----------------------------------------------------------------------------------
 	use eTorn\Controller\Logger;
-use eTorn\Routes\ActionsRoutes;
-use eTorn\Routes\ConfigRoutes;
-use eTorn\Routes\LayoutsRoutes;
-use eTorn\Routes\StoresRoutes;
-use eTorn\Routes\TestRoutes;
-use Illuminate\Database\Capsule\Manager as Capsule;
+	use eTorn\Routes\ActionsRoutes;
+	use eTorn\Routes\ConfigRoutes;
+	use eTorn\Routes\LayoutsRoutes;
+	use eTorn\Routes\StoresRoutes;
+	use eTorn\Routes\TestRoutes;
+	use Illuminate\Database\Capsule\Manager as Capsule;
     use eTorn\Constants\ConstantsDB;
     use Phroute\Phroute\RouteCollector;
     use Phroute\Phroute\Exception\HttpRouteNotFoundException;
