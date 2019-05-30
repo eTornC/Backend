@@ -249,6 +249,7 @@ class TurnManager {
     public function newVipTurn($body, $idStore)
 	{
 		$store = Store::find($idStore);
+		//Logger::debug($body);
 
 		if (!$store) {
 			return [

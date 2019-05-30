@@ -45,6 +45,7 @@ class ActionsRoutes
 
         $router->post($prefix . '/store/{idStore}/vipTurn', function ($idStore) {
             $body = file_get_contents('php://input');
+            $body = json_decode($body);
             return (new TurnManager())->newVipTurn($body, $idStore);
         });
 
@@ -68,12 +69,12 @@ class ActionsRoutes
             return (new TurnManager())->allStoreTurns($idStore);
         });
 
-		$router->get($prefix . '/tokenTurns', function () {
+		$router->post($prefix . '/tokenTurns', function () {
 			$body = file_get_contents('php://input');
 			$body = json_decode($body);
 
 			if (!isset($body->token)) {
-				return [];
+				return ['null'];
 			}
 
 			return (new TurnManager())->turnsOfThisToken($body->token);
