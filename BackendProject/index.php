@@ -14,7 +14,6 @@
     use Phroute\Phroute\RouteCollector;
     use Phroute\Phroute\Exception\HttpRouteNotFoundException;
     use Phroute\Phroute\Exception\HttpMethodNotAllowedException;
-    use eTorn\Routes\RouterManager;
 
     require(dirname(__FILE__) . '/vendor/autoload.php');
 
