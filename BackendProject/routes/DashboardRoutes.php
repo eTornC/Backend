@@ -12,8 +12,28 @@ class DashboardRoutes
     {
         $prefix = '';
 
-        $router->get($prefix . '/layouts', function () {
-            return (new DashboardManager());
+        $router->get($prefix . '/turns-per-type', function () {
+            $startDate = $_GET['start_date'];
+            $endDate = $_GET['end_date'];
+            $store = $_GET['store'];
+
+            return (new DashboardManager())->turnsPerType($startDate, $endDate, $store);
+        });
+
+        $router->get($prefix . '/turns-by-day', function () {
+            $startDate = $_GET['start_date'];
+            $endDate = $_GET['end_date'];
+            $store = $_GET['store'];
+
+            return (new DashboardManager())->turnsByDay($startDate, $endDate, $store);
+        });
+
+        $router->get($prefix . '/turns-number', function () {
+            $startDate = $_GET['start_date'];
+            $endDate = $_GET['end_date'];
+            $store = $_GET['store'];
+
+            return (new DashboardManager())->turnsNumber($startDate, $endDate, $store);
         });
     }
 }

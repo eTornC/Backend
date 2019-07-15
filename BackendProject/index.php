@@ -6,7 +6,8 @@
 	use eTorn\Controller\Logger;
 	use eTorn\Routes\ActionsRoutes;
 	use eTorn\Routes\ConfigRoutes;
-	use eTorn\Routes\LayoutsRoutes;
+    use eTorn\Routes\DashboardRoutes;
+    use eTorn\Routes\LayoutsRoutes;
 	use eTorn\Routes\StoresRoutes;
 	use eTorn\Routes\TestRoutes;
 	use Illuminate\Database\Capsule\Manager as Capsule;
@@ -65,6 +66,7 @@
     LayoutsRoutes::manageRoutes($router);
     StoresRoutes::manageRoutes($router);
     TestRoutes::manageRoutes($router);
+    DashboardRoutes::manageRoutes($router);
 
     $dispatcher = new Phroute\Phroute\Dispatcher($router->getData());
 

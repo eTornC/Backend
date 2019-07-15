@@ -43,7 +43,7 @@ class TurnDao
     {
     	$queue = $store->queues()->first();
 
-    	return Turn::join('buckets', 'turns.id_bucket', '=', 'buckets.id')
+    	return Turn::query()->join('buckets', 'turns.id_bucket', '=', 'buckets.id')
 			->where('buckets.id_queue', '=', $queue->id)
 			->where('state', '=', 'ATTENDING')
 			->select('turns.*')
