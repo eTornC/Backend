@@ -205,7 +205,7 @@ class TurnDao
 		return Turn::join('buckets', 'turns.id_bucket', '=', 'buckets.id')
 					->join('queues', 'buckets.id_queue', '=', 'queues.id')
 					->join('stores', 'queues.id_store', '=', 'stores.id')
-					->where('turns.config->token', '=', $token)
+					->whereRaw("JSON_UNQUOTE(JSON_EXTRACT(turns.config, '$.token')) = '$token'")
 					->where('turns.state', '=', 'WAITING')
 					->get(['turns.*', 'stores.name', 'buckets.hour_start', 'buckets.hour_final']);
 	}
